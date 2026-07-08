@@ -152,3 +152,14 @@ export async function loadSubtitles(jobId) {
     text: row.text,
   }));
 }
+
+/**
+ * Delete a job and its associated data.
+ */
+export async function deleteJob(jobId) {
+  const { error: subErr } = await supabase.from("subtitles").delete().eq("job_id", jobId);
+  if (subErr) console.error("Error deleting subtitles:", subErr.message);
+
+  const { error } = await supabase.from("jobs").delete().eq("id", jobId);
+  if (error) throw error;
+}

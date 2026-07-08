@@ -9,15 +9,43 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as TemplatesRouteImport } from './routes/templates'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as ChangelogRouteImport } from './routes/changelog'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PluginDownloadRouteImport } from './routes/plugin.download'
 import { Route as EditorJobIdRouteImport } from './routes/editor.$jobId'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TemplatesRoute = TemplatesRouteImport.update({
+  id: '/templates',
+  path: '/templates',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -30,9 +58,29 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PluginDownloadRoute = PluginDownloadRouteImport.update({
+  id: '/plugin/download',
+  path: '/plugin/download',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EditorJobIdRoute = EditorJobIdRouteImport.update({
@@ -43,49 +91,149 @@ const EditorJobIdRoute = EditorJobIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/changelog': typeof ChangelogRoute
+  '/checkout': typeof CheckoutRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
+  '/templates': typeof TemplatesRoute
+  '/terms': typeof TermsRoute
   '/editor/$jobId': typeof EditorJobIdRoute
+  '/plugin/download': typeof PluginDownloadRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/changelog': typeof ChangelogRoute
+  '/checkout': typeof CheckoutRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
+  '/templates': typeof TemplatesRoute
+  '/terms': typeof TermsRoute
   '/editor/$jobId': typeof EditorJobIdRoute
+  '/plugin/download': typeof PluginDownloadRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/changelog': typeof ChangelogRoute
+  '/checkout': typeof CheckoutRoute
   '/dashboard': typeof DashboardRoute
   '/login': typeof LoginRoute
+  '/pricing': typeof PricingRoute
+  '/privacy': typeof PrivacyRoute
   '/signup': typeof SignupRoute
+  '/templates': typeof TemplatesRoute
+  '/terms': typeof TermsRoute
   '/editor/$jobId': typeof EditorJobIdRoute
+  '/plugin/download': typeof PluginDownloadRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/login' | '/signup' | '/editor/$jobId'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/changelog'
+    | '/checkout'
+    | '/dashboard'
+    | '/login'
+    | '/pricing'
+    | '/privacy'
+    | '/signup'
+    | '/templates'
+    | '/terms'
+    | '/editor/$jobId'
+    | '/plugin/download'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/login' | '/signup' | '/editor/$jobId'
-  id: '__root__' | '/' | '/dashboard' | '/login' | '/signup' | '/editor/$jobId'
+  to:
+    | '/'
+    | '/about'
+    | '/changelog'
+    | '/checkout'
+    | '/dashboard'
+    | '/login'
+    | '/pricing'
+    | '/privacy'
+    | '/signup'
+    | '/templates'
+    | '/terms'
+    | '/editor/$jobId'
+    | '/plugin/download'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/changelog'
+    | '/checkout'
+    | '/dashboard'
+    | '/login'
+    | '/pricing'
+    | '/privacy'
+    | '/signup'
+    | '/templates'
+    | '/terms'
+    | '/editor/$jobId'
+    | '/plugin/download'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  ChangelogRoute: typeof ChangelogRoute
+  CheckoutRoute: typeof CheckoutRoute
   DashboardRoute: typeof DashboardRoute
   LoginRoute: typeof LoginRoute
+  PricingRoute: typeof PricingRoute
+  PrivacyRoute: typeof PrivacyRoute
   SignupRoute: typeof SignupRoute
+  TemplatesRoute: typeof TemplatesRoute
+  TermsRoute: typeof TermsRoute
   EditorJobIdRoute: typeof EditorJobIdRoute
+  PluginDownloadRoute: typeof PluginDownloadRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/templates': {
+      id: '/templates'
+      path: '/templates'
+      fullPath: '/templates'
+      preLoaderRoute: typeof TemplatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/signup': {
       id: '/signup'
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -102,11 +250,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plugin/download': {
+      id: '/plugin/download'
+      path: '/plugin/download'
+      fullPath: '/plugin/download'
+      preLoaderRoute: typeof PluginDownloadRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/editor/$jobId': {
@@ -121,17 +297,25 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  ChangelogRoute: ChangelogRoute,
+  CheckoutRoute: CheckoutRoute,
   DashboardRoute: DashboardRoute,
   LoginRoute: LoginRoute,
+  PricingRoute: PricingRoute,
+  PrivacyRoute: PrivacyRoute,
   SignupRoute: SignupRoute,
+  TemplatesRoute: TemplatesRoute,
+  TermsRoute: TermsRoute,
   EditorJobIdRoute: EditorJobIdRoute,
+  PluginDownloadRoute: PluginDownloadRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
+import type { getRouter } from './router.jsx'
+import type { startInstance } from './start.js'
 declare module '@tanstack/react-start' {
   interface Register {
     ssr: true

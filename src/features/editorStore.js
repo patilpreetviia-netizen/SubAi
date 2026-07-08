@@ -31,6 +31,16 @@ export const useEditorStore = create((set, get) => ({
     set({ subtitles: next, past: [...past, subtitles], future: [] });
   },
 
+  updateSegmentTime: (id, field, value) => {
+    const { subtitles, past } = get();
+    const next = subtitles.map((s) => (s.id === id ? { ...s, [field]: value } : s));
+    set({ subtitles: next, past: [...past, subtitles], future: [] });
+  },
+
+  setSubtitles: (subtitles) => {
+    set({ subtitles });
+  },
+
   undo: () => {
     const { past, subtitles, future } = get();
     if (past.length === 0) return;

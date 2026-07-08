@@ -1,7 +1,8 @@
 import { Player } from "@remotion/player";
 import { CaptionComposition } from "./CaptionComposition";
+import { forwardRef } from "react";
 
-export function CaptionPlayer({
+export const CaptionPlayer = forwardRef(({
   subtitles,
   preset,
   durationInFrames = 300,
@@ -13,9 +14,10 @@ export function CaptionPlayer({
   controls = false,
   style,
   videoUrl,
-}) {
+}, ref) => {
   return (
     <Player
+      ref={ref}
       component={CaptionComposition}
       inputProps={{ subtitles, preset, videoUrl }}
       durationInFrames={durationInFrames}
@@ -35,4 +37,4 @@ export function CaptionPlayer({
       }}
     />
   );
-}
+});

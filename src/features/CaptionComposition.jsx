@@ -17,11 +17,20 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
   );
 
   const p = preset || {
-    font: "800 44px Inter, sans-serif",
+    font: "Inter, system-ui, sans-serif",
     color: "#facc15",
     stroke: "#000000",
     bg: "transparent",
+    weight: 800,
+    shadow: "none",
+    letterSpacing: "0.02em",
+    case: "none",
+    italic: false,
   };
+
+  const textTransform =
+    p.case === "uppercase" ? "uppercase" :
+    p.case === "lowercase" ? "lowercase" : "none";
 
   return (
     <AbsoluteFill
@@ -32,7 +41,6 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
         paddingBottom: 80,
       }}
     >
-      {/* Real video background — only shown when a real video URL is provided */}
       {videoUrl ? (
         <AbsoluteFill>
           <Video
@@ -42,7 +50,6 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
         </AbsoluteFill>
       ) : (
         <>
-          {/* Fallback: Ambient dot grid placeholder */}
           <AbsoluteFill
             style={{
               backgroundImage:
@@ -93,7 +100,10 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
               <span
                 key={i}
                 style={{
-                  font: p.font,
+                  fontFamily: p.font,
+                  fontWeight: p.weight,
+                  fontStyle: p.italic ? "italic" : "normal",
+                  fontSize: 36,
                   color: isActive ? p.color : "rgba(255,255,255,0.55)",
                   transform: isActive ? "scale(1.08)" : "scale(1)",
                   transition: "transform 0.12s ease, color 0.12s ease",
@@ -101,10 +111,14 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
                     p.stroke && p.stroke !== "transparent"
                       ? `2px ${p.stroke}`
                       : undefined,
-                  textShadow: isActive
-                    ? "0 4px 20px rgba(250,204,21,0.35)"
-                    : "none",
-                  letterSpacing: "-0.01em",
+                  textShadow:
+                    isActive
+                      ? p.shadow && p.shadow !== "none"
+                        ? p.shadow
+                        : "0 4px 20px rgba(250,204,21,0.35)"
+                      : "none",
+                  letterSpacing: p.letterSpacing || "0.01em",
+                  textTransform,
                 }}
               >
                 {w}

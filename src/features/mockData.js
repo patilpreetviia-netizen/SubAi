@@ -56,45 +56,4 @@ export const MOCK_SUBTITLES = {
   ],
 };
 
-export const PRESETS = [
-  {
-    id: "beast",
-    name: "Beast Style",
-    font: "800 44px Inter, sans-serif",
-    color: "#facc15",
-    stroke: "#000000",
-    bg: "transparent",
-  },
-  {
-    id: "karaoke",
-    name: "Karaoke Smooth",
-    font: "700 36px Inter, sans-serif",
-    color: "#ffffff",
-    stroke: "#facc15",
-    bg: "rgba(0,0,0,0.35)",
-  },
-  {
-    id: "minimal",
-    name: "Minimal Bold",
-    font: "600 32px Inter, sans-serif",
-    color: "#ffffff",
-    stroke: "transparent",
-    bg: "rgba(0,0,0,0.6)",
-  },
-  {
-    id: "hype",
-    name: "Hype Amber",
-    font: "800 40px Inter, sans-serif",
-    color: "#09090b",
-    stroke: "transparent",
-    bg: "#facc15",
-  },
-  {
-    id: "clean",
-    name: "Clean Mono",
-    font: "500 28px ui-monospace, monospace",
-    color: "#ffffff",
-    stroke: "transparent",
-    bg: "rgba(24,24,27,0.85)",
-  },
-];
+export { PRESETS } from "./presets";
