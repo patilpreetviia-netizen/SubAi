@@ -5,7 +5,7 @@ A premium browser-native AI caption generation platform engineered for content c
 ## 🔗 Project Links
 
 * 👉 **Live Deployment:** [View Live Storefront Deployment](https://sub-ai-iota.vercel.app/)
-* 👉 **GitHub Repository:**[patilpreetviia-netizen/SubAi](https://github.com/patilpreetviia-netizen/sub-ai)
+* 👉 **GitHub Repository:** [patilpreetviia-netizen/SubAi](https://github.com/patilpreetviia-netizen/sub-ai)
 
 ---
 
