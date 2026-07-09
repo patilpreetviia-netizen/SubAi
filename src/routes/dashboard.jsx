@@ -14,6 +14,7 @@ import {
 } from "../lib/jobsService";
 import { extractVideoFrame } from "../lib/grok";
 import { analyzeWithGrokServer, transcribeFromStorage } from "../lib/grokServer";
+import { sendTestEmail } from "../lib/resendEmail";
 import {
   Home,
   Search,
@@ -359,6 +360,32 @@ function DashboardPage() {
           </div>
           <div className={styles.usageReset}>Allowance resets in 25 days</div>
           <button className={styles.upgradeNowBtn}>Upgrade Now</button>
+          <button
+            onClick={() => {
+              if (!user?.email) return;
+              sendTestEmail({ data: { email: user.email, name: userName } }).then((r) => {
+                if (r.success) push(r.message + " to " + user.email);
+                else push("Email failed: " + (r.message || "unknown"));
+              }).catch((e) => push("Email error: " + e.message));
+            }}
+            style={{
+              marginTop: 8,
+              width: "100%",
+              padding: "7px 0",
+              borderRadius: 8,
+              border: "1px solid rgba(255,255,255,0.08)",
+              background: "transparent",
+              color: "#a1a1aa",
+              fontSize: 11,
+              fontWeight: 600,
+              cursor: "pointer",
+              transition: "all 0.15s",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.color = "#fff"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#a1a1aa"; }}
+          >
+            Send Test Email
+          </button>
         </div>
 
         {/* User card */}
