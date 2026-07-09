@@ -274,6 +274,6 @@ To accelerate development and improve productivity, AI-assisted development tool
 
 # 📄 License
 
-Private — All Rights Reserved.
+Preet Patil — All Rights Reserved.
 
 This project is proprietary software developed for portfolio and educational purposes. Unauthorized copying, redistribution, modification, or commercial use is prohibited.
