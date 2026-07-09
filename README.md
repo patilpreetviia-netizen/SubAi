@@ -1,311 +1,279 @@
-# SubAI
+# SUBAI — AI Caption Studio for Indian Creators
 
-> **Browser-native AI Caption Studio for Indian Creators**
+A premium browser-native AI caption generation platform engineered for content creators, editors, agencies, and social media teams. Generate frame-accurate subtitles, edit them with a professional timeline, customize modern caption styles, and export production-ready captions—all without installing desktop software.
 
-Generate accurate, editable, and beautifully styled captions for videos directly in your browser. No desktop software required.
+## 🔗 Project Links
 
-🌐 **Live Demo:** https://sub-ai-iota.vercel.app/
-
----
-
-## Overview
-
-SubAI is an AI-powered caption generation platform built for creators, editors, agencies, and social media teams.
-
-Upload a video, generate word-level captions using AI, edit them in an intuitive timeline, customize them with modern caption styles, and export them for your favorite editing software—all from your browser.
+* 👉 **Live Deployment:** [View Live Storefront Deployment](https://sub-ai-iota.vercel.app/)
+* 👉 **GitHub Repository:**[patilpreetviia-netizen/SubAi](https://github.com/patilpreetviia-netizen/sub-ai)
 
 ---
 
-## Features
+# 🚀 Core Features
 
-### 🎙 AI Transcription
+SubAI transforms the traditional subtitle workflow into a fast, AI-powered browser experience.
 
-- Fast AI transcription powered by **Groq Whisper**
-- Word-level timestamps
-- High transcription accuracy
-- Supports videos up to **2GB**
+### AI Transcription
 
-### 🌍 Multi-Language Support
+* High-speed speech recognition powered by **Groq Whisper**
+* Word-level timestamps
+* Frame-accurate subtitle generation
+* Supports videos up to **2GB**
 
-Supports:
+### Multi-Language Support
 
-- English
-- Hindi
-- Hinglish
-- Marathi
-- Tamil
-- Telugu
-- Bengali
-- Gujarati
-- Punjabi
-- Kannada
+Supports automatic transcription for:
 
----
+* English
+* Hindi
+* Hinglish
+* Marathi
+* Tamil
+* Telugu
+* Bengali
+* Gujarati
+* Punjabi
+* Kannada
 
-### 🔄 Script Conversion
+### Script Conversion
 
-Instantly switch between:
+Instantly convert captions between:
 
-- Roman Hinglish
-- Hindi (Devanagari)
-- Native language scripts
-- English Translation
+* Roman Hinglish
+* Hindi (Devanagari)
+* Native language scripts
+* English Translation
 
----
+### Professional Caption Editor
 
-### ✏ Caption Editor
+* Word-by-word editing
+* Inline transcript editing
+* Draggable timeline
+* Start & End handles
+* Undo / Redo
+* Live Remotion Preview
 
-Professional browser-based editing tools:
+### Caption Presets
 
-- Word-by-word editing
-- Inline editing
-- Drag & resize timeline
-- Undo / Redo
-- Live preview
-- Frame-accurate adjustments
+Includes **30+ professionally designed subtitle styles**, including:
 
----
+* Beast
+* Karaoke
+* Minimal
+* Bold
+* Neon
+* Cyberpunk
+* Vaporwave
+* Typewriter
+* Glitch
 
-### 🎨 Caption Presets
+### Brand Kit
 
-Choose from **30+ professionally designed presets**, including:
+Create, save, and instantly reuse custom caption presets across multiple projects.
 
-- Beast
-- Karaoke
-- Minimal
-- Bold
-- Neon
-- Cyberpunk
-- Vaporwave
-- Typewriter
-- Glitch
+### AI Hook Generator
 
-and many more.
+Generate engaging opening hooks for YouTube Shorts, Instagram Reels, and TikTok using **Groq LLM**.
 
----
+### Export System
 
-### 🎯 Brand Kit
+Export captions directly as:
 
-Save your own caption styles and reuse them across projects.
-
----
-
-### 🤖 AI Hook Generator
-
-Generate engaging opening hooks from your transcript using AI to improve audience retention.
-
----
-
-### 📤 Export Options
-
-Export your captions as:
-
-- MP4 Video
-- SRT
-- SEO-ready YouTube Description
-- Premiere Pro
-- After Effects
-- DaVinci Resolve
+* MP4 Video
+* SRT Subtitle File
+* SEO-Optimized YouTube Description
+* Adobe Premiere Pro
+* Adobe After Effects
+* DaVinci Resolve
 
 ---
 
-## Tech Stack
+# 🛠 Backend & AI Integration
 
-| Category | Technology |
-|----------|------------|
+SubAI combines modern frontend architecture with cloud-based AI services to deliver a seamless browser experience.
+
+### AI Services
+
+* **Groq Whisper** for speech-to-text transcription
+* **Groq LLM** for AI Hook Generation
+
+### Backend
+
+* **Supabase Authentication**
+  * Email & Password Login
+  * Secure Session Management
+
+* **Supabase PostgreSQL**
+  * Project storage
+  * Transcript data
+  * Caption metadata
+
+* **Supabase Storage**
+  * Secure video uploads
+  * Private asset management
+
+### Email Service
+
+* **Resend API**
+  * Authentication emails
+  * Notification workflows
+
+---
+
+# 🛠 Frontend Architecture
+
+The application follows a modular React architecture for scalability and maintainability.
+
+### Core Components
+
+* `Upload.jsx`
+  * Video upload interface
+
+* `CaptionEditor.jsx`
+  * Word-level subtitle editor
+
+* `Timeline.jsx`
+  * Frame-accurate timeline controls
+
+* `PreviewPlayer.jsx`
+  * Live Remotion video preview
+
+* `CaptionStyles.jsx`
+  * Style preset selector
+
+* `BrandKit.jsx`
+  * Saved preset manager
+
+* `HookGenerator.jsx`
+  * AI-powered hook generation
+
+* `ExportPanel.jsx`
+  * Export options and rendering
+
+* `Dashboard.jsx`
+  * Project management
+
+* `Navbar.jsx`
+  * Navigation and authentication
+
+---
+
+# 🎨 Design Philosophy
+
+### Visual Direction
+
+Inspired by modern creative software including:
+
+* Adobe Premiere Pro
+* CapCut Desktop
+* Descript
+* Figma
+* Linear
+
+The interface prioritizes speed, minimalism, and distraction-free editing.
+
+### Design System
+
+* Minimal Dark UI
+* Matte Black Workspace
+* Glassmorphism Components
+* Smooth Micro-interactions
+* Rounded Interface Elements
+* Responsive Layout
+* Professional Motion Design
+
+### Typography
+
+* Inter
+* Geist
+* Space Grotesk
+
+---
+
+# ⚡ Technology Stack
+
+| Layer | Technology |
+|--------|------------|
 | Framework | React 19 |
-| Routing | TanStack Router |
-| SSR | TanStack Start |
+| Build Tool | Vite |
 | Styling | Tailwind CSS v4 |
-| UI | shadcn/ui |
+| UI Components | shadcn/ui |
+| Routing | TanStack Router |
 | Video Rendering | Remotion 4 |
 | State Management | Zustand |
 | Data Fetching | TanStack React Query |
-| Authentication | Supabase Auth |
-| Database | Supabase PostgreSQL |
+| Backend | Supabase |
+| Database | PostgreSQL |
 | Storage | Supabase Storage |
-| AI | Groq (Whisper + LLM) |
-| Email | Resend |
-| Payments | Razorpay |
-| Build Tool | Vite |
-| Runtime | Bun / Node.js |
+| Authentication | Supabase Auth |
+| AI | Groq Whisper + Groq LLM |
+| Email | Resend API |
 
 ---
 
-# Getting Started
-
-## Prerequisites
-
-- Bun (Recommended) or Node.js 18+
-- Supabase Project
-- Groq API Key
-
-Optional:
-
-- Resend API Key
-- Razorpay API Keys
-
----
-
-## Installation
-
-Clone the repository.
-
-```bash
-git clone https://github.com/yourusername/subai.git
-
-cd subai
-```
-
-Install dependencies.
-
-```bash
-bun install
-```
-
-or
-
-```bash
-npm install
-```
-
----
-
-## Environment Variables
-
-Create a `.env` file in the root directory.
-
-```env
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
-
-GROQ_API_KEY=
-
-RESEND_API_KEY=
-```
-
----
-
-## Development
-
-```bash
-bun run dev
-```
-
-or
-
-```bash
-npm run dev
-```
-
-Visit:
-
-```
-http://localhost:3000
-```
-
----
-
-## Production Build
-
-```bash
-bun run build
-```
-
-Preview production build:
-
-```bash
-bun run preview
-```
-
----
-
-## Database Setup
-
-Execute the provided SQL file in your Supabase project.
-
-```
-supabase-setup.sql
-```
-
-It creates:
-
-- jobs
-- subtitles
-- storage bucket for uploaded videos
-
----
-
-## Project Structure
+# 📂 Project Structure
 
 ```
 src/
-│
+
 ├── components/
-├── routes/
+├── pages/
 ├── hooks/
-├── lib/
+├── services/
 ├── store/
-├── styles/
+├── lib/
 ├── utils/
 ├── remotion/
-└── assets/
+├── assets/
+└── styles/
 ```
 
 ---
 
-## Supported Video Formats
+# 🌍 Supported Formats
 
-- MP4
-- MOV
-- AVI
-- WebM
+### Video
 
-Maximum upload size:
+* MP4
+* MOV
+* AVI
+* WebM
+
+Maximum Upload Size:
 
 **2 GB**
 
 ---
 
-## Roadmap
+# 🎯 Performance Highlights
 
-- [ ] Team Workspace
-- [ ] Auto Translation
-- [ ] AI Subtitle Correction
-- [ ] Custom Fonts
-- [ ] Motion Graphics Templates
-- [ ] Mobile Responsive Editor
-- [ ] Cloud Rendering
-- [ ] Batch Processing
+* Browser-native processing
+* AI-powered subtitle generation
+* Frame-accurate timeline editing
+* Real-time preview
+* Responsive interface
+* Optimized rendering pipeline
 
 ---
 
-## Performance
+# 🤖 Development Methodology
 
-- Browser-native processing
-- Fast AI transcription
-- Frame-accurate editing
-- Responsive timeline
-- Optimized exports
+SubAI was designed and developed as a modern AI SaaS platform focused on simplifying subtitle creation for Indian creators.
 
----
+The complete product architecture—including UI/UX design, application flow, frontend implementation, backend integration, and AI workflow—was conceptualized and built by me.
 
-## Live Website
-
-https://sub-ai-iota.vercel.app/
+To accelerate development and improve productivity, AI-assisted development tools were used for code generation, interface refinement, and rapid iteration, while maintaining complete control over the project's architecture, functionality, and implementation.
 
 ---
 
-## License
+# 🖥 Live Application Preview
 
-This project is proprietary software.
-
-**All Rights Reserved.**
-
-Unauthorized copying, modification, distribution, or commercial use is prohibited.
+![SubAI Screenshot](https://api.pikwy.com/web/6a4f0020b35b33268525f0b9.jpg)
 
 ---
 
-## Author
+# 📄 License
 
-Built with ❤️ by **SubAI**
+Private — All Rights Reserved.
+
+This project is proprietary software developed for portfolio and educational purposes. Unauthorized copying, redistribution, modification, or commercial use is prohibited.
