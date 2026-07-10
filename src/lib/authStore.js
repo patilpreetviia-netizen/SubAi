@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { supabase } from "../lib/supabase";
+import { sendWelcomeEmail } from "./resendEmail";
 
 /**
  * Minimal auth store powered by Supabase.
@@ -30,8 +31,15 @@ export const useAuthStore = create((set) => ({
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       set({ session, user: session?.user ?? null });
+      if (event === "SIGNED_IN" && session?.user) {
+        const email = session.user.email;
+        const name = session.user.user_metadata?.full_name || email?.split("@")[0] || "there";
+        if (email) {
+          sendWelcomeEmail({ email, name }).catch(() => {});
+        }
+      }
     });
 
     set({ _unsubscribe: subscription.unsubscribe.bind(subscription) });
@@ -68,17 +76,6 @@ export const useAuthStore = create((set) => ({
   signInWithGoogle: async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/dashboard`,
-      },
-    });
-    return { error };
-  },
-
-  /** GitHub OAuth – redirects the browser, returns { error } only on failure. */
-  signInWithGitHub: async () => {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
       options: {
         redirectTo: `${window.location.origin}/dashboard`,
       },
