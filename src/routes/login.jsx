@@ -76,7 +76,7 @@ function LoginPage() {
       if (authError) { setError(friendlyError(authError.message)); return; }
       if (data?.user) {
         const name = data.user.user_metadata?.full_name || email.split("@")[0];
-        sendWelcomeEmail({ email, name }).catch(() => {});
+        sendWelcomeEmail({ email, name }).catch((err) => console.warn("Welcome email failed:", err));
       }
       navigate({ to: "/dashboard" });
     } finally {

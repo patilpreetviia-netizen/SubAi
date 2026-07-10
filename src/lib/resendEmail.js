@@ -177,7 +177,7 @@ export const sendWelcomeEmail = createServerFn({ method: "POST" })
             Welcome to SubAI &mdash; the free, browser-native AI caption studio built for Indian creators. Upload a video, pick a style, and ship reels with perfect Hinglish captions.
           </p>
           <div style="text-align: center; margin-bottom: 32px;">
-            ${button("https://subai.app/dashboard", "Open your studio")}
+            ${button("https://sub-ai-iota.vercel.app/dashboard", "Open your studio")}
           </div>
           <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
             <tr>
@@ -313,11 +313,10 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
           </div>
           <div style="background: ${isOverBudget ? "rgba(239, 68, 68, 0.08)" : "rgba(250, 204, 21, 0.08)"}; border: 1px solid ${isOverBudget ? "rgba(239, 68, 68, 0.2)" : "rgba(250, 204, 21, 0.2)"}; border-radius: 8px; padding: 16px; text-align: center;">
             <p style="margin: 0; font-size: 13px; color: ${isOverBudget ? "#fca5a5" : "#fde68a"};">
-              ${
-                isOverBudget
-                  ? `You've spent <strong>Rs.${spent.toLocaleString("en-IN")}</strong> — Rs.${(spent - limit).toLocaleString("en-IN")} over your <strong>${category}</strong> budget.`
-                  : `You've used <strong>${percentage}%</strong> of your <strong>${category}</strong> budget (Rs.${spent.toLocaleString("en-IN")} of Rs.${limit.toLocaleString("en-IN")}).`
-              }
+              ${isOverBudget
+            ? `You've spent <strong>Rs.${spent.toLocaleString("en-IN")}</strong> — Rs.${(spent - limit).toLocaleString("en-IN")} over your <strong>${category}</strong> budget.`
+            : `You've used <strong>${percentage}%</strong> of your <strong>${category}</strong> budget (Rs.${spent.toLocaleString("en-IN")} of Rs.${limit.toLocaleString("en-IN")}).`
+          }
             </p>
           </div>
         `,

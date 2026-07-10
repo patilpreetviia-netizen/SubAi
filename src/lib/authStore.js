@@ -37,7 +37,7 @@ export const useAuthStore = create((set) => ({
         const email = session.user.email;
         const name = session.user.user_metadata?.full_name || email?.split("@")[0] || "there";
         if (email) {
-          sendWelcomeEmail({ email, name }).catch(() => {});
+          sendWelcomeEmail({ email, name }).catch((err) => console.warn("Welcome email failed:", err));
         }
       }
     });
