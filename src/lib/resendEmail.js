@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const RESEND_FROM = 'SubAI <onboarding@resend.dev>';
+const RESEND_FROM = "SubAI <onboarding@resend.dev>";
 
 const rateLimitStore = {};
 
@@ -13,7 +13,7 @@ function checkRateLimit(identifier, maxRequests = 5, windowMs = 60000) {
   }
 
   rateLimitStore[identifier] = rateLimitStore[identifier].filter(
-    (timestamp) => timestamp > windowStart
+    (timestamp) => timestamp > windowStart,
   );
 
   if (rateLimitStore[identifier].length >= maxRequests) {
@@ -32,7 +32,7 @@ function checkRateLimit(identifier, maxRequests = 5, windowMs = 60000) {
     success: true,
     remaining: maxRequests - rateLimitStore[identifier].length,
     retryAfter: 0,
-    message: 'Request allowed',
+    message: "Request allowed",
   };
 }
 
@@ -69,7 +69,7 @@ function emailLayout({ children, previewText }) {
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="color-scheme" content="dark" />
-      ${previewText ? `<meta name="x-apple-disable-message-reformatting" /><meta name="description" content="${previewText}" />` : ''}
+      ${previewText ? `<meta name="x-apple-disable-message-reformatting" /><meta name="description" content="${previewText}" />` : ""}
       <style>
         @media only screen and (max-width: 600px) {
           .email-container { width: 100% !important; }
@@ -128,7 +128,16 @@ function emailLayout({ children, previewText }) {
   `;
 }
 
-function button(href, text, extra = '') {
+function escapeHtml(str) {
+  return (str || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function button(href, text, extra = "") {
   return `
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
       <tr>
@@ -162,13 +171,13 @@ export const sendWelcomeEmail = createServerFn({ method: "POST" })
         previewText: "Start creating AI captions for your videos in minutes.",
         children: `
           <h1 style="font-size: 22px; font-weight: 700; margin: 0 0 8px; color: #fafafa; text-align: center;">
-            Hey ${data.name}
+            Hey ${escapeHtml(data.name)}
           </h1>
           <p style="font-size: 14px; line-height: 1.7; color: #a1a1aa; text-align: center; margin: 0 0 28px;">
             Welcome to SubAI &mdash; the free, browser-native AI caption studio built for Indian creators. Upload a video, pick a style, and ship reels with perfect Hinglish captions.
           </p>
           <div style="text-align: center; margin-bottom: 32px;">
-            ${button('https://subai.app/dashboard', 'Open your studio')}
+            ${button("https://subai.app/dashboard", "Open your studio")}
           </div>
           <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
             <tr>
@@ -230,10 +239,10 @@ export const sendTestEmail = createServerFn({ method: "POST" })
             All clear!
           </h1>
           <p style="font-size: 14px; line-height: 1.7; color: #a1a1aa; text-align: center; margin: 0 0 4px;">
-            Hi ${data.name}, this is a test email from SubAI. Your email integration is working perfectly.
+            Hi ${escapeHtml(data.name)}, this is a test email from SubAI. Your email integration is working perfectly.
           </p>
           <p style="font-size: 12px; color: #52525b; text-align: center; margin: 20px 0 0;">
-            Sent ${new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Kolkata' })} at ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata', timeZoneName: 'short' })}
+            Sent ${new Date().toLocaleDateString("en-IN", { weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "Asia/Kolkata" })} at ${new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata", timeZoneName: "short" })}
           </p>
         `,
       }),
@@ -242,7 +251,7 @@ export const sendTestEmail = createServerFn({ method: "POST" })
     if (!result.ok) {
       return { success: false, message: result.error };
     }
-    return { success: true, id: result.id, message: 'Test email sent!' };
+    return { success: true, id: result.id, message: "Test email sent!" };
   });
 
 export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
@@ -259,7 +268,8 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
       return { success: false, message: rateCheck.message };
     }
 
-    const { category, percentage, spent, limit } = data.budgetData;
+    const { category: rawCategory, percentage, spent, limit } = data.budgetData;
+    const category = escapeHtml(rawCategory);
     const isOverBudget = percentage >= 100;
 
     const result = await postEmail({
@@ -274,22 +284,22 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
           : `Your ${category} budget is at ${percentage}%.`,
         children: `
           <div style="text-align: center; margin-bottom: 16px;">
-            <span style="display: inline-block; width: 44px; height: 44px; border-radius: 50%; background: ${isOverBudget ? 'rgba(239, 68, 68, 0.12)' : 'rgba(250, 204, 21, 0.12)'}; line-height: 44px; font-size: 22px;">${isOverBudget ? '!' : '\u26A0'}</span>
+            <span style="display: inline-block; width: 44px; height: 44px; border-radius: 50%; background: ${isOverBudget ? "rgba(239, 68, 68, 0.12)" : "rgba(250, 204, 21, 0.12)"}; line-height: 44px; font-size: 22px;">${isOverBudget ? "!" : "\u26A0"}</span>
           </div>
           <h1 style="font-size: 20px; font-weight: 700; margin: 0 0 4px; color: #fafafa; text-align: center;">
-            ${isOverBudget ? 'Budget exceeded' : 'Budget limit approaching'}
+            ${isOverBudget ? "Budget exceeded" : "Budget limit approaching"}
           </h1>
           <p style="font-size: 13px; color: #71717a; text-align: center; margin: 0 0 24px;">${category}</p>
           <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%; margin-bottom: 24px;">
             <tr>
               <td style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center;">
                 <p style="margin: 0 0 2px; font-size: 11px; color: #71717a; text-transform: uppercase; letter-spacing: 0.5px;">Spent</p>
-                <p style="margin: 0; font-size: 22px; font-weight: 800; color: ${isOverBudget ? '#ef4444' : '#f59e0b'};">Rs.${spent.toLocaleString('en-IN')}</p>
+                <p style="margin: 0; font-size: 22px; font-weight: 800; color: ${isOverBudget ? "#ef4444" : "#f59e0b"};">Rs.${spent.toLocaleString("en-IN")}</p>
               </td>
               <td style="width: 8px;"></td>
               <td style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center;">
                 <p style="margin: 0 0 2px; font-size: 11px; color: #71717a; text-transform: uppercase; letter-spacing: 0.5px;">Limit</p>
-                <p style="margin: 0; font-size: 22px; font-weight: 800; color: #fafafa;">Rs.${limit.toLocaleString('en-IN')}</p>
+                <p style="margin: 0; font-size: 22px; font-weight: 800; color: #fafafa;">Rs.${limit.toLocaleString("en-IN")}</p>
               </td>
               <td style="width: 8px;"></td>
               <td style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center;">
@@ -299,13 +309,14 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
             </tr>
           </table>
           <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; margin-bottom: 24px; overflow: hidden;">
-            <div style="width: ${Math.min(percentage, 100)}%; height: 100%; background: ${isOverBudget ? 'linear-gradient(90deg, #f59e0b, #ef4444)' : 'linear-gradient(90deg, #22c55e, #f59e0b)'}; border-radius: 3px;"></div>
+            <div style="width: ${Math.min(percentage, 100)}%; height: 100%; background: ${isOverBudget ? "linear-gradient(90deg, #f59e0b, #ef4444)" : "linear-gradient(90deg, #22c55e, #f59e0b)"}; border-radius: 3px;"></div>
           </div>
-          <div style="background: ${isOverBudget ? 'rgba(239, 68, 68, 0.08)' : 'rgba(250, 204, 21, 0.08)'}; border: 1px solid ${isOverBudget ? 'rgba(239, 68, 68, 0.2)' : 'rgba(250, 204, 21, 0.2)'}; border-radius: 8px; padding: 16px; text-align: center;">
-            <p style="margin: 0; font-size: 13px; color: ${isOverBudget ? '#fca5a5' : '#fde68a'};">
-              ${isOverBudget
-                ? `You've spent <strong>Rs.${spent.toLocaleString('en-IN')}</strong> — Rs.${(spent - limit).toLocaleString('en-IN')} over your <strong>${category}</strong> budget.`
-                : `You've used <strong>${percentage}%</strong> of your <strong>${category}</strong> budget (Rs.${spent.toLocaleString('en-IN')} of Rs.${limit.toLocaleString('en-IN')}).`
+          <div style="background: ${isOverBudget ? "rgba(239, 68, 68, 0.08)" : "rgba(250, 204, 21, 0.08)"}; border: 1px solid ${isOverBudget ? "rgba(239, 68, 68, 0.2)" : "rgba(250, 204, 21, 0.2)"}; border-radius: 8px; padding: 16px; text-align: center;">
+            <p style="margin: 0; font-size: 13px; color: ${isOverBudget ? "#fca5a5" : "#fde68a"};">
+              ${
+                isOverBudget
+                  ? `You've spent <strong>Rs.${spent.toLocaleString("en-IN")}</strong> — Rs.${(spent - limit).toLocaleString("en-IN")} over your <strong>${category}</strong> budget.`
+                  : `You've used <strong>${percentage}%</strong> of your <strong>${category}</strong> budget (Rs.${spent.toLocaleString("en-IN")} of Rs.${limit.toLocaleString("en-IN")}).`
               }
             </p>
           </div>
@@ -316,5 +327,5 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
     if (!result.ok) {
       return { success: false, message: result.error };
     }
-    return { success: true, id: result.id, message: 'Budget alert sent!' };
+    return { success: true, id: result.id, message: "Budget alert sent!" };
   });

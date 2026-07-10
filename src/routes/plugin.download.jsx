@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Layout } from "../components/Layout";
 
 export const Route = createFileRoute("/plugin/download")({
-  ssr: false,
   component: PluginDownloadPage,
 });
 
@@ -80,48 +80,13 @@ const PLUGINS = [
   },
 ];
 
+const handleDownload = (pluginName) => {
+  alert(`The ${pluginName} plugin will be available for download soon. Please check back later.`);
+};
+
 function PluginDownloadPage() {
   return (
-    <div className="bg-[#060609] text-white min-h-screen font-sans">
-      <header className="fixed top-0 left-0 right-0 z-50">
-        <div className="mx-auto max-w-7xl px-4 md:px-6 pt-4">
-          <div className="flex items-center justify-between rounded-2xl border border-white/[0.06] bg-[#0c0c12]/72 backdrop-blur-xl px-4 md:px-5 py-3">
-            <Link className="flex items-center gap-2.5 shrink-0 group" to="/">
-<img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
-              <span className="font-bold text-[15px] text-white tracking-tight">SubAI</span>
-            </Link>
-            <nav className="hidden md:flex items-center gap-0.5">
-              <Link
-                to="/pricing"
-                className="px-3.5 py-2 text-[13px] text-zinc-400 hover:text-white rounded-xl hover:bg-white/[0.05] transition-all"
-              >
-                Pricing
-              </Link>
-              <Link
-                to="/plugin/download"
-                className="px-3.5 py-2 text-[13px] text-amber-300 rounded-xl hover:bg-white/[0.05] transition-all"
-              >
-                Plugin
-              </Link>
-              <Link
-                to="/changelog"
-                className="px-3.5 py-2 text-[13px] text-zinc-400 hover:text-white rounded-xl hover:bg-white/[0.05] transition-all"
-              >
-                Changelog
-              </Link>
-            </nav>
-            <div className="flex items-center gap-2">
-              <Link
-                to="/dashboard"
-                className="flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-black bg-amber-400 hover:bg-amber-300 rounded-xl transition-all"
-              >
-                Dashboard
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <Layout>
       <section className="pt-36 pb-24 px-6">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h1 className="text-[clamp(2.2rem,5vw,3.8rem)] font-black tracking-tight leading-[1.06] mb-5">
@@ -129,7 +94,7 @@ function PluginDownloadPage() {
           </h1>
           <p className="text-zinc-400 text-[16px] max-w-2xl mx-auto leading-relaxed mb-8">
             Caption your timeline without leaving your editing software. The SubAI panel transcribes
-            your sequence, styles the captions, and burns them in or drops an SRT — all in one
+            your sequence, styles the captions, and burns them in or drops an SRT \u2014 all in one
             click.
           </p>
           <p className="text-zinc-600 text-sm mb-10">One setup file, no manual config.</p>
@@ -157,14 +122,17 @@ function PluginDownloadPage() {
                 <div>
                   <h3 className="font-bold text-white">{plugin.name}</h3>
                   <p className="text-xs text-zinc-500">
-                    v{plugin.version} · {plugin.os}
+                    v{plugin.version} \u00B7 {plugin.os}
                   </p>
                 </div>
               </div>
               <p className="text-sm text-zinc-400 leading-relaxed flex-1 mb-6">{plugin.desc}</p>
               <div className="flex items-center justify-between">
                 <span className="text-xs text-zinc-600">{plugin.size}</span>
-                <button className="px-4 py-2 text-[12px] font-bold text-black bg-amber-400 hover:bg-amber-300 rounded-xl transition-all cursor-pointer">
+                <button
+                  onClick={() => handleDownload(plugin.name)}
+                  className="px-4 py-2 text-[12px] font-bold text-black bg-amber-400 hover:bg-amber-300 rounded-xl transition-all cursor-pointer"
+                >
                   Download
                 </button>
               </div>
@@ -203,53 +171,6 @@ function PluginDownloadPage() {
           </div>
         </div>
       </section>
-
-      <footer className="border-t border-white/[0.06] bg-[#060609] pt-16 pb-8">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-6 h-6 rounded-md bg-amber-500" />
-              <span className="font-bold text-white tracking-tight">SubAI</span>
-            </div>
-            <p className="text-zinc-400 text-sm max-w-xs leading-relaxed">
-              Upload a video, get accurate Hinglish captions, export.
-            </p>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-4 text-sm">Product</h4>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li>
-                <Link to="/pricing" className="hover:text-amber-400 transition-colors">
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link to="/changelog" className="hover:text-amber-400 transition-colors">
-                  Changelog
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-4 text-sm">Legal</h4>
-            <ul className="space-y-2 text-sm text-zinc-400">
-              <li>
-                <Link to="/privacy" className="hover:text-amber-400 transition-colors">
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="hover:text-amber-400 transition-colors">
-                  Terms
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto px-6 text-center text-zinc-600 text-xs">
-          © 2026 Preet Patil. All rights reserved.
-        </div>
-      </footer>
-    </div>
+    </Layout>
   );
 }

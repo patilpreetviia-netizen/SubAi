@@ -4,40 +4,45 @@ import { useAuthStore } from "../lib/authStore";
 import { loadRazorpayScript, openRazorpay, getPlanConfig } from "../lib/razorpay";
 
 export const Route = createFileRoute("/checkout")({
-  ssr: false,
   component: CheckoutPage,
 });
+
+// TODO: Implement a server-side /api/razorpay/webhook endpoint that:
+// 1. Verifies Razorpay signature using RAZORPAY_WEBHOOK_SECRET
+// 2. Updates the user's subscription/credits in the database
+// 3. Sends a confirmation email via Resend
+// Without this, payments are only verified client-side.
 
 const PLANS = [
   {
     id: "first-export",
-    label: "₹9 First Export",
-    price: "₹9",
-    desc: "One-time · First watermark-free HD export",
+    label: "\u20B99 First Export",
+    price: "\u20B99",
+    desc: "One-time \u00B7 First watermark-free HD export",
   },
   {
     id: "week-pass",
-    label: "₹59 Week Pass",
-    price: "₹59",
-    desc: "7 days of Starter · No auto-renew",
+    label: "\u20B959 Week Pass",
+    price: "\u20B959",
+    desc: "7 days of Starter \u00B7 No auto-renew",
   },
   {
     id: "starter",
-    label: "Starter · ₹299",
-    price: "₹299",
-    desc: "60 min transcription · 1080p · No watermark",
+    label: "Starter \u00B7 \u20B9299",
+    price: "\u20B9299",
+    desc: "60 min transcription \u00B7 1080p \u00B7 No watermark",
   },
   {
     id: "editor",
-    label: "Editor · ₹499",
-    price: "₹499",
-    desc: "3 hrs transcription · 4K export · Most popular",
+    label: "Editor \u00B7 \u20B9499",
+    price: "\u20B9499",
+    desc: "3 hrs transcription \u00B7 4K export \u00B7 Most popular",
   },
   {
     id: "pro",
-    label: "Pro · ₹999",
-    price: "₹999",
-    desc: "8 hrs transcription · 3 devices · Full plugin",
+    label: "Pro \u00B7 \u20B9999",
+    price: "\u20B9999",
+    desc: "8 hrs transcription \u00B7 3 devices \u00B7 Full plugin",
   },
 ];
 
@@ -49,8 +54,12 @@ function CheckoutPage() {
   const [status, setStatus] = useState(null);
 
   useEffect(() => {
+    if (!user) {
+      navigate({ to: "/login" });
+      return;
+    }
     loadRazorpayScript().catch(() => {});
-  }, []);
+  }, [user, navigate]);
 
   const handlePayment = async () => {
     setLoading(true);
@@ -58,6 +67,20 @@ function CheckoutPage() {
     const config = getPlanConfig(selectedPlan);
     if (!config) {
       setStatus("Invalid plan selected");
+      setLoading(false);
+      return;
+    }
+
+    // Validate amount matches expected plan pricing (server-side verification pending)
+    const expectedAmounts = {
+      "first-export": 9,
+      "week-pass": 59,
+      starter: 299,
+      editor: 499,
+      pro: 999,
+    };
+    if (config.amount !== expectedAmounts[selectedPlan]) {
+      setStatus("Amount mismatch — payment rejected");
       setLoading(false);
       return;
     }
@@ -76,15 +99,32 @@ function CheckoutPage() {
       email: user?.email || "",
       name: user?.user_metadata?.full_name || "",
       onSuccess: (response) => {
-        setStatus(`Payment successful! Payment ID: ${response.razorpay_payment_id}`);
+        // Validate response structure
+        if (!response?.razorpay_payment_id) {
+          setStatus("Payment verification failed: missing payment ID");
+          setLoading(false);
+          return;
+        }
+        // TODO: Verify payment server-side via a webhook endpoint.
+        // Razorpay webhook should POST to /api/razorpay/webhook with the
+        // payment payload; the server validates the signature using
+        // RAZORPAY_WEBHOOK_SECRET and updates the user's subscription in the DB.
+        // Until the webhook is implemented, payment is only confirmed client-side.
+        setStatus("Payment successful! You now have access to your plan.");
         setLoading(false);
       },
       onError: (error) => {
-        setStatus(error.message || "Payment failed");
+        setStatus(
+          error?.error?.description || error?.message || "Payment failed. Please try again.",
+        );
         setLoading(false);
       },
     });
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="bg-[#060609] text-white min-h-screen font-sans">
@@ -92,7 +132,7 @@ function CheckoutPage() {
         <div className="mx-auto max-w-7xl px-4 md:px-6 pt-4">
           <div className="flex items-center justify-between rounded-2xl border border-white/[0.06] bg-[#0c0c12]/72 backdrop-blur-xl px-4 md:px-5 py-3">
             <Link className="flex items-center gap-2.5 shrink-0 group" to="/">
-<img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
+              <img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
               <span className="font-bold text-[15px] text-white tracking-tight">SubAI</span>
             </Link>
             <Link
@@ -117,65 +157,35 @@ function CheckoutPage() {
               <button
                 key={p.id}
                 onClick={() => setSelectedPlan(p.id)}
-                style={{
-                  width: "100%",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  padding: "12px 16px",
-                  borderRadius: 12,
-                  border:
-                    selectedPlan === p.id
-                      ? "1px solid rgba(250,204,21,0.4)"
-                      : "1px solid rgba(255,255,255,0.08)",
-                  background:
-                    selectedPlan === p.id ? "rgba(250,204,21,0.06)" : "rgba(255,255,255,0.02)",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  transition: "all 0.15s",
-                }}
+                className={`w-full flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all ${
+                  selectedPlan === p.id
+                    ? "border-amber-400/40 bg-amber-400/[0.06]"
+                    : "border-white/[0.08] bg-white/[0.02]"
+                }`}
               >
                 <div
-                  style={{
-                    width: 18,
-                    height: 18,
-                    borderRadius: "50%",
-                    border: "2px solid",
-                    borderColor: selectedPlan === p.id ? "#facc15" : "#3f3f46",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    flexShrink: 0,
-                  }}
+                  className={`w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center shrink-0 ${
+                    selectedPlan === p.id ? "border-amber-400" : "border-zinc-600"
+                  }`}
                 >
-                  {selectedPlan === p.id && (
-                    <div
-                      style={{ width: 8, height: 8, borderRadius: "50%", background: "#facc15" }}
-                    />
-                  )}
+                  {selectedPlan === p.id && <div className="w-2 h-2 rounded-full bg-amber-400" />}
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 600, fontSize: 14, color: "#fff" }}>{p.label}</div>
-                  <div style={{ fontSize: 12, color: "#71717a" }}>{p.desc}</div>
+                <div className="flex-1">
+                  <div className="font-semibold text-sm text-white">{p.label}</div>
+                  <div className="text-xs text-zinc-500">{p.desc}</div>
                 </div>
-                <div style={{ fontWeight: 700, fontSize: 16, color: "#facc15" }}>{p.price}</div>
+                <div className="font-bold text-base text-amber-400">{p.price}</div>
               </button>
             ))}
           </div>
 
           {status && (
             <div
-              style={{
-                padding: "10px 14px",
-                borderRadius: 10,
-                marginBottom: 16,
-                fontSize: 13,
-                background: status.includes("successful")
-                  ? "rgba(34,197,94,0.1)"
-                  : "rgba(239,68,68,0.1)",
-                border: `1px solid ${status.includes("successful") ? "rgba(34,197,94,0.2)" : "rgba(239,68,68,0.2)"}`,
-                color: status.includes("successful") ? "#22c55e" : "#ef4444",
-              }}
+              className={`p-2.5 rounded-xl mb-4 text-sm ${
+                status.includes("successful")
+                  ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
+                  : "bg-red-500/10 border border-red-500/20 text-red-400"
+              }`}
             >
               {status}
             </div>
@@ -184,20 +194,15 @@ function CheckoutPage() {
           <button
             onClick={handlePayment}
             disabled={loading}
-            style={{
-              width: "100%",
-              padding: "14px 0",
-              borderRadius: 12,
-              background: loading ? "#27272a" : "#facc15",
-              color: loading ? "#71717a" : "#000",
-              fontSize: 15,
-              fontWeight: 700,
-              border: "none",
-              cursor: loading ? "not-allowed" : "pointer",
-              transition: "all 0.15s",
-            }}
+            className={`w-full py-3.5 rounded-xl text-[15px] font-bold border-none transition-all ${
+              loading
+                ? "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                : "bg-amber-400 text-black hover:bg-amber-300 cursor-pointer"
+            }`}
           >
-            {loading ? "Opening Razorpay…" : `Pay ₹${getPlanConfig(selectedPlan)?.amount || 0}`}
+            {loading
+              ? "Opening Razorpay\u2026"
+              : `Pay \u20B9${getPlanConfig(selectedPlan)?.amount || 0}`}
           </button>
 
           <p className="text-zinc-600 text-xs text-center mt-4">

@@ -10,26 +10,34 @@ export const useAuthStore = create((set) => ({
   user: null,
   session: null,
   loading: true,
+  _unsubscribe: null,
 
   /** Call once at app boot (e.g. in __root or a top-level effect). */
   init: async () => {
-    // 1. Grab current session
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    set({
-      session,
-      user: session?.user ?? null,
-      loading: false,
-    });
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      set({
+        session,
+        user: session?.user ?? null,
+        loading: false,
+      });
+    } catch (err) {
+      console.error("authStore init error:", err);
+      set({ loading: false });
+    }
 
-    // 2. Listen for changes (login, logout, token refresh)
-    supabase.auth.onAuthStateChange((_event, session) => {
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       set({ session, user: session?.user ?? null });
     });
+
+    set({ _unsubscribe: subscription.unsubscribe.bind(subscription) });
   },
 
-  /** Sign up with email + password. Returns { error } if something went wrong. */
+  /** Sign up with email + password. Returns { data, error }. */
   signUp: async (email, password, fullName) => {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -38,7 +46,7 @@ export const useAuthStore = create((set) => ({
         data: { full_name: fullName },
       },
     });
-    if (!error && data?.user) {
+    if (!error && data?.user && data?.session) {
       set({ user: data.user, session: data.session });
     }
     return { data, error };
@@ -56,9 +64,55 @@ export const useAuthStore = create((set) => ({
     return { data, error };
   },
 
+  /** Google OAuth – redirects the browser, returns { error } only on failure. */
+  signInWithGoogle: async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/dashboard`,
+      },
+    });
+    return { error };
+  },
+
+  /** GitHub OAuth – redirects the browser, returns { error } only on failure. */
+  signInWithGitHub: async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+      options: {
+        redirectTo: `${window.location.origin}/dashboard`,
+      },
+    });
+    return { error };
+  },
+
+  /**
+   * Send a password-reset email.
+   * The user will get a link that points to /reset-password?token=...
+   */
+  sendPasswordReset: async (email) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    return { error };
+  },
+
+  /**
+   * Update the password once the user has clicked the reset link.
+   * Must be called while the user has a valid recovery session.
+   */
+  updatePassword: async (newPassword) => {
+    const { error } = await supabase.auth.updateUser({ password: newPassword });
+    return { error };
+  },
+
   /** Sign out and clear state. */
   signOut: async () => {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.error("authStore signOut error:", err);
+    }
     set({ user: null, session: null });
   },
 }));

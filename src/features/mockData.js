@@ -7,8 +7,7 @@ export const MOCK_JOBS = [
     duration: "0:24",
     createdAt: "2 hours ago",
     thumbColor: "#facc15",
-    videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
   },
   {
     id: "job-english-podcast",
@@ -18,8 +17,7 @@ export const MOCK_JOBS = [
     duration: "1:12",
     createdAt: "Yesterday",
     thumbColor: "#a1a1aa",
-    videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
   },
   {
     id: "job-hindi-short",
@@ -29,8 +27,7 @@ export const MOCK_JOBS = [
     duration: "0:31",
     createdAt: "Just now",
     thumbColor: "#71717a",
-    videoUrl:
-      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    videoUrl: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
   },
 ];
 

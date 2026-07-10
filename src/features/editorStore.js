@@ -7,8 +7,7 @@ export const useEditorStore = create((set, get) => ({
   past: [],
   future: [],
 
-  load: (subtitles) =>
-    set({ subtitles: clone(subtitles), past: [], future: [] }),
+  load: (subtitles) => set({ subtitles: clone(subtitles), past: [], future: [] }),
 
   updateText: (id, text) => {
     const { subtitles, past } = get();

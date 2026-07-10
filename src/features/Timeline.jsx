@@ -29,17 +29,14 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
       const time = (x / totalPx) * totalDuration;
       onSeek(Math.max(0, Math.min(time, totalDuration)));
     },
-    [totalPx, totalDuration, onSeek, dragging]
+    [totalPx, totalDuration, onSeek, dragging],
   );
 
-  const handleMouseDown = useCallback(
-    (e, sub, edge) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setDragging({ id: sub.id, edge, startX: e.clientX, origStart: sub.start, origEnd: sub.end });
-    },
-    []
-  );
+  const handleMouseDown = useCallback((e, sub, edge) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragging({ id: sub.id, edge, startX: e.clientX, origStart: sub.start, origEnd: sub.end });
+  }, []);
 
   useEffect(() => {
     if (!dragging) return;
@@ -83,7 +80,7 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
   const getSubWidth = (sub) => ((sub.end - sub.start) / totalDuration) * totalPx;
 
   const rulerTicks = [];
-  const tickInterval = Math.max(1, Math.floor(60 / (PX_PER_SEC * zoom / 60)));
+  const tickInterval = Math.max(1, Math.floor(60 / ((PX_PER_SEC * zoom) / 60)));
   for (let t = 0; t <= totalDuration; t += tickInterval) {
     rulerTicks.push(t);
   }
@@ -91,36 +88,114 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", position: "relative" }}>
       {/* Transport + zoom */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 10px", borderBottom: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          padding: "6px 10px",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+          flexShrink: 0,
+        }}
+      >
         <span style={{ fontSize: 11, color: "#a1a1aa", fontFamily: "monospace", minWidth: 48 }}>
           {fmt(currentTime)}
         </span>
         <div style={{ flex: 1 }} />
         <button
           onClick={() => setZoom((z) => Math.max(0.25, z - 0.25))}
-          style={{ background: "rgba(255,255,255,0.06)", border: "none", color: "#71717a", borderRadius: 5, width: 22, height: 22, fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-        >−</button>
-        <span style={{ fontSize: 10, color: "#52525b", minWidth: 32, textAlign: "center" }}>{Math.round(zoom * 100)}%</span>
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            border: "none",
+            color: "#71717a",
+            borderRadius: 5,
+            width: 22,
+            height: 22,
+            fontSize: 12,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          −
+        </button>
+        <span style={{ fontSize: 10, color: "#52525b", minWidth: 32, textAlign: "center" }}>
+          {Math.round(zoom * 100)}%
+        </span>
         <button
           onClick={() => setZoom((z) => Math.min(4, z + 0.25))}
-          style={{ background: "rgba(255,255,255,0.06)", border: "none", color: "#71717a", borderRadius: 5, width: 22, height: 22, fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
-        >+</button>
+          style={{
+            background: "rgba(255,255,255,0.06)",
+            border: "none",
+            color: "#71717a",
+            borderRadius: 5,
+            width: 22,
+            height: 22,
+            fontSize: 12,
+            cursor: "pointer",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          +
+        </button>
         <span style={{ fontSize: 10, color: "#52525b", marginLeft: 8, fontFamily: "monospace" }}>
           {fmt(totalDuration)}
         </span>
       </div>
 
       {/* Ruler */}
-      <div style={{ height: 22, position: "relative", borderBottom: "1px solid rgba(255,255,255,0.04)", flexShrink: 0, overflow: "hidden" }}>
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: Math.max(totalPx, "100%") }}>
+      <div
+        style={{
+          height: 22,
+          position: "relative",
+          borderBottom: "1px solid rgba(255,255,255,0.04)",
+          flexShrink: 0,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            minWidth: "100%",
+            width: totalPx,
+          }}
+        >
           {rulerTicks.map((t) => {
             const left = (t / totalDuration) * totalPx;
             const isMajor = t % (tickInterval * 5) === 0;
             return (
-              <div key={t} style={{ position: "absolute", left, top: 0, bottom: 0, pointerEvents: "none" }}>
-                <div style={{ position: "absolute", left: 0, top: 0, width: 1, height: isMajor ? 14 : 6, background: "rgba(255,255,255,0.1)" }} />
+              <div
+                key={t}
+                style={{ position: "absolute", left, top: 0, bottom: 0, pointerEvents: "none" }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    left: 0,
+                    top: 0,
+                    width: 1,
+                    height: isMajor ? 14 : 6,
+                    background: "rgba(255,255,255,0.1)",
+                  }}
+                />
                 {isMajor && (
-                  <span style={{ position: "absolute", left: 3, top: 1, fontSize: 8, color: "#52525b", fontFamily: "monospace", whiteSpace: "nowrap" }}>
+                  <span
+                    style={{
+                      position: "absolute",
+                      left: 3,
+                      top: 1,
+                      fontSize: 8,
+                      color: "#52525b",
+                      fontFamily: "monospace",
+                      whiteSpace: "nowrap",
+                    }}
+                  >
                     {fmt(t)}
                   </span>
                 )}
@@ -142,7 +217,16 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
           minHeight: 60,
         }}
       >
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: Math.max(totalPx, "100%") }}>
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            minWidth: "100%",
+            width: totalPx,
+          }}
+        >
           {/* Background grid lines */}
           {Array.from({ length: Math.ceil(totalPx / 60) + 1 }, (_, i) => (
             <div
@@ -222,7 +306,18 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
                     handleMouseDown(e, sub, "start");
                   }}
                 >
-                  <div style={{ position: "absolute", left: 2, top: "50%", transform: "translateY(-50%)", width: 3, height: 16, borderRadius: 2, background: "rgba(255,255,255,0.2)" }} />
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: 2,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: 3,
+                      height: 16,
+                      borderRadius: 2,
+                      background: "rgba(255,255,255,0.2)",
+                    }}
+                  />
                 </div>
 
                 {/* Right resize handle */}
@@ -241,7 +336,18 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
                     handleMouseDown(e, sub, "end");
                   }}
                 >
-                  <div style={{ position: "absolute", right: 2, top: "50%", transform: "translateY(-50%)", width: 3, height: 16, borderRadius: 2, background: "rgba(255,255,255,0.2)" }} />
+                  <div
+                    style={{
+                      position: "absolute",
+                      right: 2,
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      width: 3,
+                      height: 16,
+                      borderRadius: 2,
+                      background: "rgba(255,255,255,0.2)",
+                    }}
+                  />
                 </div>
               </div>
             );
@@ -280,13 +386,45 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
       </div>
 
       {/* Segment labels below track */}
-      <div style={{ height: 22, position: "relative", borderTop: "1px solid rgba(255,255,255,0.04)", flexShrink: 0, overflow: "hidden" }}>
-        <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: Math.max(totalPx, "100%") }}>
+      <div
+        style={{
+          height: 22,
+          position: "relative",
+          borderTop: "1px solid rgba(255,255,255,0.04)",
+          flexShrink: 0,
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            minWidth: "100%",
+            width: totalPx,
+          }}
+        >
           {subtitles.map((sub) => {
             const left = getSubLeft(sub);
             const width = Math.max(getSubWidth(sub), 40);
             return (
-              <div key={sub.id} style={{ position: "absolute", left, top: 4, width, fontSize: 7, color: "#3f3f46", fontFamily: "monospace", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", paddingLeft: 4 }}>
+              <div
+                key={sub.id}
+                style={{
+                  position: "absolute",
+                  left,
+                  top: 4,
+                  width,
+                  fontSize: 7,
+                  color: "#3f3f46",
+                  fontFamily: "monospace",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  paddingLeft: 4,
+                }}
+              >
                 {fmt(sub.start)}–{fmt(sub.end)}
               </div>
             );

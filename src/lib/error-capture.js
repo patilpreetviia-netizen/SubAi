@@ -10,9 +10,7 @@ function record(error) {
 
 if (typeof globalThis.addEventListener === "function") {
   globalThis.addEventListener("error", (event) => record(event.error ?? event));
-  globalThis.addEventListener("unhandledrejection", (event) =>
-  record(event.reason)
-  );
+  globalThis.addEventListener("unhandledrejection", (event) => record(event.reason));
 }
 
 export function consumeLastCapturedError() {

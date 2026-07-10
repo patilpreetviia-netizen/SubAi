@@ -162,7 +162,9 @@ export const transcribeVideo = createServerFn({ method: "POST" })
     const buffer = Buffer.from(data.audioBase64, "base64");
     const audioFile = await toFile(buffer, data.fileName, { type: data.mimeType });
 
-    console.log(`Sending to Groq Whisper: ${data.fileName} (${(buffer.length / 1024).toFixed(0)} KB)`);
+    console.log(
+      `Sending to Groq Whisper: ${data.fileName} (${(buffer.length / 1024).toFixed(0)} KB)`,
+    );
 
     const transcription = await groq.audio.transcriptions.create({
       file: audioFile,

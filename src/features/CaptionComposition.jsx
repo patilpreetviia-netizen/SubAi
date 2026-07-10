@@ -11,10 +11,7 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
   const words = active ? active.text.split(" ") : [];
   const activeDur = active ? active.end - active.start : 1;
   const progress = active ? (t - active.start) / activeDur : 0;
-  const activeWordIdx = Math.min(
-    words.length - 1,
-    Math.floor(progress * words.length),
-  );
+  const activeWordIdx = Math.min(words.length - 1, Math.floor(progress * words.length));
 
   const p = preset || {
     font: "Inter, system-ui, sans-serif",
@@ -29,8 +26,7 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
   };
 
   const textTransform =
-    p.case === "uppercase" ? "uppercase" :
-    p.case === "lowercase" ? "lowercase" : "none";
+    p.case === "uppercase" ? "uppercase" : p.case === "lowercase" ? "lowercase" : "none";
 
   return (
     <AbsoluteFill
@@ -43,17 +39,13 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
     >
       {videoUrl ? (
         <AbsoluteFill>
-          <Video
-            src={videoUrl}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+          <Video src={videoUrl} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </AbsoluteFill>
       ) : (
         <>
           <AbsoluteFill
             style={{
-              backgroundImage:
-                "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
+              backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
               backgroundSize: "24px 24px",
               opacity: 0.6,
             }}
@@ -108,15 +100,12 @@ export function CaptionComposition({ subtitles = [], preset, background = "#0909
                   transform: isActive ? "scale(1.08)" : "scale(1)",
                   transition: "transform 0.12s ease, color 0.12s ease",
                   WebkitTextStroke:
-                    p.stroke && p.stroke !== "transparent"
-                      ? `2px ${p.stroke}`
-                      : undefined,
-                  textShadow:
-                    isActive
-                      ? p.shadow && p.shadow !== "none"
-                        ? p.shadow
-                        : "0 4px 20px rgba(250,204,21,0.35)"
-                      : "none",
+                    p.stroke && p.stroke !== "transparent" ? `2px ${p.stroke}` : undefined,
+                  textShadow: isActive
+                    ? p.shadow && p.shadow !== "none"
+                      ? p.shadow
+                      : "0 4px 20px rgba(250,204,21,0.35)"
+                    : "none",
                   letterSpacing: p.letterSpacing || "0.01em",
                   textTransform,
                 }}

@@ -48,9 +48,7 @@ export async function createJob({
       status: "processing",
       storage_key: storageKey,
       ai_description: aiDescription ?? null,
-      thumb_color: ["#facc15", "#a1a1aa", "#71717a", "#f472b6"][
-        Math.floor(Math.random() * 4)
-      ],
+      thumb_color: ["#facc15", "#a1a1aa", "#71717a", "#f472b6"][Math.floor(Math.random() * 4)],
     })
     .select()
     .single();
@@ -63,10 +61,7 @@ export async function createJob({
  * Mark a job as completed.
  */
 export async function completeJob(jobId) {
-  const { error } = await supabase
-    .from("jobs")
-    .update({ status: "completed" })
-    .eq("id", jobId);
+  const { error } = await supabase.from("jobs").update({ status: "completed" }).eq("id", jobId);
   if (error) console.error("completeJob error:", error.message);
 }
 
@@ -96,9 +91,7 @@ export async function uploadVideo(file) {
  * Get a signed URL for a video in Supabase Storage.
  */
 export async function getVideoUrl(storageKey) {
-  const { data, error } = await supabase.storage
-    .from("videos")
-    .createSignedUrl(storageKey, 3600);
+  const { data, error } = await supabase.storage.from("videos").createSignedUrl(storageKey, 3600);
   if (error) throw error;
   return data.signedUrl;
 }

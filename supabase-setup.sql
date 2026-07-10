@@ -42,6 +42,8 @@ on conflict (id) do nothing;
 
 drop policy if exists "Users upload own videos" on storage.objects;
 drop policy if exists "Users read own videos"   on storage.objects;
+drop policy if exists "Users update own videos" on storage.objects;
+drop policy if exists "Users delete own videos" on storage.objects;
 
 create policy "Users upload own videos"
   on storage.objects for insert
@@ -52,6 +54,20 @@ create policy "Users upload own videos"
 
 create policy "Users read own videos"
   on storage.objects for select
+  using (
+    bucket_id = 'videos'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+create policy "Users update own videos"
+  on storage.objects for update
+  using (
+    bucket_id = 'videos'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+create policy "Users delete own videos"
+  on storage.objects for delete
   using (
     bucket_id = 'videos'
     and auth.uid()::text = (storage.foldername(name))[1]
@@ -70,6 +86,7 @@ create table if not exists public.subtitles (
 );
 
 create index if not exists idx_subtitles_job_id on public.subtitles(job_id);
+create index if not exists idx_subtitles_user_id on public.subtitles(user_id);
 
 alter table public.subtitles enable row level security;
 
@@ -82,3 +99,21 @@ create policy "Users read own subtitles"   on public.subtitles for select using 
 create policy "Users insert own subtitles" on public.subtitles for insert with check (auth.uid() = user_id);
 create policy "Users update own subtitles" on public.subtitles for update using (auth.uid() = user_id);
 create policy "Users delete own subtitles" on public.subtitles for delete using (auth.uid() = user_id);
+
+-- 6. Storage cleanup — automatically delete user's storage files when their job is deleted
+-- Requires the pg_cron extension or a Supabase Edge Function / DB Trigger.
+-- Option A (DB trigger — runs inside the same transaction):
+-- create or replace function public.delete_job_storage()
+--   returns trigger as $$
+--   begin
+--     delete from storage.objects where bucket_id = 'videos' and name like (old.user_id::text || '/%');
+--     return old;
+--   end;
+--   $$ language plpgsql security definer;
+-- create trigger trg_delete_job_storage before delete on public.jobs
+--   for each row execute function public.delete_job_storage();
+--
+-- Option B (Supabase Edge Function — better for large files):
+-- Deploy a function that listens to pg_notify on job deletions and purges storage.
+--
+-- For now, ensure row-level cleanup by enforcing user_id prefix in storage path naming.

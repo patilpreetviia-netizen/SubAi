@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate, useLocation } from "@tanstack/react-router";
 import { useEffect, useState, useCallback, useRef } from "react";
 import styles from "./Dashboard.module.css";
-import { MOCK_JOBS } from "../features/mockData";
 import { useAuthStore } from "../lib/authStore";
 import {
   fetchJobs,
@@ -14,7 +13,6 @@ import {
 } from "../lib/jobsService";
 import { extractVideoFrame } from "../lib/grok";
 import { analyzeWithGrokServer, transcribeFromStorage } from "../lib/grokServer";
-import { sendTestEmail } from "../lib/resendEmail";
 import {
   Home,
   Search,
@@ -35,6 +33,7 @@ import {
   Calendar,
   X,
   Loader2,
+  Shield,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({
@@ -61,6 +60,7 @@ function DashboardPage() {
   const location = useLocation();
 
   const [jobs, setJobs] = useState([]);
+  const [jobsLoading, setJobsLoading] = useState(true);
   const [dragging, setDragging] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [toasts, setToasts] = useState([]);
@@ -74,7 +74,7 @@ function DashboardPage() {
   const fileInputRef = useRef(null);
 
   const push = useCallback((msg) => {
-    const id = Date.now();
+    const id = crypto.randomUUID();
     setToasts((t) => [...t, { id, msg }]);
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 4000);
   }, []);
@@ -84,11 +84,14 @@ function DashboardPage() {
   }, [user, loading, navigate]);
 
   const loadJobs = useCallback(async () => {
+    setJobsLoading(true);
     try {
       const data = await fetchJobs();
-      setJobs(data.length > 0 ? data : MOCK_JOBS);
+      setJobs(data || []);
     } catch {
-      setJobs(MOCK_JOBS);
+      setJobs([]);
+    } finally {
+      setJobsLoading(false);
     }
   }, []);
 
@@ -155,15 +158,16 @@ function DashboardPage() {
       } catch (e) {
         console.error("Transcription error:", e);
         push("Transcription failed: " + e.message);
-        alert("Transcription Error: " + e.message + "\n\nStack: " + e.stack);
       }
 
       if (extractedSubtitles.length === 0) {
-        throw new Error("Transcription returned no captions. Check your GROQ_API_KEY and try again.");
+        throw new Error(
+          "Transcription returned no captions. Check your GROQ_API_KEY and try again.",
+        );
       }
 
       const title = file.name.replace(/\.[^.]+$/, "");
-      const job = await createJob({ title, language, storageKey, aiDescription });
+      const job = await createJob({ title, language, writingSystem, storageKey, aiDescription });
 
       localStorage.setItem(`subtitles_${job.id}`, JSON.stringify(extractedSubtitles));
       saveSubtitles(job.id, extractedSubtitles).catch(console.warn);
@@ -173,12 +177,10 @@ function DashboardPage() {
         ...prev,
       ]);
 
-      setTimeout(async () => {
-        await completeJob(job.id);
-        setJobs((prev) => prev.map((j) => (j.id === job.id ? { ...j, status: "completed" } : j)));
-        push("Transcription complete. Ready to edit.");
-        navigate({ to: "/editor/$jobId", params: { jobId: job.id } });
-      }, 2200);
+      await completeJob(job.id);
+      setJobs((prev) => prev.map((j) => (j.id === job.id ? { ...j, status: "completed" } : j)));
+      push("Transcription complete. Ready to edit.");
+      navigate({ to: "/editor/$jobId", params: { jobId: job.id } });
 
       setModalFile(null);
       setModalVideoUrl(null);
@@ -222,10 +224,6 @@ function DashboardPage() {
     }
   };
 
-  const usagePercent = 80;
-  const usageUsed = "8";
-  const usageTotal = "10";
-
   if (loading) {
     return (
       <div className={styles.shell}>
@@ -264,13 +262,20 @@ function DashboardPage() {
         }
         .toast-enter { animation: toastIn 0.25s ease-out; }
         .project-card-enter { animation: fadeIn 0.3s ease-out; }
+        @media (max-width: 768px) {
+          .delete-project-btn { opacity: 1 !important; color: #ef4444 !important; }
+        }
       `}</style>
 
       {/* ── Sidebar ─────────────────────────── */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarBrand}>
           <div className={styles.sidebarLogo}>
-            <img src="/logo.jpeg" alt="SubAI" style={{ width: 14, height: 14, borderRadius: 3, objectFit: "cover" }} />
+            <img
+              src="/logo.jpeg"
+              alt="SubAI"
+              style={{ width: 14, height: 14, borderRadius: 3, objectFit: "cover" }}
+            />
           </div>
           SubAI
         </div>
@@ -323,6 +328,18 @@ function DashboardPage() {
 
           <div className={styles.navSep} />
 
+          {/* Admin panel — only visible to the site owner */}
+          {user?.email === "patilpreetviia@gmail.com" && (
+            <Link
+              to="/admin"
+              className={styles.navItem}
+              style={{ color: "#facc15", fontWeight: 600 }}
+            >
+              <Shield size={14} className={styles.navIcon} style={{ color: "#facc15" }} />
+              Admin Panel
+            </Link>
+          )}
+
           <Link to="/pricing" className={styles.upgradeBtn}>
             <Star size={14} />
             Upgrade to Pro
@@ -350,7 +367,7 @@ function DashboardPage() {
           >
             <div
               style={{
-                width: `${usagePercent}%`,
+                width: "0%",
                 height: "100%",
                 background: "#f59e0b",
                 borderRadius: 2,
@@ -360,32 +377,6 @@ function DashboardPage() {
           </div>
           <div className={styles.usageReset}>Allowance resets in 25 days</div>
           <button className={styles.upgradeNowBtn}>Upgrade Now</button>
-          <button
-            onClick={() => {
-              if (!user?.email) return;
-              sendTestEmail({ data: { email: user.email, name: userName } }).then((r) => {
-                if (r.success) push(r.message + " to " + user.email);
-                else push("Email failed: " + (r.message || "unknown"));
-              }).catch((e) => push("Email error: " + e.message));
-            }}
-            style={{
-              marginTop: 8,
-              width: "100%",
-              padding: "7px 0",
-              borderRadius: 8,
-              border: "1px solid rgba(255,255,255,0.08)",
-              background: "transparent",
-              color: "#a1a1aa",
-              fontSize: 11,
-              fontWeight: 600,
-              cursor: "pointer",
-              transition: "all 0.15s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.04)"; e.currentTarget.style.color = "#fff"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#a1a1aa"; }}
-          >
-            Send Test Email
-          </button>
         </div>
 
         {/* User card */}
@@ -454,7 +445,9 @@ function DashboardPage() {
                 justifyContent: "center",
               }}
             >
-              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+              <div
+                style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}
+              >
                 <Loader2 size={24} className="animate-spin" style={{ color: "#f59e0b" }} />
                 <span style={{ fontSize: 12, color: "#f59e0b", fontWeight: 600 }}>
                   Processing your video...
@@ -472,7 +465,7 @@ function DashboardPage() {
             className={styles.dropzoneTitle}
             style={{ position: "relative", zIndex: 0, opacity: uploading ? 0.3 : 1 }}
           >
-            {dragging ? "Drop your video here" : "Drop your video here"}
+            {dragging ? "Release to upload" : "Drop your video here"}
           </p>
           <p
             className={styles.dropzoneSub}
@@ -528,7 +521,39 @@ function DashboardPage() {
         {/* Recent projects */}
         <div className={styles.sectionLabel}>Recent Projects</div>
 
-        {jobs.length === 0 ? (
+        {jobsLoading ? (
+          <div className={styles.projectsGrid}>
+            {[1, 2, 3].map((n) => (
+              <div key={n} className={styles.projectCard} style={{ pointerEvents: "none" }}>
+                <div
+                  className={styles.projectThumb}
+                  style={{
+                    background: "#1a1a1e",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Loader2 size={20} className="animate-spin" style={{ color: "#27272a" }} />
+                </div>
+                <div className={styles.projectInfo}>
+                  <div
+                    style={{
+                      height: 14,
+                      width: "60%",
+                      background: "#1a1a1e",
+                      borderRadius: 4,
+                      marginBottom: 8,
+                    }}
+                  />
+                  <div
+                    style={{ height: 10, width: "40%", background: "#1a1a1e", borderRadius: 4 }}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : jobs.length === 0 ? (
           <div className={styles.projectsEmpty}>
             <div className={styles.projectsEmptyIcon}>
               <Film size={20} />
@@ -574,7 +599,15 @@ function DashboardPage() {
                         {job.duration && job.duration !== "—" ? (
                           <>
                             <span style={{ margin: "0 4px", color: "#3f3f46" }}>·</span>
-                            <Clock size={10} style={{ display: "inline", verticalAlign: "middle", marginRight: 2, opacity: 0.5 }} />
+                            <Clock
+                              size={10}
+                              style={{
+                                display: "inline",
+                                verticalAlign: "middle",
+                                marginRight: 2,
+                                opacity: 0.5,
+                              }}
+                            />
                             {job.duration}
                           </>
                         ) : null}
@@ -582,7 +615,15 @@ function DashboardPage() {
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       {job.createdAt && (
-                        <span style={{ display: "flex", alignItems: "center", gap: 3, color: "#52525b", fontSize: 10 }}>
+                        <span
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 3,
+                            color: "#52525b",
+                            fontSize: 10,
+                          }}
+                        >
                           <Calendar size={9} />
                           {formatDate(job.createdAt)}
                         </span>
@@ -596,7 +637,7 @@ function DashboardPage() {
                   </div>
                 </div>
                 <button
-                  className={styles.deleteProjectBtn}
+                  className={`${styles.deleteProjectBtn} delete-project-btn`}
                   onClick={(e) => handleDelete(e, job.id)}
                   title="Delete project"
                   style={{

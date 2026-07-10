@@ -22,6 +22,8 @@ import { Route as TermsRouteImport } from './routes/terms';
 import { Route as TemplatesRouteImport } from './routes/templates';
 import { Route as PluginDownloadRouteImport } from './routes/plugin.download';
 import { Route as CheckoutRouteImport } from './routes/checkout';
+import { Route as AdminRouteImport } from './routes/admin';
+import { Route as ResetPasswordRouteImport } from './routes/reset-password';
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -89,6 +91,18 @@ const CheckoutRoute = CheckoutRouteImport.update({
   getParentRoute: () => rootRouteImport
 });
 
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport
+});
+
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport
+});
+
 const rootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
@@ -103,6 +117,8 @@ const rootRouteChildren = {
   TemplatesRoute: TemplatesRoute,
   PluginDownloadRoute: PluginDownloadRoute,
   CheckoutRoute: CheckoutRoute,
+  AdminRoute: AdminRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 };
 
 export const routeTree = rootRouteImport.

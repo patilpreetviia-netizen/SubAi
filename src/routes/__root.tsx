@@ -1,9 +1,4 @@
-import {
-  Outlet,
-  createRootRoute,
-  HeadContent,
-  Scripts,
-} from "@tanstack/react-router";
+import { Outlet, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useEffect } from "react";
 
@@ -41,7 +36,9 @@ export const Route = createRootRoute({
   errorComponent: ({ error, reset }: { error: Error; reset: () => void }) => (
     <div style={{ padding: 40 }}>
       <h1>Something broke</h1>
-      <pre style={{ color: "#a1a1aa" }}>{error.message}</pre>
+      <pre style={{ color: "#a1a1aa" }}>
+        {error instanceof Error ? error.message : String(error)}
+      </pre>
       <button onClick={reset}>Retry</button>
     </div>
   ),
@@ -49,9 +46,13 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   const init = useAuthStore((s: any) => s.init);
+  const _unsubscribe = useAuthStore((s: any) => s._unsubscribe);
 
   useEffect(() => {
     init();
+    return () => {
+      _unsubscribe?.();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -76,7 +77,9 @@ function NotFound() {
   return (
     <div style={{ padding: 40 }}>
       <h1>404</h1>
-      <a href="/" style={{ color: "#facc15" }}>Back home</a>
+      <a href="/" style={{ color: "#facc15" }}>
+        Back home
+      </a>
     </div>
   );
 }

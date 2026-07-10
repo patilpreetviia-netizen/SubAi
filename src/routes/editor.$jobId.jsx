@@ -1,9 +1,9 @@
 import { createFileRoute, Link, useParams, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useEffect, useMemo, useState, useCallback, useRef } from "react";
 import styles from "./Editor.module.css";
 import { CaptionPlayer } from "../features/CaptionPlayer";
 import { useEditorStore } from "../features/editorStore";
-import { MOCK_JOBS, MOCK_SUBTITLES } from "../features/mockData";
+import { MOCK_SUBTITLES } from "../features/mockData";
 import { PRESETS } from "../features/presets";
 import { Timeline } from "../features/Timeline";
 import { getVideoUrl, loadSubtitles } from "../lib/jobsService";
@@ -35,6 +35,7 @@ import {
   Trash2,
   X,
   Check,
+  Loader2,
 } from "lucide-react";
 
 export const Route = createFileRoute("/editor/$jobId")({
@@ -158,12 +159,27 @@ function EmptyState() {
         xmlns="http://www.w3.org/2000/svg"
         style={{ opacity: 0.4 }}
       >
-        <rect x="8" y="16" width="64" height="48" rx="8" stroke="#52525b" strokeWidth="2" fill="none" />
+        <rect
+          x="8"
+          y="16"
+          width="64"
+          height="48"
+          rx="8"
+          stroke="#52525b"
+          strokeWidth="2"
+          fill="none"
+        />
         <rect x="14" y="26" width="52" height="8" rx="2" fill="#27272a" />
         <rect x="14" y="38" width="36" height="6" rx="2" fill="#27272a" />
         <rect x="14" y="48" width="44" height="6" rx="2" fill="#27272a" />
         <circle cx="64" cy="56" r="8" fill="#27272a" stroke="#52525b" strokeWidth="1.5" />
-        <path d="M61 56l2 2 4-4" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path
+          d="M61 56l2 2 4-4"
+          stroke="#f59e0b"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
       </svg>
       <div style={{ fontSize: 13, fontWeight: 600, color: "#71717a" }}>No captions yet</div>
       <p
@@ -177,11 +193,28 @@ function EmptyState() {
       >
         Transcription may have failed. Check your
         <br />
-        <code style={{ color: "#a1a1aa", background: "rgba(255,255,255,0.05)", padding: "1px 4px", borderRadius: 3 }}>
+        <code
+          style={{
+            color: "#a1a1aa",
+            background: "rgba(255,255,255,0.05)",
+            padding: "1px 4px",
+            borderRadius: 3,
+          }}
+        >
           GROQ_API_KEY
         </code>
         <br />
-        in <code style={{ color: "#a1a1aa", background: "rgba(255,255,255,0.05)", padding: "1px 4px", borderRadius: 3 }}>.env</code>
+        in{" "}
+        <code
+          style={{
+            color: "#a1a1aa",
+            background: "rgba(255,255,255,0.05)",
+            padding: "1px 4px",
+            borderRadius: 3,
+          }}
+        >
+          .env
+        </code>
         <br />
         or upload a new video from dashboard.
       </p>
@@ -206,7 +239,10 @@ function EditorPage() {
   const { jobId } = useParams({ from: "/editor/$jobId" });
   const navigate = useNavigate();
 
-  const [job, setJob] = useState(MOCK_JOBS.find((j) => j.id === jobId) || MOCK_JOBS[0]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+  const videoRef = useRef(null);
+  const [job, setJob] = useState(null);
   const [videoUrl, setVideoUrl] = useState(null);
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -224,6 +260,7 @@ function EditorPage() {
   const [scriptMode, setScriptMode] = useState("roman");
   const [translateModal, setTranslateModal] = useState(false);
   const [translateLang, setTranslateLang] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [brandKits, setBrandKits] = useState(() => {
     try {
       const stored = localStorage.getItem("brandKits");
@@ -247,13 +284,32 @@ function EditorPage() {
   const preset = PRESETS.find((p) => p.id === presetId);
 
   const push = useCallback((msg) => {
-    const id = Date.now();
+    const id = crypto.randomUUID();
     setToasts((t) => [...t, { id, msg }]);
     setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 4000);
   }, []);
 
   useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (playing) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [playing]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const onTime = () => setCurrentTime(el.currentTime);
+    el.addEventListener("timeupdate", onTime);
+    return () => el.removeEventListener("timeupdate", onTime);
+  }, []);
+
+  useEffect(() => {
     async function loadJobData() {
+      setLoading(true);
       try {
         const { data } = await supabase.from("jobs").select("*").eq("id", jobId).single();
         if (data) {
@@ -265,6 +321,10 @@ function EditorPage() {
               console.warn(e.message);
             }
           }
+        } else if (!jobId.startsWith("job-")) {
+          setNotFound(true);
+          setLoading(false);
+          return;
         }
       } catch (e) {
         console.warn(e.message);
@@ -287,6 +347,7 @@ function EditorPage() {
           console.warn("No subtitles found for job", jobId, e.message);
         }
       }
+      setLoading(false);
     }
     loadJobData();
   }, [jobId]);
@@ -359,19 +420,31 @@ function EditorPage() {
 
   const handleExport = async () => {
     setExporting(true);
+    let cancelled = false;
     push("Preparing video export...");
     try {
-      let videoEl = document.querySelector("video");
+      let videoEl = videoRef.current || document.querySelector("video");
       if (!videoEl && videoUrl) {
         videoEl = document.createElement("video");
         videoEl.src = videoUrl;
         videoEl.crossOrigin = "anonymous";
-        await new Promise((r) => {
-          videoEl.onloadeddata = r;
-          setTimeout(r, 5000);
-        });
+        await Promise.race([
+          new Promise((r) => {
+            videoEl.onloadeddata = r;
+          }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error("Video load timeout")), 10000)),
+        ]);
+        if (cancelled) return;
       }
       if (!videoEl) throw new Error("No video available.");
+      videoEl.currentTime = 0;
+      await Promise.race([
+        new Promise((r) => {
+          videoEl.onseeked = r;
+        }),
+        new Promise((_, rej) => setTimeout(() => rej(new Error("Seek timeout")), 3000)),
+      ]);
+      if (cancelled) return;
       const canvas = document.createElement("canvas");
       canvas.width = videoEl.videoWidth || 1080;
       canvas.height = videoEl.videoHeight || 1920;
@@ -388,21 +461,21 @@ function EditorPage() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `${job.title || "captioned"}-captioned.webm`;
+        a.download = `${job?.title || "captioned"}-captioned.webm`;
         a.click();
         URL.revokeObjectURL(url);
         setExporting(false);
         push("Export complete!");
       };
       videoEl.currentTime = 0;
-      await new Promise((r) => {
-        videoEl.onseeked = r;
-        setTimeout(r, 500);
-      });
       recorder.start();
       videoEl.play();
       const fontSize = Math.round(canvas.height * 0.04);
       const drawFrame = () => {
+        if (cancelled) {
+          recorder.stop();
+          return;
+        }
         if (videoEl.paused || videoEl.ended) {
           recorder.stop();
           return;
@@ -435,8 +508,8 @@ function EditorPage() {
 
   const handleSRTExport = () => {
     const lines = subtitles.map((s, i) => {
-      const start = new Date(s.start * 1000).toISOString().substr(11, 12).replace(".", ",");
-      const end = new Date(s.end * 1000).toISOString().substr(11, 12).replace(".", ",");
+      const start = new Date(s.start * 1000).toISOString().substring(11, 23).replace(".", ",");
+      const end = new Date(s.end * 1000).toISOString().substring(11, 23).replace(".", ",");
       return `${i + 1}\n${start} --> ${end}\n${s.text}\n`;
     });
     const blob = new Blob([lines.join("\n")], { type: "text/plain" });
@@ -456,12 +529,12 @@ function EditorPage() {
     });
     const lang = job.language || "hinglish";
     const content = [
-      `📌 ${title}`,
+      title,
       "",
-      "📝 Full Transcript with Timestamps:",
+      "Full Transcript with Timestamps:",
       ...transcriptLines,
       "",
-      "🔖 Tags",
+      "Tags",
       `#${lang} #subtitles #captions #video #content #SubAI`,
       "",
       "Generated with SubAI — AI-powered captioning",
@@ -479,7 +552,7 @@ function EditorPage() {
 
   const handleSaveBrandKit = useCallback(() => {
     const kit = {
-      id: Date.now().toString(),
+      id: crypto.randomUUID(),
       name: preset.name,
       presetId: preset.id,
       font: preset.font,
@@ -493,22 +566,28 @@ function EditorPage() {
     push(`"${kit.name}" saved to Brand Kit`);
   }, [preset, brandKits, push]);
 
-  const handleApplyBrandKit = useCallback((kit) => {
-    const match = PRESETS.find((p) => p.id === kit.presetId);
-    if (match) {
-      setPresetId(match.id);
-      push(`Applied "${kit.name}" brand kit`);
-    } else {
-      push(`Could not apply "${kit.name}" — preset not found`);
-    }
-  }, [push]);
+  const handleApplyBrandKit = useCallback(
+    (kit) => {
+      const match = PRESETS.find((p) => p.id === kit.presetId);
+      if (match) {
+        setPresetId(match.id);
+        push(`Applied "${kit.name}" brand kit`);
+      } else {
+        push(`Could not apply "${kit.name}" — preset not found`);
+      }
+    },
+    [push],
+  );
 
-  const handleDeleteBrandKit = useCallback((id) => {
-    const updated = brandKits.filter((k) => k.id !== id);
-    setBrandKits(updated);
-    localStorage.setItem("brandKits", JSON.stringify(updated));
-    push("Brand kit deleted");
-  }, [brandKits, push]);
+  const handleDeleteBrandKit = useCallback(
+    (id) => {
+      const updated = brandKits.filter((k) => k.id !== id);
+      setBrandKits(updated);
+      localStorage.setItem("brandKits", JSON.stringify(updated));
+      push("Brand kit deleted");
+    },
+    [brandKits, push],
+  );
 
   const handleTranslate = useCallback(() => {
     if (!translateLang) {
@@ -521,16 +600,68 @@ function EditorPage() {
     setTranslateLang(null);
   }, [translateLang, push]);
 
+  if (notFound) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          gap: 16,
+          background: "#09090b",
+          color: "#fff",
+        }}
+      >
+        <div style={{ fontSize: 48, fontWeight: 800, color: "#27272a" }}>404</div>
+        <div style={{ fontSize: 14, color: "#71717a" }}>Project not found</div>
+        <button
+          onClick={() => navigate({ to: "/dashboard" })}
+          style={{
+            marginTop: 8,
+            padding: "8px 20px",
+            borderRadius: 8,
+            background: "#f59e0b",
+            color: "#000",
+            fontSize: 13,
+            fontWeight: 600,
+            border: "none",
+            cursor: "pointer",
+          }}
+        >
+          Back to Dashboard
+        </button>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+          gap: 10,
+          background: "#09090b",
+          color: "#fff",
+        }}
+      >
+        <Loader2 size={18} className="animate-spin" style={{ color: "#f59e0b" }} />
+        <span style={{ fontSize: 13, color: "#71717a" }}>Loading editor...</span>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.shell}>
       {/* ── TOP BAR ──────────────────────────── */}
       <div className={styles.topbar}>
         <div className={styles.topLeft}>
           <Tooltip text="Back to dashboard">
-            <button
-              className={styles.backBtn}
-              onClick={() => navigate({ to: "/dashboard" })}
-            >
+            <button className={styles.backBtn} onClick={() => navigate({ to: "/dashboard" })}>
               <ArrowLeft size={15} />
             </button>
           </Tooltip>
@@ -556,10 +687,7 @@ function EditorPage() {
 
         <div className={styles.topRight}>
           <Tooltip text="AI Hook Generator">
-            <button
-              className={styles.iconBtn}
-              onClick={() => setHookModal(true)}
-            >
+            <button className={styles.iconBtn} onClick={() => setHookModal(true)}>
               <Wand2 size={13} /> Hook
             </button>
           </Tooltip>
@@ -684,40 +812,42 @@ function EditorPage() {
           <div className={styles.captionList}>
             {subtitles.length === 0 ? (
               <EmptyState />
-            ) : subtitles.map((s, i) => (
-              <div key={s.id} className={styles.captionRow}>
-                <div className={styles.captionRowHeader}>
-                  <span className={styles.captionRowNum}>{i + 1}</span>
-                  <span className={styles.captionTimes}>
-                    {fmt(s.start)} → {fmt(s.end)}
-                  </span>
-                </div>
-                {editingId === s.id ? (
-                  <input
-                    className={styles.captionInput}
-                    value={s.text}
-                    autoFocus
-                    onChange={(e) => updateText(s.id, e.target.value)}
-                    onBlur={() => setEditingId(null)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") setEditingId(null);
-                    }}
-                  />
-                ) : (
-                  <div className={styles.captionWords}>
-                    {s.text.split(" ").map((word, wi) => (
-                      <button
-                        key={wi}
-                        className={styles.captionWordChip}
-                        onClick={() => setEditingId(s.id)}
-                      >
-                        {word}
-                      </button>
-                    ))}
+            ) : (
+              subtitles.map((s, i) => (
+                <div key={s.id} className={styles.captionRow}>
+                  <div className={styles.captionRowHeader}>
+                    <span className={styles.captionRowNum}>{i + 1}</span>
+                    <span className={styles.captionTimes}>
+                      {fmt(s.start)} → {fmt(s.end)}
+                    </span>
                   </div>
-                )}
-              </div>
-            ))}
+                  {editingId === s.id ? (
+                    <input
+                      className={styles.captionInput}
+                      value={s.text}
+                      autoFocus
+                      onChange={(e) => updateText(s.id, e.target.value)}
+                      onBlur={() => setEditingId(null)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") setEditingId(null);
+                      }}
+                    />
+                  ) : (
+                    <div className={styles.captionWords}>
+                      {s.text.split(" ").map((word, wi) => (
+                        <button
+                          key={wi}
+                          className={styles.captionWordChip}
+                          onClick={() => setEditingId(s.id)}
+                        >
+                          {word}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))
+            )}
           </div>
         </div>
 
@@ -754,6 +884,9 @@ function EditorPage() {
               controls
               autoPlay={false}
               loop
+              resolution={resolution}
+              aspect={aspect}
+              lineMode={lineMode}
             />
           </div>
         </div>
@@ -838,8 +971,8 @@ function EditorPage() {
                               display: "flex",
                               transition: "color 0.15s",
                             }}
-                            onMouseEnter={(e) => (e.target.style.color = "#ef4444")}
-                            onMouseLeave={(e) => (e.target.style.color = "#52525b")}
+                            onMouseEnter={(e) => (e.currentTarget.style.color = "#ef4444")}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = "#52525b")}
                           >
                             <Trash2 size={12} />
                           </button>
@@ -898,8 +1031,12 @@ function EditorPage() {
                           fontFamily: "inherit",
                           transition: "background 0.15s",
                         }}
-                        onMouseEnter={(e) => (e.target.style.background = "rgba(245,158,11,0.2)")}
-                        onMouseLeave={(e) => (e.target.style.background = "rgba(245,158,11,0.1)")}
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.style.background = "rgba(245,158,11,0.2)")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.currentTarget.style.background = "rgba(245,158,11,0.1)")
+                        }
                       >
                         Apply Kit
                       </button>
@@ -927,10 +1064,15 @@ function EditorPage() {
 
               <div className={styles.searchRow}>
                 <Search size={12} className={styles.searchIcon} />
-                <input className={styles.searchInput} placeholder="Find a template" />
+                <input
+                  className={styles.searchInput}
+                  placeholder="Find a template"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
               </div>
 
-              <button className={styles.savePresetBtn}>
+              <button className={styles.savePresetBtn} onClick={handleSaveBrandKit}>
                 <BookmarkPlus size={13} />
                 Save Preset
               </button>
@@ -938,7 +1080,9 @@ function EditorPage() {
               <div className={styles.dynamicLabel}>Dynamic Captions</div>
 
               <div className={styles.templateCards}>
-                {PRESETS.map((p) => (
+                {PRESETS.filter(
+                  (p) => !searchQuery || p.name.toLowerCase().includes(searchQuery.toLowerCase()),
+                ).map((p) => (
                   <button
                     key={p.id}
                     className={`${styles.templateCard} ${presetId === p.id ? styles.templateCardActive : ""}`}
@@ -965,7 +1109,9 @@ function EditorPage() {
                       <strong style={{ fontSize: 16, letterSpacing: "-0.02em", color: p.color }}>
                         {p.name.split(" ")[0].toUpperCase()}
                       </strong>
-                      <span style={{ fontSize: 9, color: "#71717a", display: "block", marginTop: 2 }}>
+                      <span
+                        style={{ fontSize: 9, color: "#71717a", display: "block", marginTop: 2 }}
+                      >
                         fox jumps
                       </span>
                     </div>
@@ -984,26 +1130,48 @@ function EditorPage() {
             subtitles={subtitles}
             currentTime={currentTime}
             totalDuration={totalDuration || 30}
-            onSeek={(t) => { setCurrentTime(t); }}
+            onSeek={(t) => {
+              setCurrentTime(t);
+            }}
             onUpdateSegment={(id, start, end) => {
               if (typeof start === "number") updateSegmentTime(id, "start", start);
               if (typeof end === "number") updateSegmentTime(id, "end", end);
             }}
           />
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 4, padding: "4px 8px", borderTop: "1px solid rgba(255,255,255,0.04)" }}>
-          <button className={styles.transportBtn} onClick={() => setCurrentTime(0)}><SkipBack size={12} /></button>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 4,
+            padding: "4px 8px",
+            borderTop: "1px solid rgba(255,255,255,0.04)",
+          }}
+        >
+          <button className={styles.transportBtn} onClick={() => setCurrentTime(0)}>
+            <SkipBack size={12} />
+          </button>
           <button className={styles.playBtn} onClick={() => setPlaying((p) => !p)}>
             {playing ? <Pause size={11} /> : <Play size={11} />}
           </button>
-          <button className={styles.transportBtn} onClick={() => setCurrentTime(totalDuration)}><SkipForward size={12} /></button>
-          <span className={styles.timecode}>{fmt(currentTime)} / {fmt(totalDuration)}</span>
+          <button className={styles.transportBtn} onClick={() => setCurrentTime(totalDuration)}>
+            <SkipForward size={12} />
+          </button>
+          <span className={styles.timecode}>
+            {fmt(currentTime)} / {fmt(totalDuration)}
+          </span>
         </div>
       </div>
 
       {/* ── AI Hook Generator Modal ─────────── */}
       {hookModal && (
-        <div style={overlayBase} onClick={() => { setHookModal(false); setGeneratedHook(null); }}>
+        <div
+          style={overlayBase}
+          onClick={() => {
+            setHookModal(false);
+            setGeneratedHook(null);
+          }}
+        >
           <div style={modalBase} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <div
@@ -1028,7 +1196,10 @@ function EditorPage() {
                 </p>
               </div>
               <button
-                onClick={() => { setHookModal(false); setGeneratedHook(null); }}
+                onClick={() => {
+                  setHookModal(false);
+                  setGeneratedHook(null);
+                }}
                 style={{
                   background: "rgba(255,255,255,0.06)",
                   border: "none",
@@ -1096,7 +1267,7 @@ function EditorPage() {
                     transition: "background 0.2s",
                   }}
                 >
-                  {generatingHook ? "Generating…" : "Generate Hook ✨"}
+                  {generatingHook ? "Generating..." : "Generate Hook"}
                 </button>
               </div>
             ) : (
@@ -1175,7 +1346,10 @@ function EditorPage() {
             )}
 
             <button
-              onClick={() => { setHookModal(false); setGeneratedHook(null); }}
+              onClick={() => {
+                setHookModal(false);
+                setGeneratedHook(null);
+              }}
               style={{
                 width: "100%",
                 marginTop: 8,
@@ -1196,7 +1370,13 @@ function EditorPage() {
 
       {/* ── Translate Modal ───────────────────── */}
       {translateModal && (
-        <div style={overlayBase} onClick={() => { setTranslateModal(false); setTranslateLang(null); }}>
+        <div
+          style={overlayBase}
+          onClick={() => {
+            setTranslateModal(false);
+            setTranslateLang(null);
+          }}
+        >
           <div style={modalBase} onClick={(e) => e.stopPropagation()}>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <div
@@ -1221,7 +1401,10 @@ function EditorPage() {
                 </p>
               </div>
               <button
-                onClick={() => { setTranslateModal(false); setTranslateLang(null); }}
+                onClick={() => {
+                  setTranslateModal(false);
+                  setTranslateLang(null);
+                }}
                 style={{
                   background: "rgba(255,255,255,0.06)",
                   border: "none",
@@ -1256,9 +1439,7 @@ function EditorPage() {
                     style={{
                       padding: "10px 12px",
                       borderRadius: 10,
-                      background: selected
-                        ? "rgba(59,130,246,0.12)"
-                        : "rgba(255,255,255,0.03)",
+                      background: selected ? "rgba(59,130,246,0.12)" : "rgba(255,255,255,0.03)",
                       border: selected
                         ? "1px solid rgba(59,130,246,0.35)"
                         : "1px solid rgba(255,255,255,0.06)",
@@ -1310,7 +1491,10 @@ function EditorPage() {
 
             <div style={{ display: "flex", gap: 8 }}>
               <button
-                onClick={() => { setTranslateModal(false); setTranslateLang(null); }}
+                onClick={() => {
+                  setTranslateModal(false);
+                  setTranslateLang(null);
+                }}
                 style={{
                   flex: 1,
                   padding: "10px 0",
@@ -1396,6 +1580,8 @@ function EditorPage() {
 
       {/* Inline keyframes for toast animation */}
       <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .animate-spin { animation: spin 1s linear infinite; }
         @keyframes slideIn {
           from {
             opacity: 0;

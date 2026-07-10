@@ -24,20 +24,14 @@ export function NavBar() {
           <Link to="/dashboard" className={styles.link}>
             Dashboard
           </Link>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noreferrer"
-            className={styles.link}
-          >
+          <a href="https://github.com" target="_blank" rel="noreferrer" className={styles.link}>
             GitHub
           </a>
 
           {user ? (
             <>
               <span className={styles.user} title={user.email}>
-                {user.user_metadata?.full_name?.split(" ")[0] ||
-                  user.email?.split("@")[0]}
+                {user.user_metadata?.full_name?.split(" ")[0] || user.email?.split("@")[0]}
               </span>
               <Button size="sm" variant="outline" onClick={handleLogout}>
                 Log out

@@ -18,7 +18,11 @@ function useScrollDirection() {
   useEffect(() => {
     const onScroll = () => {
       const cur = window.scrollY;
-      if (cur <= 0) { setDirection("up"); prevScroll.current = 0; return; }
+      if (cur <= 0) {
+        setDirection("up");
+        prevScroll.current = 0;
+        return;
+      }
       if (cur > prevScroll.current && cur - prevScroll.current > 8) setDirection("down");
       else if (cur < prevScroll.current && prevScroll.current - cur > 8) setDirection("up");
       prevScroll.current = cur;
@@ -37,8 +41,13 @@ function useInView(threshold = 0.15) {
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setInView(true); observer.unobserve(el); } },
-      { threshold }
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.unobserve(el);
+        }
+      },
+      { threshold },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -50,8 +59,8 @@ function Particles() {
   const circles = Array.from({ length: 20 }, (_, i) => ({
     id: i,
     size: 2 + (i % 4) * 2,
-    x: ((i * 37 + 13) % 100),
-    y: ((i * 53 + 7) % 100),
+    x: (i * 37 + 13) % 100,
+    y: (i * 53 + 7) % 100,
     dur: 4 + (i % 5) * 2,
     delay: (i * 0.3) % 4,
     tx: i % 2 === 0 ? 20 : -20,
@@ -91,12 +100,8 @@ function StatCard({ value, label, icon, delay }) {
       <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-amber-400/10 border border-amber-400/15 mb-3">
         {icon}
       </div>
-      <p className="text-2xl md:text-3xl font-black text-white mb-0.5 tracking-tight">
-        {value}
-      </p>
-      <p className="text-[10px] text-zinc-500 font-medium uppercase tracking-wider">
-        {label}
-      </p>
+      <p className="text-2xl md:text-3xl font-black text-white mb-0.5 tracking-tight">{value}</p>
+      <p className="text-[10px] text-zinc-500 font-medium uppercase tracking-wider">{label}</p>
     </div>
   );
 }
@@ -134,14 +139,22 @@ function FaqItem({ question, answer }) {
         <span className="text-[15px] font-semibold text-white pr-4">{question}</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24" height="24" viewBox="0 0 24 24" fill="none"
-          stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className={`w-4 h-4 shrink-0 text-zinc-500 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
-      <div className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+      <div
+        className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+      >
         <div className="overflow-hidden">
           <p className="px-6 pb-5 text-sm text-zinc-400 leading-relaxed">{answer}</p>
         </div>
@@ -170,7 +183,7 @@ function HomePage() {
         <div className="mx-auto max-w-7xl px-4 md:px-6 pt-4">
           <div className="flex items-center justify-between rounded-2xl glass-strong px-4 md:px-5 py-3">
             <Link className="flex items-center gap-2.5 shrink-0 group" to="/">
-<img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
+              <img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
               <span className="font-bold text-[15px] text-white tracking-tight">SubAI</span>
             </Link>
 
@@ -199,8 +212,21 @@ function HomePage() {
                 Dashboard
               </Link>
               <button className="md:hidden p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                  <path d="M4 5h16" /><path d="M4 12h16" /><path d="M4 19h16" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-4 h-4"
+                >
+                  <path d="M4 5h16" />
+                  <path d="M4 12h16" />
+                  <path d="M4 19h16" />
                 </svg>
               </button>
             </div>
@@ -219,7 +245,8 @@ function HomePage() {
           <div
             className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-60"
             style={{
-              background: "radial-gradient(ellipse, rgba(217,119,6,0.14) 0%, rgba(251,191,36,0.04) 45%, transparent 70%)",
+              background:
+                "radial-gradient(ellipse, rgba(217,119,6,0.14) 0%, rgba(251,191,36,0.04) 45%, transparent 70%)",
               filter: "blur(80px)",
             }}
           />
@@ -255,36 +282,53 @@ function HomePage() {
           </p>
 
           <div className="flex items-center justify-center gap-3">
-            <Link
-              to="/signup"
-              className="btn-primary px-7 py-3.5 text-[15px]"
-            >
+            <Link to="/signup" className="btn-primary px-7 py-3.5 text-[15px]">
               Try it free
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 group-hover:translate-x-0.5 transition-transform">
-                <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 group-hover:translate-x-0.5 transition-transform"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
               </svg>
             </Link>
-            <a
-              href="#styles"
-              className="btn-secondary px-6 py-3.5 text-[15px]"
-            >
+            <a href="#styles" className="btn-secondary px-6 py-3.5 text-[15px]">
               See the styles
             </a>
           </div>
 
-          <p className="mt-4 text-[12px] text-zinc-600">
-            Free to use · Powered by Groq & Whisper
-          </p>
+          <p className="mt-4 text-[12px] text-zinc-600">Free to use · Powered by Groq & Whisper</p>
         </div>
 
         {/* Stats Grid */}
-        <div className={`relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-2xl mx-auto mt-16 transition-all duration-1000 delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+        <div
+          className={`relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-2xl mx-auto mt-16 transition-all duration-1000 delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+        >
           <StatCard
             value="99%"
             label="Accuracy"
             delay={0}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-amber-400">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 text-amber-400"
+              >
                 <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
                 <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
                 <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
@@ -298,8 +342,26 @@ function HomePage() {
             label="Caption styles"
             delay={100}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-amber-400">
-                <rect width="18" height="18" x="3" y="3" rx="2" /><path d="M7 3v18" /><path d="M3 7.5h4" /><path d="M3 12h18" /><path d="M3 16.5h4" /><path d="M17 3v18" /><path d="M17 7.5h4" /><path d="M17 16.5h4" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 text-amber-400"
+              >
+                <rect width="18" height="18" x="3" y="3" rx="2" />
+                <path d="M7 3v18" />
+                <path d="M3 7.5h4" />
+                <path d="M3 12h18" />
+                <path d="M3 16.5h4" />
+                <path d="M17 3v18" />
+                <path d="M17 7.5h4" />
+                <path d="M17 16.5h4" />
               </svg>
             }
           />
@@ -308,8 +370,21 @@ function HomePage() {
             label="Indian languages"
             delay={200}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-amber-400">
-                <circle cx="12" cy="12" r="10" /><path d="M2 12h20" /><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 text-amber-400"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20" />
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
               </svg>
             }
           />
@@ -318,8 +393,26 @@ function HomePage() {
             label="Server Lag"
             delay={300}
             icon={
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-amber-400">
-                <path d="M12 2v4" /><path d="m16.2 7.8 2.9-2.9" /><path d="M18 12h4" /><path d="m16.2 16.2 2.9 2.9" /><path d="M12 18v4" /><path d="m4.9 19.1 2.9-2.9" /><path d="M2 12h4" /><path d="m4.9 4.9 2.9 2.9" />
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 text-amber-400"
+              >
+                <path d="M12 2v4" />
+                <path d="m16.2 7.8 2.9-2.9" />
+                <path d="M18 12h4" />
+                <path d="m16.2 16.2 2.9 2.9" />
+                <path d="M12 18v4" />
+                <path d="m4.9 19.1 2.9-2.9" />
+                <path d="M2 12h4" />
+                <path d="m4.9 4.9 2.9 2.9" />
               </svg>
             }
           />
@@ -346,17 +439,37 @@ function HomePage() {
               title="Built for Hinglish"
               desc="Our transcription model understands Hindi-English code-switching out of the box. It handles slang, regional accents, and mixed-script words."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-400">
-                  <path d="M12 18V5" /><path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" /><path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" /><path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" /><path d="M18 18a4 4 0 0 0 2-7.464" /><path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" /><path d="M6 18a4 4 0 0 1-2-7.464" /><path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-5 h-5 text-amber-400"
+                >
+                  <path d="M12 18V5" />
+                  <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" />
+                  <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" />
+                  <path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" />
+                  <path d="M18 18a4 4 0 0 0 2-7.464" />
+                  <path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" />
+                  <path d="M6 18a4 4 0 0 1-2-7.464" />
+                  <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
                 </svg>
               }
             >
               <div className="mt-6 rounded-xl bg-black/30 border border-white/[0.06] p-4 space-y-2">
                 <p className="text-[13px] text-zinc-300">
-                  <span className="text-zinc-600 mr-1.5">{"\u201c"}</span>Basically technically speaking yaar<span className="text-zinc-600 ml-0.5">{"\u201d"}</span>
+                  <span className="text-zinc-600 mr-1.5">{"\u201c"}</span>Basically technically
+                  speaking yaar<span className="text-zinc-600 ml-0.5">{"\u201d"}</span>
                 </p>
                 <p className="text-[13px] text-zinc-300">
-                  <span className="text-zinc-600 mr-1.5">{"\u201c"}</span>Aaj ka video dekh bhai, life-changing hai<span className="text-zinc-600 ml-0.5">{"\u201d"}</span>
+                  <span className="text-zinc-600 mr-1.5">{"\u201c"}</span>Aaj ka video dekh bhai,
+                  life-changing hai<span className="text-zinc-600 ml-0.5">{"\u201d"}</span>
                 </p>
               </div>
             </FeatureCard>
@@ -366,17 +479,38 @@ function HomePage() {
               title="22 Indian Languages"
               desc="Native script, Roman, or English. Switch in one click."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-400">
-                  <path d="m5 8 6 6" /><path d="m4 14 6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" /><path d="m22 22-5-10-5 10" /><path d="M14 18h6" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-5 h-5 text-amber-400"
+                >
+                  <path d="m5 8 6 6" />
+                  <path d="m4 14 6-6 2-3" />
+                  <path d="M2 5h12" />
+                  <path d="M7 2h1" />
+                  <path d="m22 22-5-10-5 10" />
+                  <path d="M14 18h6" />
                 </svg>
               }
             >
               <div className="mt-5 flex flex-wrap gap-2">
-                {["\u0939\u093F", "\u0BA4\u0BAE\u0BBF", "EN", "\u0B2E\u0B4B", "\u0917\u0941"].map((label, i) => (
-                  <div key={i} className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-zinc-400 font-medium">
-                    {label}
-                  </div>
-                ))}
+                {["\u0939\u093F", "\u0BA4\u0BAE\u0BBF", "EN", "\u0B2E\u0B4B", "\u0917\u0941"].map(
+                  (label, i) => (
+                    <div
+                      key={i}
+                      className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-zinc-400 font-medium"
+                    >
+                      {label}
+                    </div>
+                  ),
+                )}
               </div>
             </FeatureCard>
 
@@ -385,10 +519,23 @@ function HomePage() {
               title="30+ Caption Styles"
               desc="Hormozi, Grit, Prism, Glitch, Word Pop. Every word tunable."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-400">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-5 h-5 text-amber-400"
+                >
                   <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
-                  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" /><circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
-                  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" /><circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
+                  <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
+                  <circle cx="17.5" cy="10.5" r=".5" fill="currentColor" />
+                  <circle cx="6.5" cy="12.5" r=".5" fill="currentColor" />
+                  <circle cx="8.5" cy="7.5" r=".5" fill="currentColor" />
                 </svg>
               }
             />
@@ -398,8 +545,26 @@ function HomePage() {
               title="16:9 & 9:16 Export"
               desc="Runs entirely in your browser using Remotion. Zero upload wait times."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-amber-400">
-                  <rect width="18" height="18" x="3" y="3" rx="2" /><path d="M7 3v18" /><path d="M3 7.5h4" /><path d="M3 12h18" /><path d="M3 16.5h4" /><path d="M17 3v18" /><path d="M17 7.5h4" /><path d="M17 16.5h4" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-5 h-5 text-amber-400"
+                >
+                  <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <path d="M7 3v18" />
+                  <path d="M3 7.5h4" />
+                  <path d="M3 12h18" />
+                  <path d="M3 16.5h4" />
+                  <path d="M17 3v18" />
+                  <path d="M17 7.5h4" />
+                  <path d="M17 16.5h4" />
                 </svg>
               }
             />
@@ -416,7 +581,8 @@ function HomePage() {
               Raw transcription vs <span className="gradient-text">SubAI output</span>
             </h2>
             <p className="text-zinc-400 max-w-xl mx-auto text-[16px] leading-relaxed">
-              Most tools give you a messy auto-transcript. SubAI cleans the speech, keeps the code-switch, and delivers captions that actually make sense.
+              Most tools give you a messy auto-transcript. SubAI cleans the speech, keeps the
+              code-switch, and delivers captions that actually make sense.
             </p>
           </div>
 
@@ -424,7 +590,9 @@ function HomePage() {
             <div className="rounded-2xl border border-red-500/20 bg-red-500/[0.03] p-6">
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2 h-2 rounded-full bg-red-400" />
-                <span className="text-[11px] font-semibold text-red-300 tracking-wide uppercase">Raw transcript</span>
+                <span className="text-[11px] font-semibold text-red-300 tracking-wide uppercase">
+                  Raw transcript
+                </span>
               </div>
               <div className="space-y-3">
                 {[
@@ -433,7 +601,10 @@ function HomePage() {
                   "Actually what I'm trying to say is that this product is very... umm...",
                   "Aap logon ko pata hai ki yeh... like... it's very important for us",
                 ].map((line, i) => (
-                  <p key={i} className="text-[14px] text-zinc-500 italic leading-relaxed border-l-2 border-red-500/20 pl-3">
+                  <p
+                    key={i}
+                    className="text-[14px] text-zinc-500 italic leading-relaxed border-l-2 border-red-500/20 pl-3"
+                  >
                     {line}
                   </p>
                 ))}
@@ -442,19 +613,49 @@ function HomePage() {
             <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.03] p-6">
               <div className="flex items-center gap-2 mb-4">
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span className="text-[11px] font-semibold text-emerald-300 tracking-wide uppercase">SubAI — Clean captions</span>
+                <span className="text-[11px] font-semibold text-emerald-300 tracking-wide uppercase">
+                  SubAI — Clean captions
+                </span>
               </div>
               <div className="space-y-3">
                 {[
-                  { roman: "So basically, the thing is…", native: "तो बात यूँ है…", eng: "So basically, the thing is…" },
-                  { roman: "Main kal market gaya tha, phir uske baad…", native: "मैं कल मार्केट गया था, फिर उसके बाद…", eng: "I went to the market yesterday, then…" },
-                  { roman: "What I'm trying to say is, this product is very…", native: "मैं यह कहने की कोशिश कर रहा हूँ कि यह प्रोडक्ट बहुत…", eng: "What I'm trying to say is, this product is very…" },
-                  { roman: "Yeh humare liye bahut important hai", native: "यह हमारे लिए बहुत महत्वपूर्ण है", eng: "This is very important for us" },
+                  {
+                    roman: "So basically, the thing is…",
+                    native: "तो बात यूँ है…",
+                    eng: "So basically, the thing is…",
+                  },
+                  {
+                    roman: "Main kal market gaya tha, phir uske baad…",
+                    native: "मैं कल मार्केट गया था, फिर उसके बाद…",
+                    eng: "I went to the market yesterday, then…",
+                  },
+                  {
+                    roman: "What I'm trying to say is, this product is very…",
+                    native: "मैं यह कहने की कोशिश कर रहा हूँ कि यह प्रोडक्ट बहुत…",
+                    eng: "What I'm trying to say is, this product is very…",
+                  },
+                  {
+                    roman: "Yeh humare liye bahut important hai",
+                    native: "यह हमारे लिए बहुत महत्वपूर्ण है",
+                    eng: "This is very important for us",
+                  },
                 ].map((line, i) => (
-                  <div key={i} className="text-[14px] text-zinc-300 leading-relaxed border-l-2 border-emerald-500/20 pl-3">
-                    <p><span className="text-zinc-500 text-[11px] font-mono">Roman:</span> {line.roman}</p>
-                    <p><span className="text-zinc-500 text-[11px] font-mono">Native:</span> {line.native}</p>
-                    <p><span className="text-zinc-500 text-[11px] font-mono">English:</span> {line.eng}</p>
+                  <div
+                    key={i}
+                    className="text-[14px] text-zinc-300 leading-relaxed border-l-2 border-emerald-500/20 pl-3"
+                  >
+                    <p>
+                      <span className="text-zinc-500 text-[11px] font-mono">Roman:</span>{" "}
+                      {line.roman}
+                    </p>
+                    <p>
+                      <span className="text-zinc-500 text-[11px] font-mono">Native:</span>{" "}
+                      {line.native}
+                    </p>
+                    <p>
+                      <span className="text-zinc-500 text-[11px] font-mono">English:</span>{" "}
+                      {line.eng}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -462,8 +663,22 @@ function HomePage() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 py-4">
-            {["Roman Script", "Devanagari", "Gurmukhi", "Bengali", "Tamil", "Telugu", "Kannada", "Malayalam", "Gujarati", "English"].map((label) => (
-              <span key={label} className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-zinc-500 font-medium">
+            {[
+              "Roman Script",
+              "Devanagari",
+              "Gurmukhi",
+              "Bengali",
+              "Tamil",
+              "Telugu",
+              "Kannada",
+              "Malayalam",
+              "Gujarati",
+              "English",
+            ].map((label) => (
+              <span
+                key={label}
+                className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-zinc-500 font-medium"
+              >
                 {label}
               </span>
             ))}
@@ -505,7 +720,10 @@ function HomePage() {
                   { feature: "Free tier (watermark)", subai: "✓", veed: "✗", others: "✗" },
                   { feature: "Browser-native (no install)", subai: "✓", capcut: "✓", others: "✗" },
                 ].map((row, i) => (
-                  <tr key={i} className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.015] transition-colors">
+                  <tr
+                    key={i}
+                    className="border-b border-white/[0.04] last:border-0 hover:bg-white/[0.015] transition-colors"
+                  >
                     <td className="py-3.5 px-5 text-zinc-300">{row.feature}</td>
                     <td className="py-3.5 px-5 text-emerald-400">{row.subai}</td>
                     <td className="py-3.5 px-5 text-zinc-600">{row.capcut ?? row.others}</td>
@@ -531,11 +749,26 @@ function HomePage() {
 
           <div className="space-y-3">
             {[
-              { q: "Is SubAI really free?", a: "Yes. The free plan includes unlimited transcription, watermark-free exports at 720p, and access to all caption styles. The Pro plan removes the watermark and unlocks 4K exports." },
-              { q: "What languages does SubAI support?", a: "22 Indian languages including Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Punjabi, Kannada, Malayalam, Urdu, and more. Plus English and Hinglish code-mixed speech." },
-              { q: "How does the three-script export work?", a: "For every sentence, SubAI generates three lines: Roman transliteration (Hinglish), Native script (Devanagari, Tamil, etc.), and English translation. You can toggle which scripts appear in your final video." },
-              { q: "Can I use my own fonts and colors?", a: "Yes. The Brand Kit feature lets you save custom fonts, colors, and logo watermarks. Your brand kit is saved locally and applies to all future exports." },
-              { q: "How do I export to Premiere / CapCut / DaVinci?", a: "The SubAI Plugin auto-syncs your captions as edit-friendly text layers in Premiere Pro, CapCut, and DaVinci Resolve. Download it from the Plugin page after signing up." },
+              {
+                q: "Is SubAI really free?",
+                a: "Yes. The free plan includes unlimited transcription, watermark-free exports at 720p, and access to all caption styles. The Pro plan removes the watermark and unlocks 4K exports.",
+              },
+              {
+                q: "What languages does SubAI support?",
+                a: "22 Indian languages including Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Punjabi, Kannada, Malayalam, Urdu, and more. Plus English and Hinglish code-mixed speech.",
+              },
+              {
+                q: "How does the three-script export work?",
+                a: "For every sentence, SubAI generates three lines: Roman transliteration (Hinglish), Native script (Devanagari, Tamil, etc.), and English translation. You can toggle which scripts appear in your final video.",
+              },
+              {
+                q: "Can I use my own fonts and colors?",
+                a: "Yes. The Brand Kit feature lets you save custom fonts, colors, and logo watermarks. Your brand kit is saved locally and applies to all future exports.",
+              },
+              {
+                q: "How do I export to Premiere / CapCut / DaVinci?",
+                a: "The SubAI Plugin auto-syncs your captions as edit-friendly text layers in Premiere Pro, CapCut, and DaVinci Resolve. Download it from the Plugin page after signing up.",
+              },
             ].map((faq, i) => (
               <FaqItem key={i} question={faq.q} answer={faq.a} />
             ))}
@@ -555,7 +788,18 @@ function HomePage() {
         />
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <div className="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-400/10 border border-amber-400/20">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-amber-400"
+            >
               <path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.42 0l6.58-6.58a1 1 0 0 0 0-1.42Z" />
               <path d="M7 7h.01" />
             </svg>
@@ -564,15 +808,34 @@ function HomePage() {
             Works where <span className="gradient-text">you work</span>
           </h2>
           <p className="text-zinc-400 max-w-lg mx-auto text-[16px] leading-relaxed mb-10">
-            Download the SubAI Plugin to auto-sync captions directly into Premiere Pro, CapCut, and DaVinci Resolve. No manual import needed.
+            Download the SubAI Plugin to auto-sync captions directly into Premiere Pro, CapCut, and
+            DaVinci Resolve. No manual import needed.
           </p>
           <Link to="/plugin/download" className="btn-primary px-8 py-4 text-[15px]">
             Download the plugin
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 ml-1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4 ml-1.5"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" x2="12" y1="15" y2="3" />
+            </svg>
           </Link>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {["Premiere Pro", "CapCut", "DaVinci Resolve", "Final Cut Pro"].map((app) => (
-              <span key={app} className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.07] text-xs text-zinc-400 font-medium">
+              <span
+                key={app}
+                className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.07] text-xs text-zinc-400 font-medium"
+              >
                 {app}
               </span>
             ))}
@@ -587,7 +850,9 @@ function HomePage() {
         className="py-28 px-6 overflow-hidden bg-black/40 border-y border-white/[0.03]"
       >
         <div className="max-w-4xl mx-auto">
-          <div className={`text-center mb-12 transition-all duration-700 ${sandboxInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div
+            className={`text-center mb-12 transition-all duration-700 ${sandboxInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          >
             <p className="section-label">Live Sandbox</p>
             <h2 className="text-4xl md:text-[3.4rem] font-black tracking-tight leading-[1.06] mb-5 text-white">
               Preset styles, <span className="gradient-text">ready to ship</span>
@@ -629,7 +894,7 @@ function HomePage() {
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2.5 mb-4 group">
-<img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
+              <img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
               <span className="font-bold text-[15px] text-white tracking-tight">SubAI</span>
             </Link>
             <p className="text-zinc-400 text-sm max-w-xs leading-relaxed">
@@ -639,25 +904,70 @@ function HomePage() {
           <div>
             <h4 className="font-bold text-white mb-4 text-sm tracking-wide">Product</h4>
             <ul className="space-y-3 text-sm text-zinc-400">
-              <li><Link to="/pricing" className="hover:text-amber-400 transition-colors duration-200">Pricing</Link></li>
-              <li><Link to="/changelog" className="hover:text-amber-400 transition-colors duration-200">Changelog</Link></li>
-              <li><Link to="/templates" className="hover:text-amber-400 transition-colors duration-200">Templates</Link></li>
-              <li><Link to="/plugin/download" className="hover:text-amber-400 transition-colors duration-200">Plugin</Link></li>
+              <li>
+                <Link to="/pricing" className="hover:text-amber-400 transition-colors duration-200">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/changelog"
+                  className="hover:text-amber-400 transition-colors duration-200"
+                >
+                  Changelog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/templates"
+                  className="hover:text-amber-400 transition-colors duration-200"
+                >
+                  Templates
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/plugin/download"
+                  className="hover:text-amber-400 transition-colors duration-200"
+                >
+                  Plugin
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="font-bold text-white mb-4 text-sm tracking-wide">Company</h4>
             <ul className="space-y-3 text-sm text-zinc-400">
-              <li><Link to="/about" className="hover:text-amber-400 transition-colors duration-200">About</Link></li>
-              <li><Link to="/login" className="hover:text-amber-400 transition-colors duration-200">Login</Link></li>
-              <li><Link to="/signup" className="hover:text-amber-400 transition-colors duration-200">Sign Up</Link></li>
+              <li>
+                <Link to="/about" className="hover:text-amber-400 transition-colors duration-200">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="hover:text-amber-400 transition-colors duration-200">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:text-amber-400 transition-colors duration-200">
+                  Sign Up
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="font-bold text-white mb-4 text-sm tracking-wide">Legal</h4>
             <ul className="space-y-3 text-sm text-zinc-400">
-              <li><Link to="/privacy" className="hover:text-amber-400 transition-colors duration-200">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-amber-400 transition-colors duration-200">Terms of Service</Link></li>
+              <li>
+                <Link to="/privacy" className="hover:text-amber-400 transition-colors duration-200">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="hover:text-amber-400 transition-colors duration-200">
+                  Terms of Service
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

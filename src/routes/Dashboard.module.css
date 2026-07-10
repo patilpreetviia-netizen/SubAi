@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   background: #111114;
-  border-right: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
   padding: 16px 0;
 }
 
@@ -35,11 +35,12 @@
 .sidebarLogo {
   width: 24px;
   height: 24px;
-  background: #f59e0b;
-  border-radius: 7px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .workspaceTag {
@@ -48,7 +49,7 @@
   gap: 8px;
   padding: 6px 12px;
   margin: 0 8px 12px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 8px;
   font-size: 12px;
   color: #a1a1aa;
@@ -87,7 +88,9 @@
   color: #a1a1aa;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s;
   border: none;
   background: transparent;
   width: 100%;
@@ -96,12 +99,12 @@
 }
 
 .navItem:hover {
-  background: rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.05);
   color: #fff;
 }
 
 .navItemActive {
-  background: rgba(245,158,11,0.12);
+  background: rgba(245, 158, 11, 0.12);
   color: #f59e0b;
 }
 
@@ -114,7 +117,7 @@
 
 .navSep {
   height: 1px;
-  background: rgba(255,255,255,0.06);
+  background: rgba(255, 255, 255, 0.06);
   margin: 8px 8px;
 }
 
@@ -138,14 +141,14 @@
   width: calc(100% - 16px);
 }
 .upgradeBtn:hover {
-  background: rgba(245,158,11,0.08);
+  background: rgba(245, 158, 11, 0.08);
 }
 
 /* Usage meter at bottom of sidebar */
 .usageMeter {
   margin: 8px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 10px;
   padding: 12px;
 }
@@ -167,7 +170,7 @@
 .usageBadge {
   font-size: 9px;
   font-weight: 700;
-  background: rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.08);
   color: #a1a1aa;
   padding: 2px 6px;
   border-radius: 4px;
@@ -180,8 +183,13 @@
   font-size: 11px;
   margin-bottom: 4px;
 }
-.usageLabel { color: #71717a; }
-.usageVal { color: #f59e0b; font-weight: 600; }
+.usageLabel {
+  color: #71717a;
+}
+.usageVal {
+  color: #f59e0b;
+  font-weight: 600;
+}
 
 .usageReset {
   font-size: 10px;
@@ -202,14 +210,16 @@
   font-family: inherit;
   transition: background 0.15s;
 }
-.upgradeNowBtn:hover { background: #fbbf24; }
+.upgradeNowBtn:hover {
+  background: #fbbf24;
+}
 
 .userCard {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 12px 12px 8px;
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .logoutBtn {
@@ -224,7 +234,9 @@
   transition: color 0.15s;
   margin-left: auto;
 }
-.logoutBtn:hover { color: #a1a1aa; }
+.logoutBtn:hover {
+  color: #a1a1aa;
+}
 
 .userAvatar {
   width: 28px;
@@ -308,7 +320,9 @@
   transition: background 0.15s;
   white-space: nowrap;
 }
-.newProjectBtn:hover { background: #fbbf24; }
+.newProjectBtn:hover {
+  background: #fbbf24;
+}
 
 /* Upload zone */
 .sectionLabel {
@@ -321,7 +335,7 @@
 }
 
 .dropzone {
-  border: 1.5px dashed rgba(255,255,255,0.12);
+  border: 1.5px dashed rgba(255, 255, 255, 0.12);
   border-radius: 14px;
   padding: 48px 24px;
   display: flex;
@@ -330,23 +344,25 @@
   justify-content: center;
   cursor: pointer;
   position: relative;
-  transition: border-color 0.15s, background 0.15s;
-  background: rgba(255,255,255,0.01);
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  background: rgba(255, 255, 255, 0.01);
   margin-bottom: 40px;
   min-height: 160px;
 }
 
 .dropzone:hover,
 .dropzoneHover {
-  border-color: rgba(245,158,11,0.4);
-  background: rgba(245,158,11,0.03);
+  border-color: rgba(245, 158, 11, 0.4);
+  background: rgba(245, 158, 11, 0.03);
 }
 
 .dropzoneIcon {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.07);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -385,8 +401,8 @@
   bottom: 12px;
   right: 16px;
   padding: 6px 14px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 7px;
   font-size: 12px;
   font-weight: 500;
@@ -395,7 +411,10 @@
   font-family: inherit;
   transition: background 0.15s;
 }
-.dropzoneBtn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.dropzoneBtn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
 
 /* Recent projects */
 .projectsEmpty {
@@ -411,7 +430,7 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -428,19 +447,21 @@
 
 .projectCard {
   background: #17171b;
-  border: 1px solid rgba(255,255,255,0.07);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: border-color 0.15s, transform 0.15s;
+  transition:
+    border-color 0.15s,
+    transform 0.15s;
   display: block;
   position: relative;
 }
 
 .projectCard:hover {
-  border-color: rgba(245,158,11,0.3);
+  border-color: rgba(245, 158, 11, 0.3);
   transform: translateY(-1px);
 }
 
@@ -450,7 +471,7 @@
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  background: rgba(255,255,255,0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .projectInfo {
@@ -484,12 +505,12 @@
 }
 
 .statusCompleted {
-  background: rgba(34,197,94,0.12);
+  background: rgba(34, 197, 94, 0.12);
   color: #22c55e;
 }
 
 .statusProcessing {
-  background: rgba(245,158,11,0.12);
+  background: rgba(245, 158, 11, 0.12);
   color: #f59e0b;
 }
 
@@ -497,7 +518,7 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0, 0, 0, 0.75);
   backdrop-filter: blur(8px);
   z-index: 100;
   display: flex;
@@ -508,7 +529,7 @@
 
 .modal {
   background: #18181b;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   width: 100%;
   max-width: 480px;
@@ -571,8 +592,8 @@
 }
 
 .langSettings {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
@@ -588,7 +609,7 @@
 .langSettingsIcon {
   width: 32px;
   height: 32px;
-  background: rgba(245,158,11,0.12);
+  background: rgba(245, 158, 11, 0.12);
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -616,7 +637,8 @@
   gap: 12px;
 }
 
-.langField {}
+.langField {
+}
 .langFieldLabel {
   font-size: 9px;
   font-weight: 700;
@@ -632,7 +654,7 @@
 .langSelect {
   width: 100%;
   background: #111114;
-  border: 1px solid rgba(255,255,255,0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   color: #fff;
   font-family: inherit;
@@ -665,5 +687,10 @@
   gap: 8px;
   transition: background 0.15s;
 }
-.generateBtn:hover:not(:disabled) { background: #fbbf24; }
-.generateBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+.generateBtn:hover:not(:disabled) {
+  background: #fbbf24;
+}
+.generateBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
