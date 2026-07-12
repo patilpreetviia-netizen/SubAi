@@ -6,28 +6,32 @@
 @import "@fontsource/inter/800.css";
 
 :root {
-  --surface-base: #07070a;
-  --surface-muted: #121216;
-  --surface-raised: #1c1c22;
-  --surface-overlay: #18181e;
-  --surface-card: #141418;
-  --text-primary: #fafafa;
-  --text-secondary: #a1a1aa;
-  --text-tertiary: #6b6b80;
-  --accent-amber: #f59e0b;
-  --accent-amber-light: #facc15;
-  --accent-amber-dim: rgba(245, 158, 11, 0.12);
-  --accent-amber-glow: 0 0 30px rgba(245, 158, 11, 0.2);
-  --border-subtle: rgba(255, 255, 255, 0.06);
-  --border-strong: rgba(255, 255, 255, 0.1);
+  --primary: #D97736;
+  --secondary: #4B5563;
+  --tertiary: #FF9A4D;
+  --bg-base: #0A0A0A;
+  --bg-surface: #0A0A0A;
+  --bg-raised: #111114;
+  --bg-overlay: #18181b;
+  --text-primary: #FFFFFF;
+  --text-secondary: #9CA3AF;
+  --text-tertiary: #6b7280;
+  --border-base: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --accent-dim: rgba(217, 119, 6, 0.12);
+  --accent-glow: 0 0 30px rgba(217, 119, 6, 0.2);
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 18px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.4);
+  --shadow-deep: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
+  --transition-fast: 150ms ease;
+  --transition-base: 500ms cubic-bezier(0.4, 0.2, 0.6, 1);
   color-scheme: dark;
 }
 
@@ -45,8 +49,8 @@ body,
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: var(--surface-base);
-  color: var(--text-primary);
+  background: var(--bg-base);
+  color: var(--text-secondary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -69,8 +73,8 @@ select {
 }
 
 ::selection {
-  background: var(--accent-amber);
-  color: #000;
+  background: var(--primary);
+  color: #030303;
 }
 
 ::-webkit-scrollbar {
@@ -88,43 +92,58 @@ select {
   background: rgba(255, 255, 255, 0.15);
 }
 
+/* ── Premium Glassmorphic Card Surface ── */
+.premium-card {
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0));
+}
+.premium-card-inner {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-deep);
+}
+
 .glass {
-  background: rgba(18, 18, 22, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--border-subtle);
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-strong {
-  background: rgba(12, 12, 18, 0.85);
+  background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--border-strong);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glow-amber {
   box-shadow:
-    0 0 30px rgba(245, 158, 11, 0.15),
-    0 0 60px rgba(245, 158, 11, 0.05);
+    0 0 30px rgba(217, 119, 6, 0.15),
+    0 0 60px rgba(217, 119, 6, 0.05);
 }
 
 .btn-primary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 700;
-  color: #000;
-  background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light));
-  border: none;
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  color: #030303;
+  background: var(--primary);
+  border: 0px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: var(--accent-amber-glow);
+  box-shadow: var(--accent-glow);
 }
 .btn-primary:active {
   transform: translateY(0);
@@ -135,42 +154,41 @@ select {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: var(--radius-md);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  background: transparent;
-  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-primary);
+  background: var(--primary);
+  border: 1px solid var(--primary);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all var(--transition-fast);
 }
 .btn-secondary:hover {
-  color: var(--text-primary);
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.03);
+  opacity: 0.9;
 }
 
 .card {
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  transition: all 0.2s;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
 }
 .card:hover {
   border-color: var(--border-strong);
 }
 
 .section-label {
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
   letter-spacing: 0.1em;
-  color: var(--accent-amber);
+  color: var(--primary);
   text-transform: uppercase;
   margin-bottom: 8px;
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent-amber), var(--accent-amber-light));
+  background: linear-gradient(135deg, var(--primary), var(--tertiary));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -195,10 +213,10 @@ select {
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.1);
+    box-shadow: 0 0 20px rgba(217, 119, 6, 0.1);
   }
   50% {
-    box-shadow: 0 0 40px rgba(245, 158, 11, 0.25);
+    box-shadow: 0 0 40px rgba(217, 119, 6, 0.25);
   }
 }
 

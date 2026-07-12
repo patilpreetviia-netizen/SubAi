@@ -4,17 +4,24 @@
   place-items: center;
   padding: 40px 20px;
   background:
-    radial-gradient(circle at 20% 20%, rgba(250, 204, 21, 0.06), transparent 40%),
-    var(--surface-base);
+    radial-gradient(circle at 20% 20%, rgba(217, 119, 6, 0.06), transparent 40%),
+    var(--bg-base);
 }
 .card {
   width: 100%;
   max-width: 420px;
-  background: var(--surface-muted);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0));
+}
+.cardInner {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-deep);
   padding: 32px;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 .brand {
   display: flex;
@@ -29,14 +36,15 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--accent-amber);
-  box-shadow: var(--accent-amber-glow);
+  background: var(--primary);
+  box-shadow: var(--accent-glow);
 }
 .title {
   font-size: 22px;
   font-weight: 700;
   margin: 0 0 6px;
   text-align: center;
+  color: var(--text-primary);
 }
 .desc {
   color: var(--text-secondary);
@@ -45,7 +53,6 @@
   margin: 0 0 20px;
 }
 
-/* ── OAuth ── */
 .oauthRow {
   display: flex;
   flex-direction: column;
@@ -59,9 +66,9 @@
   gap: 10px;
   width: 100%;
   padding: 11px 16px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-subtle);
-  background: var(--surface-base);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-base);
+  background: var(--bg-raised);
   color: var(--text-primary);
   font-size: 14px;
   font-weight: 500;
@@ -82,7 +89,6 @@
   cursor: not-allowed;
 }
 
-/* ── Divider ── */
 .divider {
   position: relative;
   text-align: center;
@@ -95,17 +101,16 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: var(--border-subtle);
+  background: var(--border-base);
 }
 .divider span {
   position: relative;
-  background: var(--surface-muted);
+  background: rgba(10, 10, 10, 0.8);
   padding: 0 10px;
   font-size: 12px;
   color: var(--text-tertiary);
 }
 
-/* ── Password field with eye toggle ── */
 .pwWrap {
   position: relative;
 }
@@ -127,7 +132,6 @@
   color: var(--text-secondary);
 }
 
-/* ── Forgot password row ── */
 .forgotRow {
   display: flex;
   justify-content: flex-end;
@@ -136,7 +140,7 @@
 .textBtn {
   background: none;
   border: none;
-  color: var(--accent-amber);
+  color: var(--primary);
   font-size: 13px;
   cursor: pointer;
   padding: 0;
@@ -147,7 +151,6 @@
   text-decoration: underline;
 }
 
-/* ── Submit ── */
 .submit {
   width: 100%;
   margin-top: 6px;
@@ -159,12 +162,12 @@
   font-size: 13px;
 }
 .foot a {
-  color: var(--accent-amber);
+  color: var(--primary);
   font-weight: 500;
 }
 .notice {
-  background: var(--accent-amber-dim);
-  color: var(--accent-amber);
+  background: var(--accent-dim);
+  color: var(--primary);
   font-size: 12px;
   padding: 8px 12px;
   border-radius: var(--radius-sm);
@@ -192,7 +195,6 @@
   border: 1px solid rgba(34, 197, 94, 0.25);
 }
 
-/* ── Password strength ── */
 .strength {
   display: flex;
   align-items: center;
@@ -202,13 +204,13 @@
 .strengthBar {
   flex: 1;
   height: 4px;
-  background: var(--border-subtle);
-  border-radius: 2px;
+  background: var(--border-base);
+  border-radius: var(--radius-xs);
   overflow: hidden;
 }
 .strengthFill {
   height: 100%;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   transition:
     width 0.2s ease,
     background 0.2s ease;

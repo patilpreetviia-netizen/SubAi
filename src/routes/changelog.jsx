@@ -53,21 +53,21 @@ function ChangelogPage() {
           <h1 className="text-[clamp(2.2rem,5vw,3.2rem)] font-black tracking-tight leading-[1.06] mb-3">
             Changelog
           </h1>
-          <p className="text-zinc-400 mb-12">Every update to SubAI, in one place.</p>
+          <p className="text-[#9CA3AF] mb-12">Every update to SubAI, in one place.</p>
 
           <div className="space-y-10">
             {CHANGES.map((release) => (
-              <div key={release.version} className="border-l-2 border-amber-400/30 pl-6 relative">
-                <div className="absolute left-0 top-0 -translate-x-[5px] w-2 h-2 rounded-full bg-amber-400" />
+              <div key={release.version} className="border-l-2 border-[#D97736]/30 pl-6 relative">
+                <div className="absolute left-0 top-0 -translate-x-[5px] w-2 h-2 rounded-full bg-[#D97736]" />
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-lg font-bold text-white">v{release.version}</span>
-                  <span className="text-xs text-zinc-600">{release.date}</span>
+                  <span className="text-xs text-[#4B5563]">{release.date}</span>
                 </div>
                 <ul className="space-y-2">
                   {release.items.map((item, i) => (
-                    <li key={i} className="text-sm text-zinc-300 flex items-start gap-2">
+                    <li key={i} className="text-sm text-[#D1D5DB] flex items-start gap-2">
                       <svg
-                        className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0"
+                        className="w-3.5 h-3.5 text-[#D97736] mt-0.5 shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

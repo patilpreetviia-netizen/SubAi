@@ -1,8 +1,8 @@
 .foot {
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   padding: 32px 24px;
   margin-top: 80px;
-  color: var(--text-tertiary);
+  color: #6b7280;
   font-size: 13px;
 }
 .inner {
@@ -19,18 +19,18 @@
   align-items: center;
   gap: 6px;
   padding: 5px 10px;
-  border-radius: 999px;
-  background: var(--accent-amber-dim);
-  color: var(--accent-amber);
+  border-radius: 9999px;
+  background: rgba(217, 119, 6, 0.12);
+  color: #D97736;
   font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 .links a {
-  color: var(--text-secondary);
+  color: #9CA3AF;
   margin-left: 18px;
 }
 .links a:hover {
-  color: var(--accent-amber);
+  color: #D97736;
 }

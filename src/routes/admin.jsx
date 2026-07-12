@@ -35,7 +35,7 @@ import {
 const ADMIN_EMAIL = "patilpreetviia@gmail.com";
 
 const COLORS = [
-  "#facc15",
+  "#D97736",
   "#22c55e",
   "#ef4444",
   "#3b82f6",
@@ -83,19 +83,23 @@ function initials(name, email) {
 }
 
 /* ─── stat card ─────────────────────────────────────── */
-function StatCard({ label, value, icon, color = "#facc15", sub }) {
+function StatCard({ label, value, icon, color = "#D97736", sub }) {
   return (
     <div
       style={{
-        background: "#111114",
-        border: "1px solid rgba(255,255,255,0.07)",
-        borderRadius: 14,
+        background: "rgba(10,10,10,0.8)",
+        backdropFilter: "blur(24px)",
+        WebkitBackdropFilter: "blur(24px)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        borderRadius: 16,
         padding: "20px 22px",
         display: "flex",
         flexDirection: "column",
         gap: 6,
         position: "relative",
         overflow: "hidden",
+        boxShadow: "rgba(0,0,0,0.25) 0px 25px 50px -12px",
+        transition: "all 150ms ease",
       }}
     >
       <div
@@ -105,7 +109,7 @@ function StatCard({ label, value, icon, color = "#facc15", sub }) {
           right: 16,
           width: 38,
           height: 38,
-          borderRadius: 10,
+          borderRadius: 6,
           background: `${color}18`,
           display: "flex",
           alignItems: "center",
@@ -118,7 +122,7 @@ function StatCard({ label, value, icon, color = "#facc15", sub }) {
       <div
         style={{
           fontSize: 11,
-          color: "#71717a",
+          color: "#6b7280",
           textTransform: "uppercase",
           letterSpacing: "0.06em",
           fontWeight: 600,
@@ -129,7 +133,7 @@ function StatCard({ label, value, icon, color = "#facc15", sub }) {
       <div style={{ fontSize: 30, fontWeight: 800, color: "#fff", lineHeight: 1 }}>
         {fmt(value)}
       </div>
-      {sub && <div style={{ fontSize: 12, color: "#52525b" }}>{sub}</div>}
+      {sub && <div style={{ fontSize: 12, color: "#6b7280" }}>{sub}</div>}
       <div
         style={{
           position: "absolute",
@@ -138,7 +142,7 @@ function StatCard({ label, value, icon, color = "#facc15", sub }) {
           right: 0,
           height: 3,
           background: `${color}30`,
-          borderRadius: "0 0 14px 14px",
+          borderRadius: "0 0 16px 16px",
         }}
       />
     </div>
@@ -198,18 +202,20 @@ function ConfirmDialog({
     >
       <div
         style={{
-          background: "#18181b",
+          background: "rgba(10,10,10,0.85)",
+          backdropFilter: "blur(24px)",
           border: "1px solid rgba(255,255,255,0.1)",
           borderRadius: 16,
           padding: 28,
           maxWidth: 400,
           width: "100%",
+          boxShadow: "rgba(0,0,0,0.4) 0px 25px 50px -12px",
         }}
       >
         <h3 style={{ fontSize: 16, fontWeight: 700, margin: "0 0 10px", color: "#fff" }}>
           {title}
         </h3>
-        <p style={{ fontSize: 13, color: "#a1a1aa", margin: "0 0 24px", lineHeight: 1.5 }}>
+        <p style={{ fontSize: 13, color: "#9CA3AF", margin: "0 0 24px", lineHeight: 1.5 }}>
           {body}
         </p>
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
@@ -217,13 +223,14 @@ function ConfirmDialog({
             onClick={onCancel}
             style={{
               padding: "8px 18px",
-              borderRadius: 8,
+              borderRadius: 9999,
               border: "1px solid rgba(255,255,255,0.1)",
               background: "transparent",
-              color: "#a1a1aa",
+              color: "#9CA3AF",
               cursor: "pointer",
               fontSize: 13,
               fontFamily: "inherit",
+              transition: "all 150ms ease",
             }}
           >
             Cancel
@@ -232,7 +239,7 @@ function ConfirmDialog({
             onClick={onConfirm}
             style={{
               padding: "8px 18px",
-              borderRadius: 8,
+              borderRadius: 9999,
               border: "none",
               background: danger ? "#ef4444" : "#22c55e",
               color: "#fff",
@@ -240,6 +247,7 @@ function ConfirmDialog({
               fontSize: 13,
               fontWeight: 600,
               fontFamily: "inherit",
+              transition: "all 150ms ease",
             }}
           >
             {confirmLabel}
@@ -278,7 +286,7 @@ function useToast() {
             border: `1px solid ${t.type === "error" ? "#ef444440" : "#22c55e40"}`,
             color: t.type === "error" ? "#f87171" : "#4ade80",
             padding: "10px 16px",
-            borderRadius: 10,
+            borderRadius: 16,
             fontSize: 13,
             fontWeight: 500,
             animation: "slideInRight 0.25s ease-out",
@@ -304,16 +312,16 @@ function NavBtn({ active, onClick, icon, label, badge }) {
         gap: 10,
         width: "100%",
         padding: "9px 14px",
-        borderRadius: 9,
+        borderRadius: 16,
         border: "none",
         cursor: "pointer",
-        background: active ? "rgba(250,204,21,0.1)" : "transparent",
-        color: active ? "#facc15" : "#a1a1aa",
+        background: active ? "rgba(217,119,6,0.1)" : "transparent",
+        color: active ? "#D97736" : "#9CA3AF",
         fontSize: 13,
         fontWeight: active ? 600 : 400,
         fontFamily: "inherit",
         textAlign: "left",
-        transition: "all 0.15s",
+        transition: "all 150ms ease",
       }}
     >
       <span style={{ fontSize: 15 }}>{icon}</span>
@@ -326,7 +334,7 @@ function NavBtn({ active, onClick, icon, label, badge }) {
             fontSize: 10,
             fontWeight: 700,
             padding: "2px 6px",
-            borderRadius: 10,
+            borderRadius: 9999,
             lineHeight: 1.5,
           }}
         >
@@ -553,9 +561,9 @@ function AdminPage() {
         display: "flex",
         height: "100vh",
         overflow: "hidden",
-        background: "#0a0a0d",
+        background: "#0A0A0A",
         color: "#fff",
-        fontFamily: '"Inter", system-ui, sans-serif',
+        fontFamily: "var(--font-sans)",
       }}
     >
       <style>{`
@@ -569,6 +577,41 @@ function AdminPage() {
         ::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:3px; }
         input, textarea, button, select { font-family:inherit; }
         a { color:inherit; text-decoration:none; }
+        .admin-card {
+          background: rgba(10,10,10,0.8);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          box-shadow: rgba(0,0,0,0.25) 0px 25px 50px -12px;
+          padding: 20px;
+          transition: all 150ms ease;
+        }
+        .admin-card:hover {
+          border-color: rgba(255,255,255,0.12);
+        }
+        .admin-input {
+          background: #111114;
+          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: 16px;
+          padding: 10px 14px;
+          color: #fff;
+          font-size: 13px;
+          outline: none;
+          transition: border-color 150ms ease;
+        }
+        .admin-input:focus {
+          border-color: #D97736;
+        }
+        .admin-btn {
+          padding: 6px 12px;
+          border-radius: 6px;
+          border: none;
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 500;
+          transition: all 150ms ease;
+        }
       `}</style>
 
       {/* ── SIDEBAR ── */}
@@ -576,8 +619,9 @@ function AdminPage() {
         style={{
           width: 220,
           minWidth: 220,
-          background: "#0f0f12",
-          borderRight: "1px solid rgba(255,255,255,0.06)",
+          background: "rgba(10,10,10,0.9)",
+          backdropFilter: "blur(24px)",
+          borderRight: "1px solid rgba(255,255,255,0.08)",
           display: "flex",
           flexDirection: "column",
           padding: "16px 10px",
@@ -597,7 +641,7 @@ function AdminPage() {
             style={{
               width: 30,
               height: 30,
-              borderRadius: 8,
+              borderRadius: 6,
               overflow: "hidden",
               background: "#1a1a20",
               display: "flex",
@@ -606,14 +650,14 @@ function AdminPage() {
             }}
           >
             <img
-              src="/logo.jpeg"
+              src="/subai-logo.png"
               alt="SubAI"
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              style={{ height: 52, width: "auto", objectFit: "contain" }}
             />
           </div>
           <div>
             <div style={{ fontSize: 13, fontWeight: 700, color: "#fff" }}>SubAI Admin</div>
-            <div style={{ fontSize: 10, color: "#52525b" }}>Control Panel</div>
+            <div style={{ fontSize: 10, color: "#6b7280" }}>Control Panel</div>
           </div>
         </div>
 
@@ -646,15 +690,16 @@ function AdminPage() {
           style={{
             margin: "10px 4px 0",
             padding: "10px 12px",
-            background: "rgba(250,204,21,0.06)",
-            borderRadius: 10,
-            border: "1px solid rgba(250,204,21,0.12)",
+            background: "rgba(217,119,6,0.06)",
+            borderRadius: 16,
+            border: "1px solid rgba(217,119,6,0.12)",
+            transition: "all 150ms ease",
           }}
         >
-          <div style={{ fontSize: 10, color: "#facc15", fontWeight: 700, marginBottom: 3 }}>
+          <div style={{ fontSize: 10, color: "#D97736", fontWeight: 700, marginBottom: 3 }}>
             ADMIN
           </div>
-          <div style={{ fontSize: 11, color: "#71717a", wordBreak: "break-all" }}>{user.email}</div>
+          <div style={{ fontSize: 11, color: "#6b7280", wordBreak: "break-all" }}>{user.email}</div>
         </div>
       </aside>
 
@@ -669,7 +714,7 @@ function AdminPage() {
             alignItems: "center",
             justifyContent: "space-between",
             borderBottom: "1px solid rgba(255,255,255,0.06)",
-            background: "#0a0a0d",
+            background: "#0A0A0A",
             flexShrink: 0,
           }}
         >
@@ -680,20 +725,21 @@ function AdminPage() {
             </h1>
           </div>
           <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-            {loadingData && <span style={{ fontSize: 11, color: "#52525b" }}>Loading…</span>}
+            {loadingData && <span style={{ fontSize: 11, color: "#6b7280" }}>Loading…</span>}
             <button
               onClick={loadAll}
               style={{
                 padding: "7px 14px",
-                borderRadius: 8,
+                borderRadius: 9999,
                 border: "1px solid rgba(255,255,255,0.1)",
                 background: "transparent",
-                color: "#a1a1aa",
+                color: "#9CA3AF",
                 cursor: "pointer",
                 fontSize: 12,
                 display: "flex",
                 alignItems: "center",
                 gap: 6,
+                transition: "all 150ms ease",
               }}
             >
               ↻ Refresh
@@ -709,7 +755,7 @@ function AdminPage() {
               padding: "12px 16px",
               background: "rgba(239,68,68,0.1)",
               border: "1px solid rgba(239,68,68,0.3)",
-              borderRadius: 10,
+              borderRadius: 16,
               color: "#f87171",
               fontSize: 13,
             }}
@@ -743,7 +789,7 @@ function AdminPage() {
                   label="Total Jobs"
                   value={stats?.totalJobs}
                   icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>}
-                  color="#facc15"
+                  color="#D97736"
                   sub={`${fmt(stats?.jobsByStatus?.completed || 0)} completed`}
                 />
                 <StatCard
@@ -771,7 +817,7 @@ function AdminPage() {
                   icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>}
                   color="#ef4444"
                 />
-                <StatCard label="Churned 30d" value={churned.length} icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>} color="#71717a" />
+                <StatCard label="Churned 30d" value={churned.length} icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>} color="#6b7280" />
                 <StatCard
                   label="New Signups 7d"
                   value={newSignups.length}
@@ -782,46 +828,42 @@ function AdminPage() {
 
               {/* jobs over time */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                  marginBottom: 18,
-                }}
+                className="admin-card"
+                style={{ marginBottom: 18 }}
               >
                 <SectionHead title="Jobs Over Time" />
                 <ResponsiveContainer width="100%" height={200}>
                   <AreaChart data={stats?.jobsByDate || []}>
                     <defs>
                       <linearGradient id="gJobs" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#facc15" stopOpacity={0.25} />
-                        <stop offset="95%" stopColor="#facc15" stopOpacity={0} />
+                        <stop offset="5%" stopColor="#D97736" stopOpacity={0.25} />
+                        <stop offset="95%" stopColor="#D97736" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <XAxis
                       dataKey="date"
-                      tick={{ fontSize: 10, fill: "#52525b" }}
+                      tick={{ fontSize: 10, fill: "#6b7280" }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
-                      tick={{ fontSize: 10, fill: "#52525b" }}
+                      tick={{ fontSize: 10, fill: "#6b7280" }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <Tooltip
                       contentStyle={{
-                        background: "#18181b",
+                        background: "rgba(10,10,10,0.9)",
                         border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 8,
+                        borderRadius: 6,
                         fontSize: 12,
+                        boxShadow: "rgba(0,0,0,0.3) 0px 10px 30px -5px",
                       }}
                     />
                     <Area
                       type="monotone"
                       dataKey="count"
-                      stroke="#facc15"
+                      stroke="#D97736"
                       strokeWidth={2}
                       fill="url(#gJobs)"
                       name="Jobs"
@@ -840,12 +882,7 @@ function AdminPage() {
                 }}
               >
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="Language Split" />
                   <ResponsiveContainer width="100%" height={180}>
@@ -868,7 +905,7 @@ function AdminPage() {
                         contentStyle={{
                           background: "#18181b",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 8,
+                          borderRadius: 6,
                           fontSize: 12,
                         }}
                       />
@@ -876,12 +913,7 @@ function AdminPage() {
                   </ResponsiveContainer>
                 </div>
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="Job Status" />
                   <ResponsiveContainer width="100%" height={180}>
@@ -904,7 +936,7 @@ function AdminPage() {
                         contentStyle={{
                           background: "#18181b",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 8,
+                          borderRadius: 6,
                           fontSize: 12,
                         }}
                       />
@@ -915,12 +947,7 @@ function AdminPage() {
 
               {/* top users */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Top Users by Jobs" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -933,7 +960,7 @@ function AdminPage() {
                         gap: 12,
                         padding: "10px 14px",
                         background: "rgba(255,255,255,0.03)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                         border: "1px solid rgba(255,255,255,0.05)",
                       }}
                     >
@@ -958,12 +985,12 @@ function AdminPage() {
                         <div style={{ fontSize: 13, color: "#fff", fontWeight: 500 }}>
                           {u.email}
                         </div>
-                        {u.name && <div style={{ fontSize: 11, color: "#71717a" }}>{u.name}</div>}
+                        {u.name && <div style={{ fontSize: 11, color: "#6b7280" }}>{u.name}</div>}
                       </div>
                       <div
                         style={{
                           padding: "3px 10px",
-                          borderRadius: 20,
+                          borderRadius: 9999,
                           background: `${COLORS[i % COLORS.length]}20`,
                           color: COLORS[i % COLORS.length],
                           fontSize: 12,
@@ -990,9 +1017,9 @@ function AdminPage() {
                   style={{
                     flex: 1,
                     padding: "10px 14px",
-                    borderRadius: 10,
+                    borderRadius: 16,
                     border: "1px solid rgba(255,255,255,0.1)",
-                    background: "#111114",
+                    background: "#0f0f12",
                     color: "#fff",
                     fontSize: 13,
                     outline: "none",
@@ -1001,11 +1028,11 @@ function AdminPage() {
                 <div
                   style={{
                     padding: "10px 16px",
-                    borderRadius: 10,
-                    background: "#111114",
+                    borderRadius: 16,
+                    background: "#0f0f12",
                     border: "1px solid rgba(255,255,255,0.1)",
                     fontSize: 13,
-                    color: "#71717a",
+                    color: "#6b7280",
                     display: "flex",
                     alignItems: "center",
                   }}
@@ -1021,13 +1048,14 @@ function AdminPage() {
                     alignItems: "center",
                     gap: 10,
                     padding: "10px 14px",
-                    background: "rgba(250,204,21,0.08)",
-                    borderRadius: 10,
+                    background: "rgba(217,119,6,0.08)",
+                    borderRadius: 16,
                     marginBottom: 12,
-                    border: "1px solid rgba(250,204,21,0.15)",
+                    border: "1px solid rgba(217,119,6,0.15)",
+                    transition: "all 150ms ease",
                   }}
                 >
-                  <span style={{ fontSize: 13, color: "#facc15", fontWeight: 600 }}>
+                  <span style={{ fontSize: 13, color: "#D97736", fontWeight: 600 }}>
                     {selectedUsers.size} selected
                   </span>
                   <button
@@ -1054,12 +1082,13 @@ function AdminPage() {
                     }}
                     style={{
                       padding: "6px 12px",
-                      borderRadius: 8,
+                      borderRadius: 9999,
                       border: "none",
-                      background: "rgba(251,146,60,0.15)",
-                      color: "#fb923c",
+                      background: "rgba(217,119,6,0.15)",
+                      color: "#FF9A4D",
                       cursor: "pointer",
                       fontSize: 12,
+                      transition: "all 150ms ease",
                     }}
                   >
                     Ban Selected
@@ -1086,12 +1115,13 @@ function AdminPage() {
                     }}
                     style={{
                       padding: "6px 12px",
-                      borderRadius: 8,
+                      borderRadius: 9999,
                       border: "none",
                       background: "rgba(239,68,68,0.12)",
                       color: "#f87171",
                       cursor: "pointer",
                       fontSize: 12,
+                      transition: "all 150ms ease",
                     }}
                   >
                     Delete Selected
@@ -1100,12 +1130,13 @@ function AdminPage() {
                     onClick={() => setSelectedUsers(new Set())}
                     style={{
                       padding: "6px 12px",
-                      borderRadius: 8,
+                      borderRadius: 9999,
                       border: "1px solid rgba(255,255,255,0.1)",
                       background: "transparent",
-                      color: "#71717a",
+                      color: "#6b7280",
                       cursor: "pointer",
                       fontSize: 12,
+                      transition: "all 150ms ease",
                     }}
                   >
                     Clear
@@ -1117,13 +1148,15 @@ function AdminPage() {
                   <div key={u.id}>
                     <div
                       style={{
-                        background: "#111114",
-                        border: `1px solid ${u.banned ? "rgba(239,68,68,0.3)" : "rgba(255,255,255,0.07)"}`,
-                        borderRadius: 12,
+                        background: "rgba(10,10,10,0.8)",
+                        backdropFilter: "blur(24px)",
+                        border: `1px solid ${u.banned ? "rgba(239,68,68,0.3)" : "rgba(255,255,255,0.08)"}`,
+                        borderRadius: 16,
                         padding: "14px 16px",
                         display: "flex",
                         alignItems: "center",
                         gap: 14,
+                        transition: "all 150ms ease",
                       }}
                     >
                       <input
@@ -1141,7 +1174,7 @@ function AdminPage() {
                         style={{
                           width: 16,
                           height: 16,
-                          accentColor: "#facc15",
+                          accentColor: "#D97736",
                           cursor: "pointer",
                           flexShrink: 0,
                         }}
@@ -1154,7 +1187,7 @@ function AdminPage() {
                           borderRadius: "50%",
                           background: u.banned
                             ? "#451a1a"
-                            : "linear-gradient(135deg,#f59e0b,#ef4444)",
+                            : "linear-gradient(135deg,#D97736,#FF9A4D)",
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
@@ -1184,7 +1217,7 @@ function AdminPage() {
                             <span
                               style={{
                                 padding: "2px 8px",
-                                borderRadius: 20,
+                                borderRadius: 9999,
                                 background: "#451a1a",
                                 color: "#f87171",
                                 fontSize: 11,
@@ -1198,7 +1231,7 @@ function AdminPage() {
                             <span
                               style={{
                                 padding: "2px 8px",
-                                borderRadius: 20,
+                                borderRadius: 9999,
                                 background: "rgba(34,197,94,0.1)",
                                 color: "#4ade80",
                                 fontSize: 11,
@@ -1210,16 +1243,16 @@ function AdminPage() {
                           <span
                             style={{
                               padding: "2px 8px",
-                              borderRadius: 20,
+                              borderRadius: 9999,
                               background: "rgba(255,255,255,0.05)",
-                              color: "#71717a",
+                              color: "#6b7280",
                               fontSize: 11,
                             }}
                           >
                             {u.provider}
                           </span>
                         </div>
-                        <div style={{ fontSize: 11, color: "#52525b", marginTop: 3 }}>
+                        <div style={{ fontSize: 11, color: "#6b7280", marginTop: 3 }}>
                           {u.name && <span style={{ marginRight: 10 }}>{u.name}</span>}
                           Joined {fmtDate(u.createdAt)} · Last seen {fmtAgo(u.lastSignIn)} ·{" "}
                           {u.jobCount} jobs · {u.topLanguage}
@@ -1232,12 +1265,13 @@ function AdminPage() {
                           onClick={() => setExpandedUser(expandedUser === u.id ? null : u.id)}
                           style={{
                             padding: "6px 12px",
-                            borderRadius: 8,
+                            borderRadius: 9999,
                             border: "1px solid rgba(255,255,255,0.1)",
                             background: "transparent",
-                            color: "#a1a1aa",
+                            color: "#9CA3AF",
                             cursor: "pointer",
                             fontSize: 12,
+                            transition: "all 150ms ease",
                           }}
                         >
                           {expandedUser === u.id ? "▲ Hide" : "▼ Jobs"}
@@ -1246,13 +1280,14 @@ function AdminPage() {
                           onClick={() => handleBanUser(u)}
                           style={{
                             padding: "6px 12px",
-                            borderRadius: 8,
+                            borderRadius: 9999,
                             border: "none",
-                            background: u.banned ? "rgba(34,197,94,0.15)" : "rgba(251,146,60,0.15)",
-                            color: u.banned ? "#4ade80" : "#fb923c",
+                            background: u.banned ? "rgba(34,197,94,0.15)" : "rgba(217,119,6,0.15)",
+                            color: u.banned ? "#4ade80" : "#FF9A4D",
                             cursor: "pointer",
                             fontSize: 12,
                             fontWeight: 500,
+                            transition: "all 150ms ease",
                           }}
                         >
                           {u.banned ? "Unban" : "Ban"}
@@ -1261,13 +1296,14 @@ function AdminPage() {
                           onClick={() => handleDeleteUser(u)}
                           style={{
                             padding: "6px 12px",
-                            borderRadius: 8,
+                            borderRadius: 9999,
                             border: "none",
                             background: "rgba(239,68,68,0.12)",
                             color: "#f87171",
                             cursor: "pointer",
                             fontSize: 12,
                             fontWeight: 500,
+                            transition: "all 150ms ease",
                           }}
                         >
                           Delete
@@ -1282,12 +1318,12 @@ function AdminPage() {
                           margin: "4px 0 4px 52px",
                           padding: "12px 14px",
                           background: "#0f0f12",
-                          borderRadius: 10,
+                          borderRadius: 16,
                           border: "1px solid rgba(255,255,255,0.05)",
                         }}
                       >
                         {stats.jobs.filter((j) => j.user_id === u.id).length === 0 ? (
-                          <div style={{ fontSize: 12, color: "#52525b" }}>No jobs</div>
+                          <div style={{ fontSize: 12, color: "#6b7280" }}>No jobs</div>
                         ) : (
                           stats.jobs
                             .filter((j) => j.user_id === u.id)
@@ -1302,22 +1338,26 @@ function AdminPage() {
                                   borderBottom: "1px solid rgba(255,255,255,0.04)",
                                 }}
                               >
-                                <span style={{ fontSize: 12, color: "#a1a1aa", flex: 1 }}>
+                                <span style={{ fontSize: 12, color: "#9CA3AF", flex: 1 }}>
                                   {j.title || j.id.slice(0, 10)} · {j.language} · {j.status}
                                 </span>
-                                <span style={{ fontSize: 11, color: "#52525b" }}>
+                                <span style={{ fontSize: 11, color: "#6b7280" }}>
                                   {fmtDate(j.created_at)}
                                 </span>
                                 <button
                                   onClick={() => handleDeleteJob(j)}
                                   style={{
                                     padding: "3px 8px",
-                                    borderRadius: 6,
+                                    borderRadius: 9999,
                                     border: "none",
                                     background: "rgba(239,68,68,0.1)",
                                     color: "#f87171",
                                     cursor: "pointer",
                                     fontSize: 11,
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: 4,
+                                    transition: "all 150ms ease",
                                   }}
                                 >
                                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Del
@@ -1345,9 +1385,9 @@ function AdminPage() {
                     flex: 1,
                     minWidth: 200,
                     padding: "10px 14px",
-                    borderRadius: 10,
+                    borderRadius: 16,
                     border: "1px solid rgba(255,255,255,0.1)",
-                    background: "#111114",
+                    background: "#0f0f12",
                     color: "#fff",
                     fontSize: 13,
                     outline: "none",
@@ -1358,9 +1398,9 @@ function AdminPage() {
                   onChange={(e) => setJobStatusFilter(e.target.value)}
                   style={{
                     padding: "10px 14px",
-                    borderRadius: 10,
+                    borderRadius: 16,
                     border: "1px solid rgba(255,255,255,0.1)",
-                    background: "#111114",
+                    background: "#0f0f12",
                     color: "#fff",
                     fontSize: 13,
                     outline: "none",
@@ -1374,11 +1414,11 @@ function AdminPage() {
                 <div
                   style={{
                     padding: "10px 16px",
-                    borderRadius: 10,
-                    background: "#111114",
+                    borderRadius: 16,
+                    background: "#0f0f12",
                     border: "1px solid rgba(255,255,255,0.1)",
                     fontSize: 13,
-                    color: "#71717a",
+                    color: "#6b7280",
                     display: "flex",
                     alignItems: "center",
                   }}
@@ -1392,9 +1432,9 @@ function AdminPage() {
                   <div
                     key={j.id}
                     style={{
-                      background: "#111114",
-                      border: "1px solid rgba(255,255,255,0.07)",
-                      borderRadius: 12,
+                      background: "#0f0f12",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      borderRadius: 16,
                       padding: "12px 16px",
                       display: "flex",
                       alignItems: "center",
@@ -1405,7 +1445,7 @@ function AdminPage() {
                       style={{
                         width: 36,
                         height: 36,
-                        borderRadius: 8,
+                        borderRadius: 6,
                         background: j.thumb_color || "#1a1a20",
                         display: "flex",
                         alignItems: "center",
@@ -1420,14 +1460,14 @@ function AdminPage() {
                       <div style={{ fontSize: 13, fontWeight: 600, color: "#fff" }}>
                         {j.title || `Job ${j.id.slice(0, 8)}`}
                       </div>
-                      <div style={{ fontSize: 11, color: "#52525b", marginTop: 2 }}>
+                      <div style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>
                         {j.userEmail} · {j.language} · {fmtDate(j.created_at)}
                       </div>
                       {j.ai_description && (
                         <div
                           style={{
                             fontSize: 11,
-                            color: "#71717a",
+                            color: "#6b7280",
                             marginTop: 3,
                             fontStyle: "italic",
                           }}
@@ -1439,12 +1479,12 @@ function AdminPage() {
                     <span
                       style={{
                         padding: "3px 10px",
-                        borderRadius: 20,
+                        borderRadius: 9999,
                         fontSize: 11,
                         fontWeight: 600,
                         background:
-                          j.status === "completed" ? "rgba(34,197,94,0.1)" : "rgba(250,204,21,0.1)",
-                        color: j.status === "completed" ? "#4ade80" : "#facc15",
+                          j.status === "completed" ? "rgba(34,197,94,0.1)" : "rgba(217,119,6,0.1)",
+                        color: j.status === "completed" ? "#4ade80" : "#D97736",
                       }}
                     >
                       {j.status}
@@ -1453,13 +1493,17 @@ function AdminPage() {
                       onClick={() => handleDeleteJob(j)}
                       style={{
                         padding: "6px 12px",
-                        borderRadius: 8,
+                        borderRadius: 9999,
                         border: "none",
                         background: "rgba(239,68,68,0.12)",
                         color: "#f87171",
                         cursor: "pointer",
                         fontSize: 12,
                         fontWeight: 500,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 4,
+                        transition: "all 150ms ease",
                       }}
                     >
                       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
@@ -1467,7 +1511,7 @@ function AdminPage() {
                   </div>
                 ))}
                 {filteredJobs.length > 100 && (
-                  <div style={{ textAlign: "center", color: "#52525b", fontSize: 12, padding: 12 }}>
+                  <div style={{ textAlign: "center", color: "#6b7280", fontSize: 12, padding: 12 }}>
                     Showing first 100 of {filteredJobs.length} results
                   </div>
                 )}
@@ -1480,12 +1524,7 @@ function AdminPage() {
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               {/* users over time */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="User Signups Over Time" />
                 <ResponsiveContainer width="100%" height={200}>
@@ -1498,21 +1537,22 @@ function AdminPage() {
                     </defs>
                     <XAxis
                       dataKey="date"
-                      tick={{ fontSize: 10, fill: "#52525b" }}
+                      tick={{ fontSize: 10, fill: "#6b7280" }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
-                      tick={{ fontSize: 10, fill: "#52525b" }}
+                      tick={{ fontSize: 10, fill: "#6b7280" }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <Tooltip
                       contentStyle={{
-                        background: "#18181b",
+                        background: "rgba(10,10,10,0.9)",
                         border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 8,
+                        borderRadius: 6,
                         fontSize: 12,
+                        boxShadow: "rgba(0,0,0,0.3) 0px 10px 30px -5px",
                       }}
                     />
                     <Area
@@ -1529,40 +1569,36 @@ function AdminPage() {
 
               {/* cumulative */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Cumulative Growth" />
                 <ResponsiveContainer width="100%" height={200}>
                   <LineChart data={stats?.cumulativeData || []}>
                     <XAxis
                       dataKey="date"
-                      tick={{ fontSize: 10, fill: "#52525b" }}
+                      tick={{ fontSize: 10, fill: "#6b7280" }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <YAxis
-                      tick={{ fontSize: 10, fill: "#52525b" }}
+                      tick={{ fontSize: 10, fill: "#6b7280" }}
                       tickLine={false}
                       axisLine={false}
                     />
                     <Tooltip
                       contentStyle={{
-                        background: "#18181b",
+                        background: "rgba(10,10,10,0.9)",
                         border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 8,
+                        borderRadius: 6,
                         fontSize: 12,
+                        boxShadow: "rgba(0,0,0,0.3) 0px 10px 30px -5px",
                       }}
                     />
                     <Legend />
                     <Line
                       type="monotone"
                       dataKey="jobs"
-                      stroke="#facc15"
+                      stroke="#D97736"
                       dot={false}
                       name="Jobs"
                       strokeWidth={2}
@@ -1582,24 +1618,19 @@ function AdminPage() {
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                 {/* by weekday */}
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="Jobs by Weekday" />
                   <ResponsiveContainer width="100%" height={160}>
                     <BarChart data={stats?.jobsByWeekday || []}>
                       <XAxis
                         dataKey="name"
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
                       <YAxis
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
@@ -1607,36 +1638,31 @@ function AdminPage() {
                         contentStyle={{
                           background: "#18181b",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 8,
+                          borderRadius: 6,
                           fontSize: 12,
                         }}
                       />
-                      <Bar dataKey="count" fill="#facc15" radius={[4, 4, 0, 0]} name="Jobs" />
+                      <Bar dataKey="count" fill="#D97736" radius={[4, 4, 0, 0]} name="Jobs" />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
 
                 {/* by hour */}
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="Jobs by Hour (UTC)" />
                   <ResponsiveContainer width="100%" height={160}>
                     <BarChart data={stats?.jobsByHour || []}>
                       <XAxis
                         dataKey="hour"
-                        tick={{ fontSize: 9, fill: "#52525b" }}
+                        tick={{ fontSize: 9, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                         interval={3}
                       />
                       <YAxis
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
@@ -1644,7 +1670,7 @@ function AdminPage() {
                         contentStyle={{
                           background: "#18181b",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 8,
+                          borderRadius: 6,
                           fontSize: 12,
                         }}
                       />
@@ -1655,24 +1681,19 @@ function AdminPage() {
 
                 {/* duration buckets */}
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="Video Duration Buckets" />
                   <ResponsiveContainer width="100%" height={160}>
                     <BarChart data={durationPie}>
                       <XAxis
                         dataKey="name"
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
                       <YAxis
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
@@ -1680,7 +1701,7 @@ function AdminPage() {
                         contentStyle={{
                           background: "#18181b",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 8,
+                          borderRadius: 6,
                           fontSize: 12,
                         }}
                       />
@@ -1691,12 +1712,7 @@ function AdminPage() {
 
                 {/* engagement */}
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="User Engagement" />
                   <ResponsiveContainer width="100%" height={160}>
@@ -1708,12 +1724,12 @@ function AdminPage() {
                     >
                       <XAxis
                         dataKey="name"
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
                       <YAxis
-                        tick={{ fontSize: 10, fill: "#52525b" }}
+                        tick={{ fontSize: 10, fill: "#6b7280" }}
                         tickLine={false}
                         axisLine={false}
                       />
@@ -1721,7 +1737,7 @@ function AdminPage() {
                         contentStyle={{
                           background: "#18181b",
                           border: "1px solid rgba(255,255,255,0.1)",
-                          borderRadius: 8,
+                          borderRadius: 6,
                           fontSize: 12,
                         }}
                       />
@@ -1745,17 +1761,18 @@ function AdminPage() {
                   return (
                     <div
                       style={{
-                        background: "linear-gradient(135deg,#1a1a2e,#16213e)",
-                        border: "1px solid rgba(59,130,246,0.2)",
-                        borderRadius: 14,
+                        background: "linear-gradient(135deg,rgba(217,119,6,0.1),rgba(59,130,246,0.1))",
+                        border: "1px solid rgba(217,119,6,0.2)",
+                        borderRadius: 16,
                         padding: 20,
+                        backdropFilter: "blur(24px)",
                       }}
                     >
-                      <div style={{ fontSize: 12, color: "#71717a", marginBottom: 6 }}>
+                      <div style={{ fontSize: 12, color: "#6b7280", marginBottom: 6 }}>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> AI INSIGHT
                       </div>
                       <div style={{ fontSize: 16, fontWeight: 600, color: "#fff" }}>
-                        Peak usage is at <span style={{ color: "#facc15" }}>{peak.hour}</span> UTC
+                        Peak usage is at <span style={{ color: "#D97736" }}>{peak.hour}</span> UTC
                         with {peak.count} jobs
                       </div>
                     </div>
@@ -1764,12 +1781,7 @@ function AdminPage() {
 
               {/* churned users */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead
                   title={`Churned Users (${churned.length}) — No activity in 30 days`}
@@ -1784,7 +1796,7 @@ function AdminPage() {
                         gap: 12,
                         padding: "8px 12px",
                         background: "rgba(255,255,255,0.02)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                       }}
                     >
                       <div
@@ -1797,21 +1809,21 @@ function AdminPage() {
                           alignItems: "center",
                           justifyContent: "center",
                           fontSize: 12,
-                          color: "#52525b",
+                          color: "#6b7280",
                         }}
                       >
                         {initials(u.name, u.email)}
                       </div>
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: 13, color: "#a1a1aa" }}>{u.email}</div>
-                        <div style={{ fontSize: 11, color: "#52525b" }}>
+                        <div style={{ fontSize: 13, color: "#9CA3AF" }}>{u.email}</div>
+                        <div style={{ fontSize: 11, color: "#6b7280" }}>
                           Last seen {fmtAgo(u.lastSignIn)} · {u.jobCount} total jobs
                         </div>
                       </div>
                     </div>
                   ))}
                   {churned.length === 0 && (
-                    <div style={{ fontSize: 13, color: "#52525b" }}>
+                    <div style={{ fontSize: 13, color: "#6b7280" }}>
                       No churned users — great retention!
                     </div>
                   )}
@@ -1820,12 +1832,7 @@ function AdminPage() {
 
               {/* new signups */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title={`New Signups This Week (${newSignups.length})`} />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -1838,7 +1845,7 @@ function AdminPage() {
                         gap: 12,
                         padding: "8px 12px",
                         background: "rgba(34,197,94,0.04)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                         border: "1px solid rgba(34,197,94,0.1)",
                       }}
                     >
@@ -1859,7 +1866,7 @@ function AdminPage() {
                       </div>
                       <div style={{ flex: 1 }}>
                         <div style={{ fontSize: 13, color: "#fff" }}>{u.email}</div>
-                        <div style={{ fontSize: 11, color: "#52525b" }}>
+                        <div style={{ fontSize: 11, color: "#6b7280" }}>
                           Joined {fmtAgo(u.createdAt)} · {u.provider}
                         </div>
                       </div>
@@ -1867,19 +1874,14 @@ function AdminPage() {
                     </div>
                   ))}
                   {newSignups.length === 0 && (
-                    <div style={{ fontSize: 13, color: "#52525b" }}>No new signups this week</div>
+                    <div style={{ fontSize: 13, color: "#6b7280" }}>No new signups this week</div>
                   )}
                 </div>
               </div>
 
               {/* top language */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Language Popularity Ranking" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1893,7 +1895,7 @@ function AdminPage() {
                             style={{
                               width: 60,
                               fontSize: 12,
-                              color: "#a1a1aa",
+                              color: "#9CA3AF",
                               textAlign: "right",
                             }}
                           >
@@ -1917,7 +1919,7 @@ function AdminPage() {
                               }}
                             />
                           </div>
-                          <div style={{ width: 30, fontSize: 12, color: "#52525b" }}>{count}</div>
+                          <div style={{ width: 30, fontSize: 12, color: "#6b7280" }}>{count}</div>
                         </div>
                       );
                     })}
@@ -1940,7 +1942,7 @@ function AdminPage() {
                   label="Total Jobs"
                   value={revenue?.totalJobs || 0}
                   icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>}
-                  color="#facc15"
+                  color="#D97736"
                   sub="All time"
                 />
                 <StatCard
@@ -1966,12 +1968,7 @@ function AdminPage() {
                 />
               </div>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Revenue Breakdown" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
@@ -1986,14 +1983,14 @@ function AdminPage() {
                       label: "Processing",
                       value: (revenue?.totalJobs || 0) - (revenue?.completedJobs || 0),
                       total: revenue?.totalJobs || 1,
-                      color: "#facc15",
+                      color: "#D97736",
                     },
                   ].map((item) => (
                     <div
                       key={item.label}
                       style={{ display: "flex", alignItems: "center", gap: 12 }}
                     >
-                      <div style={{ width: 120, fontSize: 12, color: "#a1a1aa" }}>{item.label}</div>
+                      <div style={{ width: 120, fontSize: 12, color: "#9CA3AF" }}>{item.label}</div>
                       <div
                         style={{
                           flex: 1,
@@ -2013,7 +2010,7 @@ function AdminPage() {
                         />
                       </div>
                       <div
-                        style={{ width: 40, fontSize: 12, color: "#52525b", textAlign: "right" }}
+                        style={{ width: 40, fontSize: 12, color: "#6b7280", textAlign: "right" }}
                       >
                         {item.value}
                       </div>
@@ -2043,19 +2040,20 @@ function AdminPage() {
                   }}
                   style={{
                     padding: "7px 14px",
-                    borderRadius: 8,
+                    borderRadius: 9999,
                     border: "1px solid rgba(255,255,255,0.1)",
                     background: "transparent",
-                    color: "#a1a1aa",
+                    color: "#9CA3AF",
                     cursor: "pointer",
                     fontSize: 12,
+                    transition: "all 150ms ease",
                   }}
                 >
                   ↻ Load Files
                 </button>
               </div>
               {storageLoading && (
-                <div style={{ fontSize: 13, color: "#52525b" }}>Loading storage files…</div>
+                <div style={{ fontSize: 13, color: "#6b7280" }}>Loading storage files…</div>
               )}
               {storageFiles && (
                 <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -2063,20 +2061,22 @@ function AdminPage() {
                     <div
                       key={f.id}
                       style={{
-                        background: "#111114",
-                        border: "1px solid rgba(255,255,255,0.07)",
-                        borderRadius: 12,
+                        background: "rgba(10,10,10,0.8)",
+                        backdropFilter: "blur(24px)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        borderRadius: 16,
                         padding: "12px 16px",
                         display: "flex",
                         alignItems: "center",
                         gap: 12,
+                        transition: "all 150ms ease",
                       }}
                     >
                       <div
                         style={{
                           width: 36,
                           height: 36,
-                          borderRadius: 8,
+                          borderRadius: 6,
                           background: "#1a1a20",
                           display: "flex",
                           alignItems: "center",
@@ -2099,7 +2099,7 @@ function AdminPage() {
                         >
                           {f.name}
                         </div>
-                        <div style={{ fontSize: 11, color: "#52525b", marginTop: 2 }}>
+                        <div style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>
                           {(f.size / 1024 / 1024).toFixed(1)} MB · {f.mimeType} ·{" "}
                           {fmtDate(f.createdAt)}
                         </div>
@@ -2127,13 +2127,17 @@ function AdminPage() {
                         }}
                         style={{
                           padding: "6px 12px",
-                          borderRadius: 8,
+                          borderRadius: 9999,
                           border: "none",
                           background: "rgba(239,68,68,0.12)",
                           color: "#f87171",
                           cursor: "pointer",
                           fontSize: 12,
                           fontWeight: 500,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 4,
+                          transition: "all 150ms ease",
                         }}
                       >
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Delete
@@ -2142,7 +2146,7 @@ function AdminPage() {
                   ))}
                   {storageFiles.length === 0 && (
                     <div
-                      style={{ fontSize: 13, color: "#52525b", textAlign: "center", padding: 40 }}
+                      style={{ fontSize: 13, color: "#6b7280", textAlign: "center", padding: 40 }}
                     >
                       No storage files
                     </div>
@@ -2150,7 +2154,7 @@ function AdminPage() {
                 </div>
               )}
               {!storageFiles && !storageLoading && (
-                <div style={{ fontSize: 13, color: "#52525b" }}>
+                <div style={{ fontSize: 13, color: "#6b7280" }}>
                   Click "Load Files" to view storage contents
                 </div>
               )}
@@ -2167,14 +2171,15 @@ function AdminPage() {
                     onClick={() => setEmailFilter(f)}
                     style={{
                       padding: "6px 14px",
-                      borderRadius: 8,
+                      borderRadius: 9999,
                       border: "none",
                       fontSize: 12,
                       cursor: "pointer",
                       background:
-                        emailFilter === f ? "rgba(250,204,21,0.15)" : "rgba(255,255,255,0.04)",
-                      color: emailFilter === f ? "#facc15" : "#71717a",
+                        emailFilter === f ? "rgba(217,119,6,0.15)" : "rgba(255,255,255,0.04)",
+                      color: emailFilter === f ? "#D97736" : "#6b7280",
                       textTransform: "capitalize",
+                      transition: "all 150ms ease",
                     }}
                   >
                     {f}
@@ -2182,12 +2187,7 @@ function AdminPage() {
                 ))}
               </div>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Email Statistics" />
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 12 }}>
@@ -2208,38 +2208,33 @@ function AdminPage() {
                       label: "Free Tier Alerts",
                       value: stats?.emailStats?.freeTierLimit || 0,
                       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
-                      color: "#facc15",
+                      color: "#D97736",
                     },
                   ].map((e) => (
                     <div
                       key={e.label}
                       style={{
                         background: "rgba(255,255,255,0.02)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                         padding: 16,
                         textAlign: "center",
                       }}
                     >
                       <div style={{ fontSize: 24, marginBottom: 6 }}>{e.icon}</div>
                       <div style={{ fontSize: 24, fontWeight: 800, color: "#fff" }}>{e.value}</div>
-                      <div style={{ fontSize: 11, color: "#71717a", marginTop: 4 }}>{e.label}</div>
+                      <div style={{ fontSize: 11, color: "#6b7280", marginTop: 4 }}>{e.label}</div>
                     </div>
                   ))}
                 </div>
               </div>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Email Service Status" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   {[
                     ["Resend API", "Connected", "#22c55e"],
-                    ["Rate Limiting", "In-memory (resets on restart)", "#facc15"],
+                    ["Rate Limiting", "In-memory (resets on restart)", "#D97736"],
                     ["Welcome Emails", "Sent on signup", "#22c55e"],
                     ["Free Tier Alerts", "Sent at 80% usage", "#22c55e"],
                   ].map(([k, v, c]) => (
@@ -2251,10 +2246,10 @@ function AdminPage() {
                         gap: 12,
                         padding: "10px 14px",
                         background: "rgba(255,255,255,0.02)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                       }}
                     >
-                      <div style={{ width: 140, fontSize: 12, color: "#71717a" }}>{k}</div>
+                      <div style={{ width: 140, fontSize: 12, color: "#6b7280" }}>{k}</div>
                       <div style={{ fontSize: 13, color: c }}>{v}</div>
                     </div>
                   ))}
@@ -2267,17 +2262,12 @@ function AdminPage() {
           {tab === "flags" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead
                   title="Feature Flags"
                   action={
-                    <span style={{ fontSize: 11, color: "#52525b" }}>
+                    <span style={{ fontSize: 11, color: "#6b7280" }}>
                       Toggle features on/off (stored in state, wire to DB to persist)
                     </span>
                   }
@@ -2292,14 +2282,14 @@ function AdminPage() {
                         justifyContent: "space-between",
                         padding: "12px 14px",
                         background: "rgba(255,255,255,0.02)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                       }}
                     >
                       <div>
                         <div style={{ fontSize: 13, color: "#fff", fontWeight: 500 }}>
                           {key.replace(/([A-Z])/g, " $1").replace(/^./, (s) => s.toUpperCase())}
                         </div>
-                        <div style={{ fontSize: 11, color: "#52525b", marginTop: 2 }}>
+                        <div style={{ fontSize: 11, color: "#6b7280", marginTop: 2 }}>
                           {val ? "Enabled" : "Disabled"}
                         </div>
                       </div>
@@ -2308,12 +2298,13 @@ function AdminPage() {
                         style={{
                           width: 44,
                           height: 24,
-                          borderRadius: 12,
+                          borderRadius: 9999,
                           border: "none",
                           cursor: "pointer",
-                          background: val ? "#22c55e" : "rgba(255,255,255,0.1)",
+                          background: val ? "#D97736" : "rgba(255,255,255,0.1)",
                           position: "relative",
-                          transition: "background 0.2s",
+                          transition: "background 150ms ease",
+                          flexShrink: 0,
                         }}
                       >
                         <div
@@ -2325,7 +2316,7 @@ function AdminPage() {
                             position: "absolute",
                             top: 3,
                             left: val ? 23 : 3,
-                            transition: "left 0.2s",
+                            transition: "left 150ms ease",
                           }}
                         />
                       </button>
@@ -2340,12 +2331,7 @@ function AdminPage() {
           {tab === "audit" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead
                   title="Audit Log"
@@ -2360,12 +2346,13 @@ function AdminPage() {
                       }}
                       style={{
                         padding: "6px 12px",
-                        borderRadius: 8,
+                        borderRadius: 9999,
                         border: "1px solid rgba(255,255,255,0.1)",
                         background: "transparent",
-                        color: "#a1a1aa",
+                        color: "#9CA3AF",
                         cursor: "pointer",
                         fontSize: 12,
+                        transition: "all 150ms ease",
                       }}
                     >
                       ↻ Load
@@ -2373,7 +2360,7 @@ function AdminPage() {
                   }
                 />
                 {auditLog.length === 0 ? (
-                  <div style={{ fontSize: 13, color: "#52525b", textAlign: "center", padding: 30 }}>
+                  <div style={{ fontSize: 13, color: "#6b7280", textAlign: "center", padding: 30 }}>
                     No audit logs yet. Create an "audit_log" table in Supabase to enable tracking.
                   </div>
                 ) : (
@@ -2387,16 +2374,16 @@ function AdminPage() {
                           gap: 12,
                           padding: "10px 14px",
                           background: "rgba(255,255,255,0.02)",
-                          borderRadius: 10,
+                          borderRadius: 16,
                         }}
                       >
-                        <div style={{ fontSize: 11, color: "#52525b", minWidth: 80 }}>
+                        <div style={{ fontSize: 11, color: "#6b7280", minWidth: 80 }}>
                           {fmtDate(log.created_at)}
                         </div>
-                        <div style={{ fontSize: 13, color: "#a1a1aa", flex: 1 }}>
+                        <div style={{ fontSize: 13, color: "#9CA3AF", flex: 1 }}>
                           {log.action} — {log.details || ""}
                         </div>
-                        <div style={{ fontSize: 11, color: "#71717a" }}>{log.admin_email}</div>
+                        <div style={{ fontSize: 11, color: "#6b7280" }}>{log.admin_email}</div>
                       </div>
                     ))}
                   </div>
@@ -2409,12 +2396,7 @@ function AdminPage() {
           {tab === "bulk" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Bulk Operations" />
                 <div
@@ -2565,7 +2547,7 @@ function AdminPage() {
                       style={{
                         background: "rgba(255,255,255,0.02)",
                         border: "1px solid rgba(255,255,255,0.06)",
-                        borderRadius: 12,
+                        borderRadius: 16,
                         padding: 16,
                         display: "flex",
                         flexDirection: "column",
@@ -2578,20 +2560,21 @@ function AdminPage() {
                           {op.label}
                         </div>
                       </div>
-                      <div style={{ fontSize: 12, color: "#52525b" }}>{op.desc}</div>
+                      <div style={{ fontSize: 12, color: "#6b7280" }}>{op.desc}</div>
                       <button
                         onClick={op.action}
                         style={{
                           marginTop: 4,
                           padding: "8px 16px",
-                          borderRadius: 8,
+                          borderRadius: 9999,
                           border: "1px solid rgba(255,255,255,0.1)",
                           background: "transparent",
-                          color: "#a1a1aa",
+                          color: "#9CA3AF",
                           cursor: "pointer",
                           fontSize: 12,
                           fontWeight: 500,
                           textAlign: "left",
+                          transition: "all 150ms ease",
                         }}
                       >
                         Execute →
@@ -2607,16 +2590,11 @@ function AdminPage() {
           {tab === "moderation" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Currently Banned Users" />
                 {users?.filter((u) => u.banned).length === 0 ? (
-                  <div style={{ fontSize: 13, color: "#52525b" }}>No banned users currently</div>
+                  <div style={{ fontSize: 13, color: "#6b7280" }}>No banned users currently</div>
                 ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                     {users
@@ -2630,7 +2608,7 @@ function AdminPage() {
                             gap: 12,
                             padding: "10px 14px",
                             background: "rgba(239,68,68,0.05)",
-                            borderRadius: 10,
+                            borderRadius: 16,
                             border: "1px solid rgba(239,68,68,0.2)",
                           }}
                         >
@@ -2638,7 +2616,7 @@ function AdminPage() {
                             <div style={{ fontSize: 13, color: "#f87171", fontWeight: 500 }}>
                               {u.email}
                             </div>
-                            <div style={{ fontSize: 11, color: "#52525b" }}>
+                            <div style={{ fontSize: 11, color: "#6b7280" }}>
                               Banned · {u.jobCount} jobs
                             </div>
                           </div>
@@ -2646,13 +2624,14 @@ function AdminPage() {
                             onClick={() => handleBanUser(u)}
                             style={{
                               padding: "6px 14px",
-                              borderRadius: 8,
+                              borderRadius: 9999,
                               border: "none",
                               background: "rgba(34,197,94,0.15)",
                               color: "#4ade80",
                               cursor: "pointer",
                               fontSize: 12,
                               fontWeight: 500,
+                              transition: "all 150ms ease",
                             }}
                           >
                             ✓ Unban
@@ -2661,12 +2640,13 @@ function AdminPage() {
                             onClick={() => handleDeleteUser(u)}
                             style={{
                               padding: "6px 14px",
-                              borderRadius: 8,
+                              borderRadius: 9999,
                               border: "none",
                               background: "rgba(239,68,68,0.12)",
                               color: "#f87171",
                               cursor: "pointer",
                               fontSize: 12,
+                              transition: "all 150ms ease",
                             }}
                           >
                             Delete
@@ -2679,12 +2659,7 @@ function AdminPage() {
 
               {/* jobs with AI description */}
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Jobs with AI Descriptions" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
@@ -2697,14 +2672,14 @@ function AdminPage() {
                         style={{
                           padding: "10px 14px",
                           background: "rgba(255,255,255,0.03)",
-                          borderRadius: 10,
+                          borderRadius: 16,
                         }}
                       >
                         <div
                           style={{
                             fontSize: 12,
                             fontWeight: 600,
-                            color: "#a1a1aa",
+                            color: "#9CA3AF",
                             marginBottom: 4,
                           }}
                         >
@@ -2713,7 +2688,7 @@ function AdminPage() {
                         <div
                           style={{
                             fontSize: 12,
-                            color: "#71717a",
+                            color: "#6b7280",
                             fontStyle: "italic",
                             lineHeight: 1.5,
                           }}
@@ -2723,7 +2698,7 @@ function AdminPage() {
                       </div>
                     ))}
                   {!(stats?.jobs || []).some((j) => j.ai_description) && (
-                    <div style={{ fontSize: 13, color: "#52525b" }}>No AI descriptions yet</div>
+                    <div style={{ fontSize: 13, color: "#6b7280" }}>No AI descriptions yet</div>
                   )}
                 </div>
               </div>
@@ -2734,12 +2709,8 @@ function AdminPage() {
           {tab === "broadcast" && (
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 24,
-                }}
+                className="admin-card"
+                style={{ padding: 24 }}
               >
                 <SectionHead title="Send Announcement" />
                 <textarea
@@ -2750,9 +2721,9 @@ function AdminPage() {
                   style={{
                     width: "100%",
                     padding: "14px 16px",
-                    borderRadius: 10,
+                    borderRadius: 16,
                     border: "1px solid rgba(255,255,255,0.1)",
-                    background: "#0a0a0d",
+                    background: "#0A0A0A",
                     color: "#fff",
                     fontSize: 13,
                     outline: "none",
@@ -2766,13 +2737,17 @@ function AdminPage() {
                     disabled={!announcement.trim()}
                     style={{
                       padding: "10px 24px",
-                      borderRadius: 10,
+                      borderRadius: 9999,
                       border: "none",
-                      background: announcement.trim() ? "#facc15" : "rgba(255,255,255,0.05)",
-                      color: announcement.trim() ? "#000" : "#52525b",
+                      background: announcement.trim() ? "#D97736" : "rgba(255,255,255,0.05)",
+                      color: announcement.trim() ? "#030303" : "#6b7280",
                       cursor: announcement.trim() ? "pointer" : "not-allowed",
                       fontSize: 13,
                       fontWeight: 700,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 8,
+                      transition: "all 150ms ease",
                     }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Post Announcement
@@ -2782,12 +2757,7 @@ function AdminPage() {
 
               {announcements.length > 0 && (
                 <div
-                  style={{
-                    background: "#111114",
-                    border: "1px solid rgba(255,255,255,0.07)",
-                    borderRadius: 14,
-                    padding: 20,
-                  }}
+                  className="admin-card"
                 >
                   <SectionHead title="Announcement History" />
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -2796,13 +2766,13 @@ function AdminPage() {
                         key={a.id}
                         style={{
                           padding: "12px 14px",
-                          background: "rgba(250,204,21,0.05)",
-                          borderRadius: 10,
-                          border: "1px solid rgba(250,204,21,0.1)",
+                          background: "rgba(217,119,6,0.05)",
+                          borderRadius: 16,
+                          border: "1px solid rgba(217,119,6,0.1)",
                         }}
                       >
                         <div style={{ fontSize: 13, color: "#fff", lineHeight: 1.5 }}>{a.msg}</div>
-                        <div style={{ fontSize: 11, color: "#52525b", marginTop: 4 }}>
+                        <div style={{ fontSize: 11, color: "#6b7280", marginTop: 4 }}>
                           {fmtDate(a.time)}
                         </div>
                       </div>
@@ -2824,7 +2794,7 @@ function AdminPage() {
                 }}
               >
                 <StatCard label="DB Users" value={stats?.totalUsers} icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>} color="#3b82f6" />
-                <StatCard label="DB Jobs" value={stats?.totalJobs} icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>} color="#facc15" />
+                <StatCard label="DB Jobs" value={stats?.totalJobs} icon={<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>} color="#D97736" />
                 <StatCard
                   label="DB Subtitles"
                   value={stats?.totalSubtitles}
@@ -2852,12 +2822,7 @@ function AdminPage() {
               </div>
 
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Admin Info" />
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
@@ -2879,11 +2844,11 @@ function AdminPage() {
                         gap: 12,
                         padding: "10px 14px",
                         background: "rgba(255,255,255,0.02)",
-                        borderRadius: 10,
+                        borderRadius: 16,
                       }}
                     >
-                      <div style={{ width: 180, fontSize: 12, color: "#71717a" }}>{k}</div>
-                      <div style={{ fontSize: 13, color: "#a1a1aa", fontFamily: "monospace" }}>
+                      <div style={{ width: 180, fontSize: 12, color: "#6b7280" }}>{k}</div>
+                      <div style={{ fontSize: 13, color: "#9CA3AF", fontFamily: "monospace" }}>
                         {v}
                       </div>
                     </div>
@@ -2892,12 +2857,7 @@ function AdminPage() {
               </div>
 
               <div
-                style={{
-                  background: "#111114",
-                  border: "1px solid rgba(255,255,255,0.07)",
-                  borderRadius: 14,
-                  padding: 20,
-                }}
+                className="admin-card"
               >
                 <SectionHead title="Quick Actions" />
                 <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
@@ -2905,12 +2865,13 @@ function AdminPage() {
                     onClick={loadAll}
                     style={{
                       padding: "10px 20px",
-                      borderRadius: 10,
+                      borderRadius: 9999,
                       border: "1px solid rgba(255,255,255,0.1)",
                       background: "transparent",
-                      color: "#a1a1aa",
+                      color: "#9CA3AF",
                       cursor: "pointer",
                       fontSize: 13,
+                      transition: "all 150ms ease",
                     }}
                   >
                     ↻ Reload All Data
@@ -2923,12 +2884,13 @@ function AdminPage() {
                     }}
                     style={{
                       padding: "10px 20px",
-                      borderRadius: 10,
-                      border: "none",
-                      background: "rgba(250,204,21,0.1)",
-                      color: "#facc15",
+                      borderRadius: 9999,
+                      border: "1px solid #D97736",
+                      background: "transparent",
+                      color: "#D97736",
                       cursor: "pointer",
                       fontSize: 13,
+                      transition: "all 150ms ease",
                     }}
                   >
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> Hard Reset + Reload
@@ -2937,12 +2899,13 @@ function AdminPage() {
                     <button
                       style={{
                         padding: "10px 20px",
-                        borderRadius: 10,
+                        borderRadius: 9999,
                         border: "1px solid rgba(255,255,255,0.1)",
                         background: "transparent",
-                        color: "#a1a1aa",
+                        color: "#9CA3AF",
                         cursor: "pointer",
                         fontSize: 13,
+                        transition: "all 150ms ease",
                       }}
                     >
                       ← Go to App

@@ -1,15 +1,15 @@
 .shell {
   display: flex;
   min-height: 100vh;
-  background: #09090b;
+  background: #0A0A0A;
   color: #e4e4e7;
   font-family: "Inter", system-ui, sans-serif;
 }
 .sidebar {
   width: 220px;
   flex-shrink: 0;
-  background: #0c0c10;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0A0A0A;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
   padding: 20px 0;
@@ -26,7 +26,7 @@
   font-weight: 800;
   font-size: 16px;
   color: #fafafa;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   margin-bottom: 16px;
 }
 .sidebarLogo {
@@ -35,14 +35,14 @@
   border-radius: 5px;
   overflow: hidden;
   flex-shrink: 0;
-  background: #0c0c10;
+  background: #0A0A0A;
 }
 .navItem {
   display: flex;
   align-items: center;
   gap: 10px;
   padding: 10px 16px;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-size: 13px;
   font-weight: 500;
   text-decoration: none;
@@ -58,11 +58,11 @@
   color: #fafafa;
 }
 .navItemActive {
-  background: rgba(250, 204, 21, 0.08);
-  color: #facc15;
+  background: rgba(217, 119, 6, 0.08);
+  color: #D97736;
 }
 .navItemActive svg {
-  color: #facc15;
+  color: #D97736;
 }
 .navSep {
   height: 1px;
@@ -88,7 +88,7 @@
 }
 .header p {
   font-size: 13px;
-  color: #71717a;
+  color: #6b7280;
   margin: 4px 0 0;
 }
 .backBtn {
@@ -96,10 +96,10 @@
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: transparent;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-size: 12px;
   cursor: pointer;
   text-decoration: none;
@@ -116,15 +116,15 @@
   margin-bottom: 28px;
 }
 .card {
-  background: #121216;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  background: #111114;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   padding: 20px;
 }
 .cardLabel {
   font-size: 11px;
   font-weight: 600;
-  color: #71717a;
+  color: #6b7280;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
@@ -137,7 +137,7 @@
 }
 .cardSub {
   font-size: 11px;
-  color: #52525b;
+  color: #6b7280;
   margin-top: 6px;
 }
 .chartGrid {
@@ -147,22 +147,22 @@
   margin-bottom: 28px;
 }
 .chartCard {
-  background: #121216;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  background: #111114;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   padding: 20px;
 }
 .chartCardFull {
-  background: #121216;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
+  background: #111114;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   padding: 20px;
   grid-column: 1 / -1;
 }
 .chartTitle {
   font-size: 13px;
   font-weight: 600;
-  color: #a1a1aa;
+  color: #9CA3AF;
   margin-bottom: 16px;
 }
 .tableWrap {
@@ -176,12 +176,12 @@
 .table th {
   text-align: left;
   padding: 10px 12px;
-  color: #71717a;
+  color: #6b7280;
   font-weight: 600;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   white-space: nowrap;
 }
 .table td {
@@ -193,7 +193,7 @@
   background: rgba(255, 255, 255, 0.02);
 }
 .tableLink {
-  color: #facc15;
+  color: #D97736;
   text-decoration: none;
   cursor: pointer;
 }
@@ -213,7 +213,7 @@
 }
 .badgeYellow {
   background: rgba(250, 204, 21, 0.12);
-  color: #facc15;
+  color: #D97736;
 }
 .badgeRed {
   background: rgba(239, 68, 68, 0.12);
@@ -221,12 +221,12 @@
 }
 .badgeGray {
   background: rgba(113, 113, 122, 0.12);
-  color: #a1a1aa;
+  color: #9CA3AF;
 }
 .emptyState {
   text-align: center;
   padding: 60px 20px;
-  color: #52525b;
+  color: #6b7280;
   font-size: 13px;
 }
 .emptyState svg {
@@ -238,23 +238,23 @@
   align-items: center;
   justify-content: center;
   padding: 80px;
-  color: #71717a;
+  color: #6b7280;
   gap: 12px;
   font-size: 14px;
 }
 .detailOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
 }
 .detailPanel {
-  background: #121216;
+  background: #111114;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 28px;
   max-width: 700px;
   width: 90%;
@@ -268,14 +268,14 @@
 }
 .detailPanel .meta {
   font-size: 12px;
-  color: #71717a;
+  color: #6b7280;
   margin-bottom: 20px;
 }
 .detailClose {
   float: right;
   background: none;
   border: none;
-  color: #71717a;
+  color: #6b7280;
   cursor: pointer;
   padding: 4px;
 }
@@ -290,7 +290,7 @@
   gap: 12px;
 }
 .subtitleTime {
-  color: #facc15;
+  color: #D97736;
   font-weight: 600;
   white-space: nowrap;
   min-width: 80px;
@@ -304,10 +304,10 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: transparent;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-size: 12px;
   cursor: pointer;
   transition: all 0.15s;
@@ -327,7 +327,7 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  color: #71717a;
+  color: #6b7280;
 }
 .legendDot {
   width: 8px;

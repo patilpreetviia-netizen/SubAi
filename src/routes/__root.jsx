@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { useAuthStore } from "../lib/authStore";
+import { WebGLBackground } from "../features/WebGLBackground";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -35,10 +36,25 @@ export const Route = createRootRoute({
   component: RootComponent,
   notFoundComponent: NotFound,
   errorComponent: ({ error, reset }) => (
-    <div style={{ padding: 40 }}>
-      <h1>Something broke</h1>
-      <pre style={{ color: "#a1a1aa" }}>{error.message}</pre>
-      <button onClick={reset}>Retry</button>
+    <div style={{ padding: 40, background: "#0A0A0A", color: "#fff", minHeight: "100vh" }}>
+      <h1 style={{ fontSize: 24, fontWeight: 700 }}>Something broke</h1>
+      <pre style={{ color: "#9CA3AF", marginTop: 8 }}>{error.message}</pre>
+      <button
+        onClick={reset}
+        style={{
+          marginTop: 16,
+          padding: "8px 20px",
+          borderRadius: 9999,
+          background: "#D97736",
+          color: "#030303",
+          border: "none",
+          fontSize: 12,
+          fontWeight: 500,
+          cursor: "pointer",
+        }}
+      >
+        Retry
+      </button>
     </div>
   ),
 });
@@ -48,7 +64,6 @@ function RootComponent() {
 
   useEffect(() => {
     init();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <Outlet />;
@@ -60,7 +75,8 @@ function RootShell({ children }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body style={{ background: "#0A0A0A" }}>
+        <WebGLBackground />
         {children}
         <Scripts />
       </body>
@@ -70,9 +86,27 @@ function RootShell({ children }) {
 
 function NotFound() {
   return (
-    <div style={{ padding: 40 }}>
-      <h1>404</h1>
-      <a href="/" style={{ color: "#facc15" }}>
+    <div
+      style={{
+        padding: 40,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        minHeight: "100vh",
+        background: "#0A0A0A",
+      }}
+    >
+      <h1 style={{ fontSize: 48, fontWeight: 700, color: "#FFFFFF" }}>404</h1>
+      <a
+        href="/"
+        style={{
+          color: "#D97736",
+          marginTop: 8,
+          fontSize: 14,
+          fontWeight: 500,
+        }}
+      >
         Back home
       </a>
     </div>

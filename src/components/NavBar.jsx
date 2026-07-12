@@ -17,8 +17,7 @@ export function NavBar() {
     <nav className={styles.nav}>
       <div className={styles.inner}>
         <Link to="/" className={styles.brand}>
-          <span className={styles.dot} />
-          SubAI
+          <img src="/subai-logo.png" alt="SubAI" className={styles.logo} />
         </Link>
         <div className={styles.links}>
           <Link to="/dashboard" className={styles.link}>

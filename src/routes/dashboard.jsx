@@ -236,8 +236,8 @@ function DashboardPage() {
             gap: 12,
           }}
         >
-          <Loader2 size={20} className="animate-spin" style={{ color: "#f59e0b" }} />
-          <span style={{ color: "#71717a", fontSize: 13 }}>Loading your dashboard...</span>
+          <Loader2 size={20} className="animate-spin" style={{ color: "#D97736" }} />
+          <span style={{ color: "#9CA3AF", fontSize: 13 }}>Loading your dashboard...</span>
         </div>
       </div>
     );
@@ -267,17 +267,15 @@ function DashboardPage() {
         }
       `}</style>
 
-      {/* ── Sidebar ─────────────────────────── */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarBrand}>
           <div className={styles.sidebarLogo}>
             <img
-              src="/logo.jpeg"
+              src="/subai-logo.png"
               alt="SubAI"
-              style={{ width: 14, height: 14, borderRadius: 3, objectFit: "cover" }}
+              style={{ height: 40, width: "auto", objectFit: "contain" }}
             />
           </div>
-          SubAI
         </div>
 
         <div className={styles.workspaceTag}>
@@ -328,14 +326,13 @@ function DashboardPage() {
 
           <div className={styles.navSep} />
 
-          {/* Admin panel — only visible to the site owner */}
           {user?.email === "patilpreetviia@gmail.com" && (
             <Link
               to="/admin"
               className={styles.navItem}
-              style={{ color: "#facc15", fontWeight: 600 }}
+              style={{ color: "#D97736", fontWeight: 600 }}
             >
-              <Shield size={14} className={styles.navIcon} style={{ color: "#facc15" }} />
+              <Shield size={14} className={styles.navIcon} style={{ color: "#D97736" }} />
               Admin Panel
             </Link>
           )}
@@ -346,7 +343,6 @@ function DashboardPage() {
           </Link>
         </nav>
 
-        {/* Usage meter */}
         <div className={styles.usageMeter}>
           <div className={styles.usageTop}>
             <span className={styles.usagePlan}>FREE</span>
@@ -360,7 +356,7 @@ function DashboardPage() {
             style={{
               height: 4,
               background: "rgba(255,255,255,0.06)",
-              borderRadius: 2,
+              borderRadius: 4,
               marginBottom: 8,
               overflow: "hidden",
             }}
@@ -369,9 +365,9 @@ function DashboardPage() {
               style={{
                 width: "0%",
                 height: "100%",
-                background: "#f59e0b",
-                borderRadius: 2,
-                transition: "width 0.4s ease",
+                background: "#D97736",
+                borderRadius: 4,
+                transition: "width 150ms ease",
               }}
             />
           </div>
@@ -379,7 +375,6 @@ function DashboardPage() {
           <button className={styles.upgradeNowBtn}>Upgrade Now</button>
         </div>
 
-        {/* User card */}
         <div className={styles.userCard}>
           <div className={styles.userAvatar}>{userInitial}</div>
           <div className={styles.userInfo}>
@@ -396,7 +391,6 @@ function DashboardPage() {
         </div>
       </aside>
 
-      {/* ── Main ────────────────────────────── */}
       <main className={`${styles.main} main-scroll`}>
         <div className={styles.topBar}>
           <div>
@@ -409,7 +403,6 @@ function DashboardPage() {
           </button>
         </div>
 
-        {/* Upload zone */}
         <div className={styles.sectionLabel}>Upload a Video</div>
         <input
           ref={fileInputRef}
@@ -438,7 +431,7 @@ function DashboardPage() {
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "rgba(245,158,11,0.04)",
+                background: "rgba(217,119,54,0.04)",
                 zIndex: 1,
                 display: "flex",
                 alignItems: "center",
@@ -448,8 +441,8 @@ function DashboardPage() {
               <div
                 style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}
               >
-                <Loader2 size={24} className="animate-spin" style={{ color: "#f59e0b" }} />
-                <span style={{ fontSize: 12, color: "#f59e0b", fontWeight: 600 }}>
+                <Loader2 size={24} className="animate-spin" style={{ color: "#D97736" }} />
+                <span style={{ fontSize: 12, color: "#D97736", fontWeight: 600 }}>
                   Processing your video...
                 </span>
               </div>
@@ -489,7 +482,7 @@ function DashboardPage() {
                 key={fmt}
                 style={{
                   fontSize: 10,
-                  color: "#52525b",
+                  color: "#6b7280",
                   background: "rgba(255,255,255,0.04)",
                   padding: "2px 8px",
                   borderRadius: 4,
@@ -518,7 +511,6 @@ function DashboardPage() {
           </button>
         </div>
 
-        {/* Recent projects */}
         <div className={styles.sectionLabel}>Recent Projects</div>
 
         {jobsLoading ? (
@@ -558,10 +550,10 @@ function DashboardPage() {
             <div className={styles.projectsEmptyIcon}>
               <Film size={20} />
             </div>
-            <div style={{ fontWeight: 600, marginBottom: 4, fontSize: 14, color: "#a1a1aa" }}>
+            <div style={{ fontWeight: 600, marginBottom: 4, fontSize: 14, color: "#9CA3AF" }}>
               No projects yet
             </div>
-            <div style={{ fontSize: 12, color: "#52525b" }}>Upload a video to get started</div>
+            <div style={{ fontSize: 12, color: "#6b7280" }}>Upload a video to get started</div>
           </div>
         ) : (
           <div className={styles.projectsGrid}>
@@ -620,7 +612,7 @@ function DashboardPage() {
                             display: "flex",
                             alignItems: "center",
                             gap: 3,
-                            color: "#52525b",
+                            color: "#6b7280",
                             fontSize: 10,
                           }}
                         >
@@ -653,9 +645,9 @@ function DashboardPage() {
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    color: "#71717a",
+                    color: "#9CA3AF",
                     opacity: 0,
-                    transition: "opacity 0.15s, color 0.15s",
+                    transition: "opacity 150ms ease, color 150ms ease",
                     zIndex: 2,
                   }}
                   onMouseEnter={(e) => {
@@ -664,7 +656,7 @@ function DashboardPage() {
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.opacity = "0";
-                    e.currentTarget.style.color = "#71717a";
+                    e.currentTarget.style.color = "#9CA3AF";
                   }}
                 >
                   <Trash2 size={13} />
@@ -674,11 +666,9 @@ function DashboardPage() {
           </div>
         )}
 
-        {/* Extra spacing for scroll comfort */}
         <div style={{ height: 40 }} />
       </main>
 
-      {/* ── Prepare Media Modal ─────────────── */}
       {modalFile && (
         <div
           className={styles.modalOverlay}
@@ -704,12 +694,12 @@ function DashboardPage() {
                 justifyContent: "center",
                 width: 28,
                 height: 28,
-                borderRadius: 8,
+                borderRadius: 6,
                 background: "rgba(255,255,255,0.06)",
                 border: "none",
-                color: "#71717a",
+                color: "#9CA3AF",
                 cursor: "pointer",
-                transition: "background 0.15s, color 0.15s",
+                transition: "background 150ms ease, color 150ms ease",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "rgba(255,255,255,0.12)";
@@ -717,7 +707,7 @@ function DashboardPage() {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                e.currentTarget.style.color = "#71717a";
+                e.currentTarget.style.color = "#9CA3AF";
               }}
             >
               <X size={14} />
@@ -864,7 +854,6 @@ function DashboardPage() {
         </div>
       )}
 
-      {/* Toasts */}
       <div
         style={{
           position: "fixed",
@@ -881,25 +870,25 @@ function DashboardPage() {
             key={t.id}
             className="toast-enter"
             style={{
-              background: "#18181b",
-              border: "1px solid rgba(255,255,255,0.1)",
-              borderRadius: 10,
+              background: "rgba(10,10,10,0.8)",
+              backdropFilter: "blur(24px)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 16,
               padding: "10px 16px",
               fontSize: 13,
               color: "#fff",
-              boxShadow: "0 4px 24px rgba(0,0,0,0.5)",
+              boxShadow: "rgba(0,0,0,0.25) 0px 25px 50px -12px",
               display: "flex",
               alignItems: "center",
               gap: 8,
-              backdropFilter: "blur(8px)",
             }}
           >
             <div
               style={{
                 width: 6,
                 height: 6,
-                borderRadius: "50%",
-                background: "#f59e0b",
+                borderRadius: 9999,
+                background: "#D97736",
                 flexShrink: 0,
               }}
             />

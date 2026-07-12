@@ -13,7 +13,7 @@ function PrivacyPage() {
           <h1 className="text-[clamp(2rem,4vw,3rem)] font-black tracking-tight leading-[1.06] mb-8">
             Privacy Policy
           </h1>
-          <div className="space-y-6 text-sm text-zinc-300 leading-relaxed">
+          <div className="space-y-6 text-sm text-[#D1D5DB] leading-relaxed">
             <p>Last updated: July 8, 2026</p>
 
             <h2 className="text-white font-bold text-base mt-8">1. Information We Collect</h2>
@@ -59,7 +59,7 @@ function PrivacyPage() {
             <h2 className="text-white font-bold text-base mt-8">5. Contact</h2>
             <p>
               For privacy-related inquiries, email{" "}
-              <a href="mailto:support@subai.in" className="text-amber-400 hover:underline">
+              <a href="mailto:support@subai.in" className="text-[#D97736] hover:underline">
                 support@subai.in
               </a>
               .

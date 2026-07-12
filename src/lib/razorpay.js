@@ -55,7 +55,7 @@ export function openRazorpay({ plan, amount, email, name, onSuccess, onError }) 
       name: name || "",
     },
     theme: {
-      color: "#facc15",
+      color: "#D97736",
     },
     handler: function (response) {
       if (onSuccess) {

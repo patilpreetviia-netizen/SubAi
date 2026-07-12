@@ -1,9 +1,9 @@
 .input {
   width: 100%;
-  background: var(--surface-muted);
+  background: var(--bg-raised);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border-base);
+  border-radius: var(--radius-sm);
   padding: 11px 14px;
   font-size: 14px;
   outline: none;
@@ -12,8 +12,8 @@
     background 0.15s ease;
 }
 .input:focus {
-  border-color: var(--accent-amber);
-  background: var(--surface-raised);
+  border-color: var(--primary);
+  background: var(--bg-overlay);
 }
 .input::placeholder {
   color: var(--text-tertiary);

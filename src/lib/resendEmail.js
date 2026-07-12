@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 
-const RESEND_FROM = "SubAI <onboarding@resend.dev>";
+const RESEND_FROM = "SubAI <noreply@sub-ai-iota.vercel.app>";
 
 const rateLimitStore = {};
 
@@ -82,17 +82,18 @@ function emailLayout({ children, previewText }) {
         }
       </style>
     </head>
-    <body style="margin: 0; padding: 0; background-color: #09090b; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #09090b;">
+    <body style="margin: 0; padding: 0;   background-color: #0A0A0A; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="  background-color: #0A0A0A;">
         <tr>
           <td align="center" style="padding: 40px 16px;">
             <table class="email-container" role="presentation" width="520" cellpadding="0" cellspacing="0" style="max-width: 520px; width: 100%;">
               <tr>
                 <td style="padding: 0 0 24px; text-align: center;">
+
                   <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
                     <tr>
                       <td style="vertical-align: middle;">
-                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #facc15; box-shadow: 0 0 10px rgba(250, 204, 21, 0.5); margin-right: 8px; vertical-align: middle;"></span>
+                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #D97736; box-shadow: 0 0 10px rgba(217, 119, 6, 0.5); margin-right: 8px; vertical-align: middle;"></span>
                       </td>
                       <td style="vertical-align: middle;">
                         <span style="font-weight: 800; font-size: 20px; color: #fafafa; letter-spacing: -0.3px;">SubAI</span>
@@ -141,8 +142,8 @@ function button(href, text, extra = "") {
   return `
     <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
       <tr>
-        <td style="border-radius: 8px; background: #f59e0b;" ${extra}>
-          <a href="${href}" style="display: inline-block; padding: 12px 32px; border-radius: 8px; font-weight: 700; font-size: 14px; color: #09090b; text-decoration: none; letter-spacing: -0.2px;">${text}</a>
+        <td style="border-radius: 6px; background: #D97736;" ${extra}>
+          <a href="${href}" style="display: inline-block; padding: 12px 32px; border-radius: 6px; font-weight: 700; font-size: 14px; color: #030303; text-decoration: none; letter-spacing: -0.2px;">${text}</a>
         </td>
       </tr>
     </table>
@@ -185,15 +186,15 @@ export const sendWelcomeEmail = createServerFn({ method: "POST" })
                 <table role="presentation" cellpadding="0" cellspacing="0" style="width: 100%;">
                   <tr>
                     <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
-                      <p style="margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #facc15;">100%</p>
+                      <p style="margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #D97736;">100%</p>
                       <p style="margin: 0; font-size: 11px; color: #71717a;">Free to use</p>
                     </td>
                     <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
-                      <p style="margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #facc15;">5 min</p>
+                      <p style="margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #D97736;">5 min</p>
                       <p style="margin: 0; font-size: 11px; color: #71717a;">Avg. caption time</p>
                     </td>
                     <td style="width: 33.33%; padding: 8px; text-align: center; vertical-align: top;">
-                      <p style="margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #facc15;">9 langs</p>
+                      <p style="margin: 0 0 4px; font-size: 18px; font-weight: 700; color: #D97736;">9 langs</p>
                       <p style="margin: 0; font-size: 11px; color: #71717a;">Supported</p>
                     </td>
                   </tr>
@@ -233,7 +234,7 @@ export const sendTestEmail = createServerFn({ method: "POST" })
         previewText: "Your SubAI email integration is working correctly.",
         children: `
           <div style="text-align: center; margin-bottom: 8px;">
-            <span style="display: inline-block; width: 40px; height: 40px; border-radius: 50%; background: rgba(250, 204, 21, 0.12); line-height: 40px; font-size: 20px;">&#10003;</span>
+              <span style="display: inline-block; width: 40px; height: 40px; border-radius: 50%; background: rgba(217, 119, 6, 0.12); line-height: 40px; font-size: 20px;">&#10003;</span>
           </div>
           <h1 style="font-size: 20px; font-weight: 700; margin: 0 0 6px; color: #fafafa; text-align: center;">
             All clear!
@@ -294,7 +295,7 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
             <tr>
               <td style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center;">
                 <p style="margin: 0 0 2px; font-size: 11px; color: #71717a; text-transform: uppercase; letter-spacing: 0.5px;">Spent</p>
-                <p style="margin: 0; font-size: 22px; font-weight: 800; color: ${isOverBudget ? "#ef4444" : "#f59e0b"};">Rs.${spent.toLocaleString("en-IN")}</p>
+                <p style="margin: 0; font-size: 22px; font-weight: 800; color: ${isOverBudget ? "#ef4444" : "#D97736"};">Rs.${spent.toLocaleString("en-IN")}</p>
               </td>
               <td style="width: 8px;"></td>
               <td style="padding: 12px; background: rgba(255,255,255,0.03); border-radius: 8px; text-align: center;">
@@ -309,9 +310,9 @@ export const sendBudgetAlertEmail = createServerFn({ method: "POST" })
             </tr>
           </table>
           <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; margin-bottom: 24px; overflow: hidden;">
-            <div style="width: ${Math.min(percentage, 100)}%; height: 100%; background: ${isOverBudget ? "linear-gradient(90deg, #f59e0b, #ef4444)" : "linear-gradient(90deg, #22c55e, #f59e0b)"}; border-radius: 3px;"></div>
+            <div style="width: ${Math.min(percentage, 100)}%; height: 100%; background: ${isOverBudget ? "linear-gradient(90deg, #D97736, #ef4444)" : "linear-gradient(90deg, #22c55e, #D97736)"}; border-radius: 3px;"></div>
           </div>
-          <div style="background: ${isOverBudget ? "rgba(239, 68, 68, 0.08)" : "rgba(250, 204, 21, 0.08)"}; border: 1px solid ${isOverBudget ? "rgba(239, 68, 68, 0.2)" : "rgba(250, 204, 21, 0.2)"}; border-radius: 8px; padding: 16px; text-align: center;">
+          <div style="background: ${isOverBudget ? "rgba(239, 68, 68, 0.08)" : "rgba(217, 119, 6, 0.08)"}; border: 1px solid ${isOverBudget ? "rgba(239, 68, 68, 0.2)" : "rgba(217, 119, 6, 0.2)"}; border-radius: 8px; padding: 16px; text-align: center;">
             <p style="margin: 0; font-size: 13px; color: ${isOverBudget ? "#fca5a5" : "#fde68a"};">
               ${isOverBudget
             ? `You've spent <strong>Rs.${spent.toLocaleString("en-IN")}</strong> — Rs.${(spent - limit).toLocaleString("en-IN")} over your <strong>${category}</strong> budget.`

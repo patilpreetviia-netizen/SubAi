@@ -1,26 +1,21 @@
-/* ═══════════════════════════════════════════
-   EDITOR — Captik-style 3-panel layout
-═══════════════════════════════════════════ */
-
 .shell {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
-  background: #0d0d10;
+  background: #0A0A0A;
   color: #fff;
   font-family: var(--font-sans, "Inter", system-ui, sans-serif);
 }
 
-/* ── Top bar ─────────────────────────────── */
 .topbar {
   height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  background: #111114;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0A0A0A;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
   gap: 12px;
 }
@@ -36,14 +31,14 @@
 .backBtn {
   background: transparent;
   border: none;
-  color: #a1a1aa;
+  color: #9CA3AF;
   cursor: pointer;
   font-size: 16px;
   padding: 4px 6px;
   border-radius: 6px;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 150ms ease,
+    color 150ms ease;
   display: flex;
   align-items: center;
 }
@@ -65,14 +60,14 @@
 .brandDot {
   width: 18px;
   height: 18px;
-  background: #f59e0b;
+  background: #D97736;
   border-radius: 5px;
   flex-shrink: 0;
 }
 
 .projectName {
   font-size: 13px;
-  color: #a1a1aa;
+  color: #9CA3AF;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -104,14 +99,14 @@
   border-radius: 4px;
   border: none;
   background: transparent;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-size: 11px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 150ms ease,
+    color 150ms ease;
 }
 
 .resBtnActive {
@@ -133,16 +128,16 @@
 
 .iconBtn {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #a1a1aa;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9CA3AF;
   cursor: pointer;
   font-size: 12px;
   padding: 6px 10px;
-  border-radius: 7px;
+  border-radius: 6px;
   font-family: inherit;
   transition:
-    background 0.15s,
-    color 0.15s;
+    background 150ms ease,
+    color 150ms ease;
   white-space: nowrap;
 }
 .iconBtn:hover {
@@ -157,14 +152,14 @@
 .saveBtn {
   padding: 6px 14px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 150ms ease;
 }
 .saveBtn:hover {
   background: rgba(255, 255, 255, 0.06);
@@ -174,14 +169,14 @@
 .srtBtn {
   padding: 6px 14px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
   font-size: 12px;
   font-weight: 500;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 150ms ease;
 }
 .srtBtn:hover {
   background: rgba(255, 255, 255, 0.06);
@@ -190,46 +185,44 @@
 
 .exportBtn {
   padding: 6px 16px;
-  background: #f59e0b;
+  background: #D97736;
   border: none;
-  border-radius: 7px;
+  border-radius: 9999px;
   font-size: 12px;
   font-weight: 700;
-  color: #000;
+  color: #030303;
   font-family: inherit;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: background 150ms ease;
   white-space: nowrap;
 }
 .exportBtn:hover {
-  background: #fbbf24;
+  background: #FF9A4D;
 }
 .exportBtn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-/* ── Body (left + center + right) ──────────── */
 .body {
   flex: 1;
   display: flex;
   overflow: hidden;
 }
 
-/* ── Left panel — Captions ───────────────── */
 .leftPanel {
   width: 240px;
   min-width: 240px;
   display: flex;
   flex-direction: column;
-  background: #111114;
-  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0A0A0A;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
 .panelHeader {
   padding: 12px 14px 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
 
@@ -237,7 +230,7 @@
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #71717a;
+  color: #6b7280;
   text-transform: uppercase;
   margin: 0 0 10px;
 }
@@ -252,19 +245,19 @@
   padding: 4px 10px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 5px;
-  color: #a1a1aa;
+  border-radius: 6px;
+  color: #9CA3AF;
   font-size: 11px;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 150ms ease;
 }
 
 .lineBtnActive {
-  background: #f59e0b;
-  border-color: #f59e0b;
-  color: #000;
+  background: #D97736;
+  border-color: #D97736;
+  color: #030303;
   font-weight: 700;
 }
 
@@ -275,7 +268,7 @@
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;
-  color: #71717a;
+  color: #6b7280;
   text-transform: uppercase;
   cursor: pointer;
   background: none;
@@ -294,7 +287,7 @@
 .captionRow {
   padding: 8px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  transition: background 0.1s;
+  transition: background 150ms ease;
 }
 
 .captionRow:hover {
@@ -310,14 +303,14 @@
 
 .captionRowNum {
   font-size: 10px;
-  color: #52525b;
+  color: #6b7280;
   font-weight: 600;
   min-width: 14px;
 }
 
 .captionTimes {
   font-size: 9px;
-  color: #52525b;
+  color: #6b7280;
   font-family: ui-monospace, monospace;
   flex: 1;
 }
@@ -335,20 +328,20 @@
   font-size: 11px;
   color: #d4d4d8;
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background 150ms ease;
   border: none;
   font-family: inherit;
 }
 .captionWordChip:hover {
-  background: rgba(245, 158, 11, 0.2);
-  color: #f59e0b;
+  background: rgba(217, 119, 54, 0.2);
+  color: #D97736;
 }
 
 .captionInput {
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 5px;
+  border: 1px solid rgba(217, 119, 54, 0.3);
+  border-radius: 6px;
   color: #fff;
   font-size: 11px;
   font-family: inherit;
@@ -356,13 +349,12 @@
   outline: none;
 }
 
-/* ── Center panel — Preview ──────────────── */
 .centerPanel {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background: #0d0d10;
+  background: #0A0A0A;
 }
 
 .previewTopBar {
@@ -370,7 +362,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
 
@@ -382,14 +374,14 @@
 .aspectBtn {
   padding: 4px 8px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 5px;
-  color: #71717a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  color: #6b7280;
   font-size: 10px;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 150ms ease;
 }
 
 .aspectBtnActive {
@@ -403,7 +395,7 @@
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  color: #71717a;
+  color: #6b7280;
 }
 
 .canvas {
@@ -415,20 +407,19 @@
   padding: 16px;
 }
 
-/* ── Right panel — Templates ─────────────── */
 .rightPanel {
   width: 260px;
   min-width: 260px;
   display: flex;
   flex-direction: column;
-  background: #111114;
-  border-left: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0A0A0A;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
   overflow: hidden;
 }
 
 .panelTabs {
   display: flex;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
 }
 
@@ -438,18 +429,18 @@
   text-align: center;
   font-size: 12px;
   font-weight: 500;
-  color: #71717a;
+  color: #6b7280;
   cursor: pointer;
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
   font-family: inherit;
-  transition: color 0.15s;
+  transition: color 150ms ease;
 }
 
 .panelTabActive {
   color: #fff;
-  border-bottom-color: #f59e0b;
+  border-bottom-color: #D97736;
 }
 
 .templatesBody {
@@ -471,10 +462,10 @@
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 150ms ease;
   border: none;
   background: rgba(255, 255, 255, 0.05);
-  color: #a1a1aa;
+  color: #9CA3AF;
 }
 
 .subTabActive {
@@ -492,7 +483,7 @@
   left: 9px;
   top: 50%;
   transform: translateY(-50%);
-  color: #71717a;
+  color: #6b7280;
   pointer-events: none;
 }
 
@@ -500,7 +491,7 @@
   width: 100%;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 7px;
+  border-radius: 6px;
   padding: 7px 10px 7px 28px;
   font-size: 12px;
   color: #fff;
@@ -513,15 +504,15 @@
   width: 100%;
   padding: 7px;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
   font-size: 11px;
   font-weight: 500;
-  color: #a1a1aa;
+  color: #9CA3AF;
   font-family: inherit;
   cursor: pointer;
   margin-bottom: 14px;
-  transition: background 0.15s;
+  transition: background 150ms ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -536,7 +527,7 @@
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #52525b;
+  color: #6b7280;
   text-transform: uppercase;
   margin-bottom: 8px;
 }
@@ -548,27 +539,29 @@
 }
 
 .templateCard {
-  background: #17171b;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 10px;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
   padding: 12px;
   cursor: pointer;
   transition:
-    border-color 0.15s,
-    transform 0.1s;
+    border-color 150ms ease,
+    transform 150ms ease;
   text-align: left;
   width: 100%;
   font-family: inherit;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 }
 
 .templateCard:hover {
-  border-color: rgba(245, 158, 11, 0.3);
+  border-color: rgba(217, 119, 54, 0.3);
   transform: scale(1.01);
 }
 
 .templateCardActive {
-  border-color: #f59e0b;
-  background: rgba(245, 158, 11, 0.06);
+  border-color: #D97736;
+  background: rgba(217, 119, 54, 0.06);
 }
 
 .templateCardName {
@@ -587,7 +580,7 @@
   padding: 1px 5px;
   background: #ef4444;
   color: #fff;
-  border-radius: 3px;
+  border-radius: 4px;
   display: inline-flex;
   align-items: center;
   gap: 3px;
@@ -599,16 +592,16 @@
   padding: 1px 5px;
   background: #22c55e;
   color: #fff;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 
 .templatePreview {
-  background: #0d0d10;
-  border-radius: 7px;
+  background: #0A0A0A;
+  border-radius: 6px;
   padding: 10px;
   text-align: center;
   font-size: 11px;
-  color: #71717a;
+  color: #6b7280;
   line-height: 1.5;
 }
 
@@ -617,10 +610,9 @@
   margin: 0 2px;
 }
 
-/* ── Timeline + waveform ─────────────────── */
 .timeline {
   height: 120px;
-  background: #0d0d10;
+  background: #0A0A0A;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   flex-shrink: 0;
   display: flex;
@@ -639,12 +631,12 @@
 .transportBtn {
   background: transparent;
   border: none;
-  color: #a1a1aa;
+  color: #9CA3AF;
   cursor: pointer;
   font-size: 14px;
   padding: 4px;
   border-radius: 4px;
-  transition: color 0.15s;
+  transition: color 150ms ease;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -656,19 +648,19 @@
 .playBtn {
   width: 30px;
   height: 30px;
-  background: #f59e0b;
+  background: #D97736;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  color: #000;
+  color: #030303;
   font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s;
+  transition: background 150ms ease;
 }
 .playBtn:hover {
-  background: #fbbf24;
+  background: #FF9A4D;
 }
 
 .lineModeBtns {
@@ -684,10 +676,10 @@
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;
-  color: #71717a;
+  color: #6b7280;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.1s;
+  transition: all 150ms ease;
 }
 
 .lineModeBtnActive {
@@ -706,11 +698,11 @@
 .zoomBtn {
   background: transparent;
   border: none;
-  color: #71717a;
+  color: #6b7280;
   cursor: pointer;
   font-size: 16px;
   padding: 2px 4px;
-  transition: color 0.15s;
+  transition: color 150ms ease;
 }
 .zoomBtn:hover {
   color: #fff;
@@ -735,18 +727,18 @@
 .wordChip {
   flex-shrink: 0;
   padding: 4px 8px;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 5px;
+  background: rgba(217, 119, 54, 0.15);
+  border: 1px solid rgba(217, 119, 54, 0.3);
+  border-radius: 6px;
   font-size: 10px;
-  color: #f59e0b;
+  color: #D97736;
   white-space: nowrap;
   cursor: pointer;
-  transition: background 0.1s;
+  transition: background 150ms ease;
   font-family: ui-monospace, monospace;
 }
 .wordChip:hover {
-  background: rgba(245, 158, 11, 0.3);
+  background: rgba(217, 119, 54, 0.3);
 }
 
 .waveform {

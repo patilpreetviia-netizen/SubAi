@@ -29,7 +29,7 @@ function strengthLabel(s) {
 }
 function strengthColor(s) {
   if (s <= 2) return "#f87171";
-  if (s <= 3) return "#facc15";
+  if (s <= 3) return "#FF9A4D";
   if (s === 4) return "#4ade80";
   return "#22c55e";
 }
@@ -52,8 +52,8 @@ function ResetPasswordPage() {
   const navigate = useNavigate();
   const updatePassword = useAuthStore((s) => s.updatePassword);
 
-  const [ready, setReady] = useState(false);    // session recovered from URL hash
-  const [invalid, setInvalid] = useState(false); // link was bad / expired
+  const [ready, setReady] = useState(false);
+  const [invalid, setInvalid] = useState(false);
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -61,8 +61,6 @@ function ResetPasswordPage() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-  /* Supabase embeds the recovery token in the URL hash after redirect.
-     onAuthStateChange picks it up and fires a PASSWORD_RECOVERY event. */
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") {
@@ -70,12 +68,10 @@ function ResetPasswordPage() {
       }
     });
 
-    // Fallback: if user somehow already has a session when they land here
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) setReady(true);
     });
 
-    // Timeout — if no recovery event in 5 s, the link was likely invalid
     const timeout = setTimeout(() => {
       setReady((r) => { if (!r) setInvalid(true); return r; });
     }, 5000);
@@ -112,109 +108,113 @@ function ResetPasswordPage() {
 
   const strengthScore = password ? getStrength(password) : -1;
 
-  /* ── Waiting for the recovery event ── */
   if (!ready && !invalid) {
     return (
       <div className={styles.wrap}>
-        <div className={styles.card} style={{ textAlign: "center" }}>
-          <p style={{ color: "var(--text-secondary)" }}>Verifying reset link…</p>
+        <div className={styles.card}>
+          <div className={styles.cardInner} style={{ textAlign: "center" }}>
+            <p style={{ color: "var(--text-secondary)" }}>Verifying reset link…</p>
+          </div>
         </div>
       </div>
     );
   }
 
-  /* ── Link was invalid / expired ── */
   if (invalid) {
     return (
       <div className={styles.wrap}>
         <div className={styles.card}>
-          <Link to="/" className={styles.brand}><span className={styles.dot} /> SubAI</Link>
-          <h1 className={styles.title}>Link expired</h1>
-          <p className={styles.desc} style={{ marginBottom: 24 }}>
-            This reset link is invalid or has expired. Please request a new one.
-          </p>
-          <Button className={styles.submit} onClick={() => navigate({ to: "/login" })}>
-            Back to login
-          </Button>
+          <div className={styles.cardInner}>
+            <Link to="/" className={styles.brand}><img src="/subai-logo.png" alt="SubAI" style={{ height: 64, width: "auto" }} /></Link>
+            <h1 className={styles.title}>Link expired</h1>
+            <p className={styles.desc} style={{ marginBottom: 24 }}>
+              This reset link is invalid or has expired. Please request a new one.
+            </p>
+            <Button className={styles.submit} onClick={() => navigate({ to: "/login" })}>
+              Back to login
+            </Button>
+          </div>
         </div>
       </div>
     );
   }
 
-  /* ── Success ── */
   if (success) {
     return (
       <div className={styles.wrap}>
         <div className={styles.card}>
-          <Link to="/" className={styles.brand}><span className={styles.dot} /> SubAI</Link>
-          <div className={styles.success} role="status" style={{ textAlign: "center", marginTop: 16 }}>
-            ✅ Password updated! Redirecting to dashboard…
+          <div className={styles.cardInner}>
+            <Link to="/" className={styles.brand}><img src="/subai-logo.png" alt="SubAI" style={{ height: 64, width: "auto" }} /></Link>
+            <div className={styles.success} role="status" style={{ textAlign: "center", marginTop: 16 }}>
+              ✅ Password updated! Redirecting to dashboard…
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  /* ── Reset form ── */
   return (
     <div className={styles.wrap}>
       <div className={styles.card}>
-        <Link to="/" className={styles.brand}><span className={styles.dot} /> SubAI</Link>
-        <h1 className={styles.title}>Set new password</h1>
-        <p className={styles.desc}>Choose a strong password for your account.</p>
+        <div className={styles.cardInner}>
+          <Link to="/" className={styles.brand}><img src="/subai-logo.png" alt="SubAI" style={{ height: 64, width: "auto" }} /></Link>
+          <h1 className={styles.title}>Set new password</h1>
+          <p className={styles.desc}>Choose a strong password for your account.</p>
 
-        {error && <div className={styles.error} role="alert">{error}</div>}
+          {error && <div className={styles.error} role="alert">{error}</div>}
 
-        <form onSubmit={onSubmit}>
-          <div className={styles.pwWrap}>
+          <form onSubmit={onSubmit}>
+            <div className={styles.pwWrap}>
+              <Input
+                label="New password"
+                type={showPw ? "text" : "password"}
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="min 6 characters"
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPw((v) => !v)}
+                aria-label={showPw ? "Hide password" : "Show password"}
+              >
+                <EyeIcon open={showPw} />
+              </button>
+            </div>
+
+            {strengthScore >= 0 && (
+              <div className={styles.strength}>
+                <div className={styles.strengthBar}>
+                  <div
+                    className={styles.strengthFill}
+                    style={{
+                      width: `${(strengthScore / 5) * 100}%`,
+                      background: strengthColor(strengthScore),
+                    }}
+                  />
+                </div>
+                <span className={styles.strengthLabel}>{strengthLabel(strengthScore)}</span>
+              </div>
+            )}
+
             <Input
-              label="New password"
+              label="Confirm password"
               type={showPw ? "text" : "password"}
               required
               minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="min 6 characters"
+              value={confirm}
+              onChange={(e) => setConfirm(e.target.value)}
+              placeholder="repeat password"
             />
-            <button
-              type="button"
-              className={styles.eyeBtn}
-              onClick={() => setShowPw((v) => !v)}
-              aria-label={showPw ? "Hide password" : "Show password"}
-            >
-              <EyeIcon open={showPw} />
-            </button>
-          </div>
 
-          {strengthScore >= 0 && (
-            <div className={styles.strength}>
-              <div className={styles.strengthBar}>
-                <div
-                  className={styles.strengthFill}
-                  style={{
-                    width: `${(strengthScore / 5) * 100}%`,
-                    background: strengthColor(strengthScore),
-                  }}
-                />
-              </div>
-              <span className={styles.strengthLabel}>{strengthLabel(strengthScore)}</span>
-            </div>
-          )}
-
-          <Input
-            label="Confirm password"
-            type={showPw ? "text" : "password"}
-            required
-            minLength={6}
-            value={confirm}
-            onChange={(e) => setConfirm(e.target.value)}
-            placeholder="repeat password"
-          />
-
-          <Button type="submit" className={styles.submit} disabled={loading}>
-            {loading ? "Updating…" : "Update password"}
-          </Button>
-        </form>
+            <Button type="submit" className={styles.submit} disabled={loading}>
+              {loading ? "Updating…" : "Update password"}
+            </Button>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -24,7 +24,6 @@ function friendlyError(raw) {
   return ERROR_MAP[raw] || raw;
 }
 
-/* ── Google icon ───────────────────────────────────── */
 function GoogleIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -36,7 +35,6 @@ function GoogleIcon() {
   );
 }
 
-/* ── Eye icons ─────────────────────────────────────── */
 function EyeIcon({ open }) {
   return open ? (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -51,13 +49,11 @@ function EyeIcon({ open }) {
   );
 }
 
-/* ─────────────────────────────────────────────────── */
-
 function LoginPage() {
   const navigate = useNavigate();
   const { signIn, signInWithGoogle, sendPasswordReset } = useAuthStore();
 
-  const [mode, setMode] = useState("login"); // "login" | "forgot"
+  const [mode, setMode] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
@@ -66,7 +62,6 @@ function LoginPage() {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
-  /* ── Email/password login ── */
   const onLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -84,7 +79,6 @@ function LoginPage() {
     }
   };
 
-  /* ── OAuth ── */
   const onOAuth = async (provider) => {
     setOauthLoading("google");
     setError(null);
@@ -93,10 +87,8 @@ function LoginPage() {
       setError(friendlyError(authError.message));
       setOauthLoading(null);
     }
-    // on success the browser redirects away, so we don't clear loading
   };
 
-  /* ── Forgot password ── */
   const onForgot = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -111,120 +103,120 @@ function LoginPage() {
     }
   };
 
-  /* ── Render: Forgot Password mode ── */
   if (mode === "forgot") {
     return (
       <div className={styles.wrap}>
         <div className={styles.card}>
-          <Link to="/" className={styles.brand}>
-            <span className={styles.dot} /> SubAI
-          </Link>
-          <h1 className={styles.title}>Reset your password</h1>
-          <p className={styles.desc}>Enter your email and we'll send a reset link.</p>
+          <div className={styles.cardInner}>
+            <Link to="/" className={styles.brand}>
+              <img src="/subai-logo.png" alt="SubAI" style={{ height: 64, width: "auto" }} />
+            </Link>
+            <h1 className={styles.title}>Reset your password</h1>
+            <p className={styles.desc}>Enter your email and we'll send a reset link.</p>
 
-          {error && <div className={styles.error} role="alert">{error}</div>}
-          {success && <div className={styles.success} role="status">{success}</div>}
+            {error && <div className={styles.error} role="alert">{error}</div>}
+            {success && <div className={styles.success} role="status">{success}</div>}
 
-          {!success && (
-            <form onSubmit={onForgot}>
-              <Input
-                label="Email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@studio.in"
-              />
-              <Button type="submit" className={styles.submit} disabled={loading}>
-                {loading ? "Sending…" : "Send reset link"}
-              </Button>
-            </form>
-          )}
+            {!success && (
+              <form onSubmit={onForgot}>
+                <Input
+                  label="Email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@studio.in"
+                />
+                <Button type="submit" className={styles.submit} disabled={loading}>
+                  {loading ? "Sending…" : "Send reset link"}
+                </Button>
+              </form>
+            )}
 
-          <div className={styles.foot} style={{ marginTop: 16 }}>
-            <button className={styles.textBtn} onClick={() => { setMode("login"); setError(null); setSuccess(null); }}>
-              ← Back to login
-            </button>
+            <div className={styles.foot} style={{ marginTop: 16 }}>
+              <button className={styles.textBtn} onClick={() => { setMode("login"); setError(null); setSuccess(null); }}>
+                ← Back to login
+              </button>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 
-  /* ── Render: Login mode ── */
   return (
     <div className={styles.wrap}>
       <div className={styles.card}>
-        <Link to="/" className={styles.brand}>
-          <span className={styles.dot} /> SubAI
-        </Link>
-        <h1 className={styles.title}>Welcome back</h1>
-        <p className={styles.desc}>Log in to continue captioning.</p>
+        <div className={styles.cardInner}>
+          <Link to="/" className={styles.brand}>
+            <img src="/subai-logo.png" alt="SubAI" style={{ height: 64, width: "auto" }} />
+          </Link>
+          <h1 className={styles.title}>Welcome back</h1>
+          <p className={styles.desc}>Log in to continue captioning.</p>
 
-        {error && <div className={styles.error} role="alert">{error}</div>}
+          {error && <div className={styles.error} role="alert">{error}</div>}
 
-        {/* ── OAuth buttons ── */}
-        <div className={styles.oauthRow}>
-          <button
-            type="button"
-            className={styles.oauthBtn}
-            onClick={() => onOAuth("google")}
-            disabled={!!oauthLoading}
-          >
-            <GoogleIcon />
-            {oauthLoading === "google" ? "Redirecting…" : "Continue with Google"}
-          </button>
-        </div>
+          <div className={styles.oauthRow}>
+            <button
+              type="button"
+              className={styles.oauthBtn}
+              onClick={() => onOAuth("google")}
+              disabled={!!oauthLoading}
+            >
+              <GoogleIcon />
+              {oauthLoading === "google" ? "Redirecting…" : "Continue with Google"}
+            </button>
+          </div>
 
-        <div className={styles.divider}><span>or</span></div>
+          <div className={styles.divider}><span>or</span></div>
 
-        {/* ── Email/password form ── */}
-        <form onSubmit={onLogin}>
-          <Input
-            label="Email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@studio.in"
-          />
-          <div className={styles.pwWrap}>
+          <form onSubmit={onLogin}>
             <Input
-              label="Password"
-              type={showPw ? "text" : "password"}
+              label="Email"
+              type="email"
               required
-              minLength={6}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@studio.in"
             />
-            <button
-              type="button"
-              className={styles.eyeBtn}
-              onClick={() => setShowPw((v) => !v)}
-              aria-label={showPw ? "Hide password" : "Show password"}
-            >
-              <EyeIcon open={showPw} />
-            </button>
+            <div className={styles.pwWrap}>
+              <Input
+                label="Password"
+                type={showPw ? "text" : "password"}
+                required
+                minLength={6}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={() => setShowPw((v) => !v)}
+                aria-label={showPw ? "Hide password" : "Show password"}
+              >
+                <EyeIcon open={showPw} />
+              </button>
+            </div>
+
+            <div className={styles.forgotRow}>
+              <button
+                type="button"
+                className={styles.textBtn}
+                onClick={() => { setMode("forgot"); setError(null); }}
+              >
+                Forgot password?
+              </button>
+            </div>
+
+            <Button type="submit" className={styles.submit} disabled={loading || !!oauthLoading}>
+              {loading ? "Signing in…" : "Sign in"}
+            </Button>
+          </form>
+
+          <div className={styles.foot}>
+            New here? <Link to="/signup">Create an account</Link>
           </div>
-
-          <div className={styles.forgotRow}>
-            <button
-              type="button"
-              className={styles.textBtn}
-              onClick={() => { setMode("forgot"); setError(null); }}
-            >
-              Forgot password?
-            </button>
-          </div>
-
-          <Button type="submit" className={styles.submit} disabled={loading || !!oauthLoading}>
-            {loading ? "Signing in…" : "Sign in"}
-          </Button>
-        </form>
-
-        <div className={styles.foot}>
-          New here? <Link to="/signup">Create an account</Link>
         </div>
       </div>
     </div>

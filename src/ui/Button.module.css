@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-full);
   font-weight: 600;
   font-size: 14px;
   padding: 10px 18px;
@@ -27,21 +27,20 @@
 }
 
 .solid {
-  background: var(--accent-amber);
-  color: #09090b;
+  background: var(--primary);
+  color: #030303;
 }
 .solid:hover:not(:disabled) {
-  box-shadow: var(--accent-amber-glow);
+  box-shadow: var(--accent-glow);
 }
 
 .outline {
-  background: transparent;
+  background: var(--primary);
   color: var(--text-primary);
-  border-color: var(--border-strong);
+  border-color: var(--primary);
 }
 .outline:hover:not(:disabled) {
-  border-color: var(--accent-amber);
-  color: var(--accent-amber);
+  opacity: 0.9;
 }
 
 .ghost {
@@ -50,7 +49,7 @@
 }
 .ghost:hover:not(:disabled) {
   color: var(--text-primary);
-  background: var(--surface-muted);
+  background: var(--bg-raised);
 }
 
 .sm {

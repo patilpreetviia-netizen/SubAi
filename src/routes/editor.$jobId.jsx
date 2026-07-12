@@ -93,14 +93,16 @@ const overlayBase = {
 };
 
 const modalBase = {
-  background: "#18181b",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "rgba(10,10,10,0.8)",
+  backdropFilter: "blur(24px)",
+  border: "1px solid rgba(255,255,255,0.08)",
   borderRadius: 16,
   padding: 24,
   maxWidth: 600,
   width: "90%",
   maxHeight: "85vh",
   overflow: "auto",
+  boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
 };
 
 function Tooltip({ text, children }) {
@@ -175,13 +177,13 @@ function EmptyState() {
         <circle cx="64" cy="56" r="8" fill="#27272a" stroke="#52525b" strokeWidth="1.5" />
         <path
           d="M61 56l2 2 4-4"
-          stroke="#f59e0b"
+          stroke="#D97736"
           strokeWidth="1.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
       </svg>
-      <div style={{ fontSize: 13, fontWeight: 600, color: "#71717a" }}>No captions yet</div>
+      <div style={{ fontSize: 13, fontWeight: 600, color: "#6b7280" }}>No captions yet</div>
       <p
         style={{
           fontSize: 11,
@@ -195,10 +197,10 @@ function EmptyState() {
         <br />
         <code
           style={{
-            color: "#a1a1aa",
+            color: "#9CA3AF",
             background: "rgba(255,255,255,0.05)",
             padding: "1px 4px",
-            borderRadius: 3,
+            borderRadius: 4,
           }}
         >
           GROQ_API_KEY
@@ -207,10 +209,10 @@ function EmptyState() {
         in{" "}
         <code
           style={{
-            color: "#a1a1aa",
+            color: "#9CA3AF",
             background: "rgba(255,255,255,0.05)",
             padding: "1px 4px",
-            borderRadius: 3,
+            borderRadius: 4,
           }}
         >
           .env
@@ -610,20 +612,20 @@ function EditorPage() {
           justifyContent: "center",
           height: "100vh",
           gap: 16,
-          background: "#09090b",
+          background: "#0A0A0A",
           color: "#fff",
         }}
       >
         <div style={{ fontSize: 48, fontWeight: 800, color: "#27272a" }}>404</div>
-        <div style={{ fontSize: 14, color: "#71717a" }}>Project not found</div>
+        <div style={{ fontSize: 14, color: "#6b7280" }}>Project not found</div>
         <button
           onClick={() => navigate({ to: "/dashboard" })}
           style={{
             marginTop: 8,
             padding: "8px 20px",
-            borderRadius: 8,
-            background: "#f59e0b",
-            color: "#000",
+            borderRadius: 9999,
+            background: "#D97736",
+            color: "#030303",
             fontSize: 13,
             fontWeight: 600,
             border: "none",
@@ -645,19 +647,18 @@ function EditorPage() {
           justifyContent: "center",
           height: "100vh",
           gap: 10,
-          background: "#09090b",
+          background: "#0A0A0A",
           color: "#fff",
         }}
       >
-        <Loader2 size={18} className="animate-spin" style={{ color: "#f59e0b" }} />
-        <span style={{ fontSize: 13, color: "#71717a" }}>Loading editor...</span>
+        <Loader2 size={18} className="animate-spin" style={{ color: "#D97736" }} />
+        <span style={{ fontSize: 13, color: "#6b7280" }}>Loading editor...</span>
       </div>
     );
   }
 
   return (
     <div className={styles.shell}>
-      {/* ── TOP BAR ──────────────────────────── */}
       <div className={styles.topbar}>
         <div className={styles.topLeft}>
           <Tooltip text="Back to dashboard">
@@ -666,8 +667,7 @@ function EditorPage() {
             </button>
           </Tooltip>
           <Link to="/dashboard" className={styles.brand}>
-            <div className={styles.brandDot} />
-            SubAI
+            <img src="/subai-logo.png" alt="SubAI" style={{ height: 56, width: "auto", objectFit: "contain" }} />
           </Link>
           <span style={{ color: "#52525b", fontSize: 13 }}>/</span>
           <span className={styles.projectName}>{job.title || "Editor"}</span>
@@ -753,9 +753,7 @@ function EditorPage() {
         </div>
       </div>
 
-      {/* ── BODY ─────────────────────────────── */}
       <div className={styles.body}>
-        {/* ── LEFT: Captions ───────────────── */}
         <div className={styles.leftPanel}>
           <div className={styles.panelHeader}>
             <p className={styles.panelTitle}>Captions</p>
@@ -772,16 +770,15 @@ function EditorPage() {
             </div>
           </div>
 
-          {/* Script Switcher */}
           <div
             style={{
               display: "flex",
               gap: 4,
               padding: "8px 12px",
-              borderBottom: "1px solid rgba(255,255,255,0.06)",
+              borderBottom: "1px solid rgba(255,255,255,0.08)",
             }}
           >
-            <Languages size={12} style={{ color: "#71717a", marginRight: 4 }} />
+            <Languages size={12} style={{ color: "#6b7280", marginRight: 4 }} />
             {[
               { key: "roman", label: "Roman" },
               { key: "native", label: "Native" },
@@ -795,13 +792,14 @@ function EditorPage() {
                   borderRadius: 6,
                   fontSize: 11,
                   fontWeight: scriptMode === s.key ? 600 : 400,
-                  background: scriptMode === s.key ? "rgba(250,204,21,0.15)" : "transparent",
-                  color: scriptMode === s.key ? "#facc15" : "#71717a",
+                  background: scriptMode === s.key ? "rgba(217,119,54,0.15)" : "transparent",
+                  color: scriptMode === s.key ? "#D97736" : "#6b7280",
                   border:
                     scriptMode === s.key
-                      ? "1px solid rgba(250,204,21,0.25)"
+                      ? "1px solid rgba(217,119,54,0.25)"
                       : "1px solid transparent",
                   cursor: "pointer",
+                  transition: "all 150ms ease",
                 }}
               >
                 {s.label}
@@ -851,7 +849,6 @@ function EditorPage() {
           </div>
         </div>
 
-        {/* ── CENTER: Preview ───────────────── */}
         <div className={styles.centerPanel}>
           <div className={styles.previewTopBar}>
             <div className={styles.aspectBtns}>
@@ -869,9 +866,9 @@ function EditorPage() {
               })}
             </div>
             <div className={styles.zoomControls}>
-              <ZoomOut size={12} style={{ color: "#71717a" }} />
+              <ZoomOut size={12} style={{ color: "#6b7280" }} />
               <span>100%</span>
-              <ZoomIn size={12} style={{ color: "#71717a" }} />
+              <ZoomIn size={12} style={{ color: "#6b7280" }} />
             </div>
           </div>
 
@@ -891,7 +888,6 @@ function EditorPage() {
           </div>
         </div>
 
-        {/* ── RIGHT: Templates + Brand Kit ─── */}
         <div className={styles.rightPanel}>
           <div className={styles.panelTabs}>
             {["text", "templates", "brand"].map((tab) => (
@@ -926,7 +922,7 @@ function EditorPage() {
                     textAlign: "center",
                     padding: "16px 0",
                     fontSize: 11,
-                    color: "#52525b",
+                    color: "#6b7280",
                     lineHeight: 1.6,
                   }}
                 >
@@ -940,11 +936,13 @@ function EditorPage() {
                     <div
                       key={kit.id}
                       style={{
-                        background: "#17171b",
-                        border: "1px solid rgba(255,255,255,0.07)",
-                        borderRadius: 10,
+                        background: "rgba(10,10,10,0.8)",
+                        backdropFilter: "blur(24px)",
+                        border: "1px solid rgba(255,255,255,0.08)",
+                        borderRadius: 16,
                         padding: "10px 12px",
-                        transition: "border-color 0.15s",
+                        transition: "border-color 150ms ease",
+                        boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
                       }}
                     >
                       <div
@@ -964,15 +962,15 @@ function EditorPage() {
                             style={{
                               background: "none",
                               border: "none",
-                              color: "#52525b",
+                              color: "#6b7280",
                               cursor: "pointer",
                               padding: 2,
                               borderRadius: 4,
                               display: "flex",
-                              transition: "color 0.15s",
+                              transition: "color 150ms ease",
                             }}
                             onMouseEnter={(e) => (e.currentTarget.style.color = "#ef4444")}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = "#52525b")}
+                            onMouseLeave={(e) => (e.currentTarget.style.color = "#6b7280")}
                           >
                             <Trash2 size={12} />
                           </button>
@@ -993,7 +991,7 @@ function EditorPage() {
                           style={{
                             flex: 1,
                             fontSize: 11,
-                            color: "#71717a",
+                            color: "#9CA3AF",
                             overflow: "hidden",
                             textOverflow: "ellipsis",
                             whiteSpace: "nowrap",
@@ -1008,7 +1006,7 @@ function EditorPage() {
                             style={{
                               width: 12,
                               height: 12,
-                              borderRadius: 3,
+                              borderRadius: 4,
                               background: kit.bg,
                               border: "1px solid rgba(255,255,255,0.08)",
                             }}
@@ -1022,20 +1020,20 @@ function EditorPage() {
                           marginTop: 8,
                           padding: "5px 0",
                           borderRadius: 6,
-                          background: "rgba(245,158,11,0.1)",
-                          border: "1px solid rgba(245,158,11,0.2)",
-                          color: "#f59e0b",
+                          background: "rgba(217,119,54,0.1)",
+                          border: "1px solid rgba(217,119,54,0.2)",
+                          color: "#D97736",
                           fontSize: 11,
                           fontWeight: 600,
                           cursor: "pointer",
                           fontFamily: "inherit",
-                          transition: "background 0.15s",
+                          transition: "background 150ms ease",
                         }}
                         onMouseEnter={(e) =>
-                          (e.currentTarget.style.background = "rgba(245,158,11,0.2)")
+                          (e.currentTarget.style.background = "rgba(217,119,54,0.2)")
                         }
                         onMouseLeave={(e) =>
-                          (e.currentTarget.style.background = "rgba(245,158,11,0.1)")
+                          (e.currentTarget.style.background = "rgba(217,119,54,0.1)")
                         }
                       >
                         Apply Kit
@@ -1102,7 +1100,7 @@ function EditorPage() {
                       style={{ background: p.bg || "#111", color: p.color }}
                     >
                       <span
-                        style={{ fontSize: 9, color: "#71717a", display: "block", marginBottom: 2 }}
+                        style={{ fontSize: 9, color: "#6b7280", display: "block", marginBottom: 2 }}
                       >
                         the quick
                       </span>
@@ -1110,7 +1108,7 @@ function EditorPage() {
                         {p.name.split(" ")[0].toUpperCase()}
                       </strong>
                       <span
-                        style={{ fontSize: 9, color: "#71717a", display: "block", marginTop: 2 }}
+                        style={{ fontSize: 9, color: "#6b7280", display: "block", marginTop: 2 }}
                       >
                         fox jumps
                       </span>
@@ -1123,7 +1121,6 @@ function EditorPage() {
         </div>
       </div>
 
-      {/* ── TIMELINE ──────────────────────────── */}
       <div className={styles.timeline}>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
           <Timeline
@@ -1163,7 +1160,6 @@ function EditorPage() {
         </div>
       </div>
 
-      {/* ── AI Hook Generator Modal ─────────── */}
       {hookModal && (
         <div
           style={overlayBase}
@@ -1178,20 +1174,20 @@ function EditorPage() {
                 style={{
                   width: 32,
                   height: 32,
-                  borderRadius: 10,
-                  background: "rgba(250,204,21,0.15)",
+                  borderRadius: 16,
+                  background: "rgba(217,119,54,0.15)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                <Wand2 size={16} style={{ color: "#facc15" }} />
+                <Wand2 size={16} style={{ color: "#D97736" }} />
               </div>
               <div style={{ flex: 1 }}>
                 <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#fff" }}>
                   AI Hook Generator
                 </h3>
-                <p style={{ margin: 0, fontSize: 12, color: "#71717a" }}>
+                <p style={{ margin: 0, fontSize: 12, color: "#6b7280" }}>
                   Rewrite your opening 30 seconds
                 </p>
               </div>
@@ -1203,11 +1199,11 @@ function EditorPage() {
                 style={{
                   background: "rgba(255,255,255,0.06)",
                   border: "none",
-                  color: "#71717a",
+                  color: "#6b7280",
                   cursor: "pointer",
                   width: 28,
                   height: 28,
-                  borderRadius: 8,
+                  borderRadius: 6,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1219,18 +1215,18 @@ function EditorPage() {
 
             {!generatedHook ? (
               <div>
-                <p style={{ fontSize: 12, color: "#a1a1aa", marginBottom: 12, lineHeight: 1.5 }}>
+                <p style={{ fontSize: 12, color: "#9CA3AF", marginBottom: 12, lineHeight: 1.5 }}>
                   Your opening hook decides everything. AI analyzes your transcript and rewrites the
                   first line to maximize retention.
                 </p>
                 <div
                   style={{
-                    background: "#09090b",
-                    borderRadius: 8,
+                    background: "#0A0A0A",
+                    borderRadius: 16,
                     padding: 12,
                     marginBottom: 16,
                     fontSize: 12,
-                    color: "#71717a",
+                    color: "#6b7280",
                     maxHeight: 120,
                     overflow: "auto",
                     lineHeight: 1.6,
@@ -1238,7 +1234,7 @@ function EditorPage() {
                 >
                   <div
                     style={{
-                      color: "#a1a1aa",
+                      color: "#9CA3AF",
                       fontSize: 10,
                       fontWeight: 600,
                       marginBottom: 4,
@@ -1257,14 +1253,14 @@ function EditorPage() {
                   style={{
                     width: "100%",
                     padding: "10px 0",
-                    borderRadius: 10,
-                    background: generatingHook ? "#27272a" : "#facc15",
-                    color: generatingHook ? "#71717a" : "#000",
+                    borderRadius: 16,
+                    background: generatingHook ? "#27272a" : "#D97736",
+                    color: generatingHook ? "#6b7280" : "#030303",
                     fontSize: 13,
                     fontWeight: 700,
                     border: "none",
                     cursor: generatingHook ? "not-allowed" : "pointer",
-                    transition: "background 0.2s",
+                    transition: "background 150ms ease",
                   }}
                 >
                   {generatingHook ? "Generating..." : "Generate Hook"}
@@ -1274,16 +1270,16 @@ function EditorPage() {
               <div>
                 <div
                   style={{
-                    background: "rgba(250,204,21,0.08)",
-                    border: "1px solid rgba(250,204,21,0.2)",
-                    borderRadius: 10,
+                    background: "rgba(217,119,54,0.08)",
+                    border: "1px solid rgba(217,119,54,0.2)",
+                    borderRadius: 16,
                     padding: 14,
                     marginBottom: 16,
                   }}
                 >
                   <div
                     style={{
-                      color: "#facc15",
+                      color: "#D97736",
                       fontSize: 10,
                       fontWeight: 600,
                       marginBottom: 6,
@@ -1302,7 +1298,7 @@ function EditorPage() {
                       lineHeight: 1.5,
                     }}
                   >
-                    "{generatedHook}"
+                    &quot;{generatedHook}&quot;
                   </p>
                 </div>
                 <div style={{ display: "flex", gap: 8 }}>
@@ -1311,14 +1307,14 @@ function EditorPage() {
                     style={{
                       flex: 1,
                       padding: "10px 0",
-                      borderRadius: 10,
-                      background: "#facc15",
-                      color: "#000",
+                      borderRadius: 16,
+                      background: "#D97736",
+                      color: "#030303",
                       fontSize: 13,
                       fontWeight: 700,
                       border: "none",
                       cursor: "pointer",
-                      transition: "background 0.15s",
+                      transition: "background 150ms ease",
                     }}
                   >
                     Apply Hook
@@ -1329,14 +1325,14 @@ function EditorPage() {
                     style={{
                       flex: 1,
                       padding: "10px 0",
-                      borderRadius: 10,
+                      borderRadius: 16,
                       background: "rgba(255,255,255,0.06)",
-                      color: "#a1a1aa",
+                      color: "#9CA3AF",
                       fontSize: 13,
                       fontWeight: 600,
                       border: "1px solid rgba(255,255,255,0.08)",
                       cursor: "pointer",
-                      transition: "background 0.15s",
+                      transition: "background 150ms ease",
                     }}
                   >
                     Regenerate
@@ -1354,9 +1350,9 @@ function EditorPage() {
                 width: "100%",
                 marginTop: 8,
                 padding: "8px 0",
-                borderRadius: 10,
+                borderRadius: 16,
                 background: "transparent",
-                color: "#71717a",
+                color: "#6b7280",
                 fontSize: 12,
                 border: "none",
                 cursor: "pointer",
@@ -1368,7 +1364,6 @@ function EditorPage() {
         </div>
       )}
 
-      {/* ── Translate Modal ───────────────────── */}
       {translateModal && (
         <div
           style={overlayBase}
@@ -1383,7 +1378,7 @@ function EditorPage() {
                 style={{
                   width: 32,
                   height: 32,
-                  borderRadius: 10,
+                  borderRadius: 16,
                   background: "rgba(59,130,246,0.15)",
                   display: "flex",
                   alignItems: "center",
@@ -1396,7 +1391,7 @@ function EditorPage() {
                 <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#fff" }}>
                   Auto-Translate
                 </h3>
-                <p style={{ margin: 0, fontSize: 12, color: "#71717a" }}>
+                <p style={{ margin: 0, fontSize: 12, color: "#6b7280" }}>
                   Select a target Indian language
                 </p>
               </div>
@@ -1408,11 +1403,11 @@ function EditorPage() {
                 style={{
                   background: "rgba(255,255,255,0.06)",
                   border: "none",
-                  color: "#71717a",
+                  color: "#6b7280",
                   cursor: "pointer",
                   width: 28,
                   height: 28,
-                  borderRadius: 8,
+                  borderRadius: 6,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1438,27 +1433,27 @@ function EditorPage() {
                     onClick={() => setTranslateLang(lang.code)}
                     style={{
                       padding: "10px 12px",
-                      borderRadius: 10,
+                      borderRadius: 16,
                       background: selected ? "rgba(59,130,246,0.12)" : "rgba(255,255,255,0.03)",
                       border: selected
                         ? "1px solid rgba(59,130,246,0.35)"
-                        : "1px solid rgba(255,255,255,0.06)",
+                        : "1px solid rgba(255,255,255,0.08)",
                       cursor: "pointer",
                       textAlign: "left",
                       fontFamily: "inherit",
-                      transition: "all 0.15s",
+                      transition: "all 150ms ease",
                       position: "relative",
                     }}
                     onMouseEnter={(e) => {
                       if (!selected) {
                         e.target.style.background = "rgba(255,255,255,0.06)";
-                        e.target.style.borderColor = "rgba(255,255,255,0.1)";
+                        e.target.style.borderColor = "rgba(255,255,255,0.12)";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!selected) {
                         e.target.style.background = "rgba(255,255,255,0.03)";
-                        e.target.style.borderColor = "rgba(255,255,255,0.06)";
+                        e.target.style.borderColor = "rgba(255,255,255,0.08)";
                       }
                     }}
                   >
@@ -1470,7 +1465,7 @@ function EditorPage() {
                           right: 6,
                           width: 16,
                           height: 16,
-                          borderRadius: "50%",
+                          borderRadius: 9999,
                           background: "#3b82f6",
                           display: "flex",
                           alignItems: "center",
@@ -1483,7 +1478,7 @@ function EditorPage() {
                     <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 2 }}>
                       {lang.name}
                     </div>
-                    <div style={{ fontSize: 11, color: "#71717a" }}>{lang.native}</div>
+                    <div style={{ fontSize: 11, color: "#6b7280" }}>{lang.native}</div>
                   </button>
                 );
               })}
@@ -1498,15 +1493,15 @@ function EditorPage() {
                 style={{
                   flex: 1,
                   padding: "10px 0",
-                  borderRadius: 10,
+                  borderRadius: 16,
                   background: "rgba(255,255,255,0.06)",
-                  color: "#a1a1aa",
+                  color: "#9CA3AF",
                   fontSize: 13,
                   fontWeight: 600,
                   border: "1px solid rgba(255,255,255,0.08)",
                   cursor: "pointer",
                   fontFamily: "inherit",
-                  transition: "background 0.15s",
+                  transition: "background 150ms ease",
                 }}
               >
                 Cancel
@@ -1517,15 +1512,15 @@ function EditorPage() {
                 style={{
                   flex: 1,
                   padding: "10px 0",
-                  borderRadius: 10,
+                  borderRadius: 16,
                   background: translateLang ? "#3b82f6" : "#27272a",
-                  color: translateLang ? "#fff" : "#71717a",
+                  color: translateLang ? "#fff" : "#6b7280",
                   fontSize: 13,
                   fontWeight: 700,
                   border: "none",
                   cursor: translateLang ? "pointer" : "not-allowed",
                   fontFamily: "inherit",
-                  transition: "background 0.15s",
+                  transition: "background 150ms ease",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1540,7 +1535,6 @@ function EditorPage() {
         </div>
       )}
 
-      {/* ── Toasts ───────────────────────────── */}
       <div
         style={{
           position: "fixed",
@@ -1557,14 +1551,14 @@ function EditorPage() {
           <div
             key={t.id}
             style={{
-              background: "rgba(24,24,27,0.9)",
-              backdropFilter: "blur(12px)",
+              background: "rgba(10,10,10,0.8)",
+              backdropFilter: "blur(24px)",
               border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 10,
+              borderRadius: 16,
               padding: "10px 16px",
               fontSize: 13,
               color: "#fff",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.6)",
+              boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)",
               pointerEvents: "auto",
               animation: "slideIn 0.25s ease-out",
               display: "flex",
@@ -1578,7 +1572,6 @@ function EditorPage() {
         ))}
       </div>
 
-      {/* Inline keyframes for toast animation */}
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         .animate-spin { animation: spin 1s linear infinite; }
@@ -1593,7 +1586,7 @@ function EditorPage() {
           }
         }
         .${styles.wordChip}:hover {
-          background: rgba(245,158,11,0.3) !important;
+          background: rgba(217,119,54,0.3) !important;
         }
       `}</style>
     </div>

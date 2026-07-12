@@ -80,8 +80,24 @@ const PLUGINS = [
   },
 ];
 
+const PLUGIN_FILES = {
+  "Premiere Pro": "/plugins/subai-premiere-pro.zip",
+  "After Effects": "/plugins/subai-after-effects.zip",
+  "DaVinci Resolve": "/plugins/subai-davinci-resolve.zip",
+};
+
 const handleDownload = (pluginName) => {
-  alert(`The ${pluginName} plugin will be available for download soon. Please check back later.`);
+  const fileUrl = PLUGIN_FILES[pluginName];
+  if (fileUrl) {
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.download = fileUrl.split("/").pop();
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } else {
+    alert(`The ${pluginName} plugin is not available yet.`);
+  }
 };
 
 function PluginDownloadPage() {
@@ -90,20 +106,20 @@ function PluginDownloadPage() {
       <section className="pt-36 pb-24 px-6">
         <div className="max-w-4xl mx-auto text-center mb-16">
           <h1 className="text-[clamp(2.2rem,5vw,3.8rem)] font-black tracking-tight leading-[1.06] mb-5">
-            Edit captions inside your <span className="text-amber-400">NLE</span>
+            Edit captions inside your <span className="text-[#D97736]">NLE</span>
           </h1>
-          <p className="text-zinc-400 text-[16px] max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-[#9CA3AF] text-[16px] max-w-2xl mx-auto leading-relaxed mb-8">
             Caption your timeline without leaving your editing software. The SubAI panel transcribes
             your sequence, styles the captions, and burns them in or drops an SRT \u2014 all in one
             click.
           </p>
-          <p className="text-zinc-600 text-sm mb-10">One setup file, no manual config.</p>
+          <p className="text-[#4B5563] text-sm mb-10">One setup file, no manual config.</p>
 
           <div className="flex flex-wrap justify-center gap-3">
             {PLUGINS.map((p) => (
               <div
                 key={p.name}
-                className="px-4 py-2 rounded-full border border-white/[0.08] bg-white/[0.03] text-sm text-zinc-300"
+                className="px-4 py-2 rounded-full border border-[rgba(255,255,255,0.08)] bg-white/[0.03] text-sm text-[#D1D5DB]"
               >
                 {p.name}
               </div>
@@ -115,23 +131,23 @@ function PluginDownloadPage() {
           {PLUGINS.map((plugin) => (
             <div
               key={plugin.name}
-              className="rounded-2xl border border-white/[0.07] bg-[#0c0c14] p-6 flex flex-col"
+              className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#0A0A0A]/80 backdrop-blur-2xl p-6 flex flex-col"
             >
               <div className="flex items-center gap-4 mb-4">
                 {plugin.icon}
                 <div>
                   <h3 className="font-bold text-white">{plugin.name}</h3>
-                  <p className="text-xs text-zinc-500">
+                  <p className="text-xs text-[#6B7280]">
                     v{plugin.version} \u00B7 {plugin.os}
                   </p>
                 </div>
               </div>
-              <p className="text-sm text-zinc-400 leading-relaxed flex-1 mb-6">{plugin.desc}</p>
+              <p className="text-sm text-[#9CA3AF] leading-relaxed flex-1 mb-6">{plugin.desc}</p>
               <div className="flex items-center justify-between">
-                <span className="text-xs text-zinc-600">{plugin.size}</span>
+                <span className="text-xs text-[#4B5563]">{plugin.size}</span>
                 <button
                   onClick={() => handleDownload(plugin.name)}
-                  className="px-4 py-2 text-[12px] font-bold text-black bg-amber-400 hover:bg-amber-300 rounded-xl transition-all cursor-pointer"
+                  className="px-4 py-2 text-[12px] font-bold text-[#030303] bg-[#D97736] hover:bg-[#FF9A4D] rounded-full transition-all duration-150 cursor-pointer"
                 >
                   Download
                 </button>
@@ -140,29 +156,29 @@ function PluginDownloadPage() {
           ))}
         </div>
 
-        <div className="max-w-3xl mx-auto rounded-2xl border border-white/[0.07] bg-[#0c0c14] p-8">
+        <div className="max-w-3xl mx-auto rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[#0A0A0A]/80 backdrop-blur-2xl p-8">
           <h3 className="text-lg font-bold text-white mb-4">Installation</h3>
-          <div className="space-y-4 text-sm text-zinc-400">
+          <div className="space-y-4 text-sm text-[#9CA3AF]">
             <div>
-              <p className="text-zinc-300 font-medium mb-1">1. Download the plugin</p>
+              <p className="text-[#D1D5DB] font-medium mb-1">1. Download the plugin</p>
               <p>Choose your NLE and download the installer package.</p>
             </div>
             <div>
-              <p className="text-zinc-300 font-medium mb-1">2. Run the installer</p>
+              <p className="text-[#D1D5DB] font-medium mb-1">2. Run the installer</p>
               <p>
                 The setup file detects your installed Adobe / DaVinci applications and installs the
                 panel automatically.
               </p>
             </div>
             <div>
-              <p className="text-zinc-300 font-medium mb-1">3. Open SubAI panel</p>
+              <p className="text-[#D1D5DB] font-medium mb-1">3. Open SubAI panel</p>
               <p>
                 In your NLE, go to Window &gt; Extensions &gt; SubAI. Log in with your account and
                 start captioning.
               </p>
             </div>
             <div>
-              <p className="text-zinc-300 font-medium mb-1">4. Transcribe & export</p>
+              <p className="text-[#D1D5DB] font-medium mb-1">4. Transcribe & export</p>
               <p>
                 Select the sequence, choose your language, style the captions, and export with
                 burn-in or SRT.

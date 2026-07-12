@@ -2,54 +2,56 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(9, 9, 11, 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 14px 24px;
+  padding: 6px 24px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  font-size: 18px;
 }
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent-amber);
-  box-shadow: var(--accent-amber-glow);
+
+.logo {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
 }
+
 .links {
   display: flex;
   align-items: center;
   gap: 6px;
 }
+
 .link {
   padding: 8px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-secondary);
+  border-radius: 6px;
+  color: #9CA3AF;
   font-size: 14px;
   font-weight: 500;
 }
+
 .link:hover {
-  color: var(--text-primary);
-  background: var(--surface-muted);
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.05);
 }
+
 .user {
   padding: 6px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--accent-amber-dim);
-  color: var(--accent-amber);
+  border-radius: 9999px;
+  background: rgba(217, 119, 6, 0.12);
+  color: #D97736;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.01em;

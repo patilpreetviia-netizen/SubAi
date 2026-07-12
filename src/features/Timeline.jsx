@@ -278,7 +278,7 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
                 <span
                   style={{
                     fontSize: 9,
-                    color: isActive ? "#facc15" : "#71717a",
+                    color: isActive ? "#D97736" : "#6b7280",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -361,10 +361,10 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
               top: 0,
               bottom: 0,
               width: 2,
-              background: "#facc15",
+              background: "#D97736",
               zIndex: 10,
               pointerEvents: "none",
-              boxShadow: "0 0 8px rgba(250,204,21,0.4)",
+              boxShadow: "0 0 8px rgba(217,119,6,0.4)",
               transition: dragging ? "none" : "left 0.08s linear",
             }}
           >
@@ -377,8 +377,8 @@ export function Timeline({ subtitles, currentTime, totalDuration, onSeek, onUpda
                 width: 10,
                 height: 10,
                 borderRadius: "50%",
-                background: "#facc15",
-                boxShadow: "0 0 8px rgba(250,204,21,0.5)",
+                background: "#D97736",
+                boxShadow: "0 0 8px rgba(217,119,6,0.5)",
               }}
             />
           </div>

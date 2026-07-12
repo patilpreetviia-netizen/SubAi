@@ -4,6 +4,24 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+export function useScrollSetup() {
+  useEffect(() => {
+    ScrollTrigger.config({ ignoreMobileResize: true });
+
+    const onReady = () => ScrollTrigger.refresh();
+    if (document.readyState === "complete") {
+      onReady();
+    } else {
+      window.addEventListener("load", onReady);
+    }
+
+    return () => {
+      window.removeEventListener("load", onReady);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, []);
+}
+
 export function useReveal(direction = "up", delay = 0) {
   const ref = useRef(null);
 

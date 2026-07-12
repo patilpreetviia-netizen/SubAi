@@ -55,53 +55,19 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
-function Particles() {
-  const circles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    size: 2 + (i % 4) * 2,
-    x: (i * 37 + 13) % 100,
-    y: (i * 53 + 7) % 100,
-    dur: 4 + (i % 5) * 2,
-    delay: (i * 0.3) % 4,
-    tx: i % 2 === 0 ? 20 : -20,
-    ty: i % 3 === 0 ? -25 : 15,
-  }));
-
-  return (
-    <div aria-hidden="true" className="absolute inset-0 pointer-events-none overflow-hidden">
-      {circles.map((c) => (
-        <div
-          key={c.id}
-          className="absolute rounded-full bg-amber-400/20 animate-float-particle"
-          style={{
-            width: c.size,
-            height: c.size,
-            left: `${c.x}%`,
-            top: `${c.y}%`,
-            "--tx": `${c.tx}px`,
-            "--ty": `${c.ty}px`,
-            animationDuration: `${c.dur}s`,
-            animationDelay: `${c.delay}s`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
 function StatCard({ value, label, icon, delay }) {
   const [ref, inView] = useInView(0.3);
   return (
     <div
       ref={ref}
-      className={`glass rounded-2xl px-5 py-5 text-center transition-all duration-500 hover:border-amber-400/20 hover:shadow-lg hover:shadow-amber-400/5 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
+      className={`glass rounded-2xl px-5 py-5 text-center transition-all duration-500 hover:border-[#D97736]/20 hover:shadow-lg hover:shadow-[#D97736]/5 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
-      <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-amber-400/10 border border-amber-400/15 mb-3">
+      <div className="inline-flex items-center justify-center w-9 h-9 rounded-2xl bg-[#D97736]/10 border border-[#D97736]/15 mb-3">
         {icon}
       </div>
       <p className="text-2xl md:text-3xl font-black text-white mb-0.5 tracking-tight">{value}</p>
-      <p className="text-[10px] text-zinc-500 font-medium uppercase tracking-wider">{label}</p>
+      <p className="text-[10px] text-[#6b7280] font-medium uppercase tracking-wider">{label}</p>
     </div>
   );
 }
@@ -111,17 +77,17 @@ function FeatureCard({ colSpan, title, desc, icon, children }) {
   return (
     <div
       ref={ref}
-      className={`${colSpan} p-7 group relative rounded-2xl border border-white/[0.07] bg-[#0c0c14] overflow-hidden transition-all duration-500 hover:border-amber-400/25 hover:shadow-lg hover:shadow-amber-400/5 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      className={`${colSpan} p-7 group relative rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(10,10,10,0.8)] backdrop-blur-[24px] shadow-[rgba(0,0,0,0.25)_0px_25px_50px_-12px] overflow-hidden transition-all duration-500 hover:border-[#D97736]/25 hover:shadow-lg hover:shadow-[#D97736]/5 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
     >
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-amber-400/5 blur-3xl" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-[#D97736]/5 blur-3xl" />
       </div>
       <div className="relative z-10">
-        <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/15 flex items-center justify-center mb-5">
+        <div className="w-10 h-10 rounded-2xl bg-[#D97736]/10 border border-[#D97736]/15 flex items-center justify-center mb-5">
           {icon}
         </div>
         <h3 className="text-xl font-bold text-white mb-2 tracking-tight">{title}</h3>
-        <p className="text-sm text-zinc-400 leading-relaxed max-w-md">{desc}</p>
+        <p className="text-sm text-[#9CA3AF] leading-relaxed max-w-md">{desc}</p>
         {children}
       </div>
     </div>
@@ -131,7 +97,7 @@ function FeatureCard({ colSpan, title, desc, icon, children }) {
 function FaqItem({ question, answer }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="rounded-2xl border border-white/[0.07] bg-white/[0.02] overflow-hidden transition-all duration-300 hover:border-amber-400/15">
+    <div className="rounded-2xl border border-[rgba(255,255,255,0.08)] bg-[rgba(10,10,10,0.8)] backdrop-blur-[24px] overflow-hidden transition-all duration-150 hover:border-[#D97736]/15">
       <button
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between px-6 py-5 text-left cursor-pointer"
@@ -147,16 +113,16 @@ function FaqItem({ question, answer }) {
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className={`w-4 h-4 shrink-0 text-zinc-500 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`w-4 h-4 shrink-0 text-[#6b7280] transition-transform duration-150 ${open ? "rotate-180" : ""}`}
         >
           <path d="m6 9 6 6 6-6" />
         </svg>
       </button>
       <div
-        className={`grid transition-all duration-300 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
+        className={`grid transition-all duration-150 ${open ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}
       >
         <div className="overflow-hidden">
-          <p className="px-6 pb-5 text-sm text-zinc-400 leading-relaxed">{answer}</p>
+          <p className="px-6 pb-5 text-sm text-[#9CA3AF] leading-relaxed">{answer}</p>
         </div>
       </div>
     </div>
@@ -175,16 +141,14 @@ function HomePage() {
   }, []);
 
   return (
-    <div className="bg-[#0B0B0D] text-white min-h-screen font-sans selection:bg-amber-500/30">
-      {/* Floating Navigation */}
+    <div className="bg-[#0A0A0A] text-white min-h-screen font-sans selection:bg-[#D97736]/30">
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-300 ${scrollDir === "down" ? "-translate-y-full" : "translate-y-0"}`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-transform duration-150 ${scrollDir === "down" ? "-translate-y-full" : "translate-y-0"}`}
       >
         <div className="mx-auto max-w-7xl px-4 md:px-6 pt-4">
           <div className="flex items-center justify-between rounded-2xl glass-strong px-4 md:px-5 py-3">
-            <Link className="flex items-center gap-2.5 shrink-0 group" to="/">
-              <img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
-              <span className="font-bold text-[15px] text-white tracking-tight">SubAI</span>
+            <Link className="flex items-center shrink-0 group" to="/">
+              <img src="/subai-logo.png" alt="SubAI" className="h-20 w-auto object-contain" />
             </Link>
 
             <nav className="hidden md:flex items-center gap-0.5">
@@ -197,7 +161,7 @@ function HomePage() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="px-3.5 py-2 text-[13px] text-zinc-400 hover:text-white rounded-xl hover:bg-white/[0.05] transition-all cursor-pointer"
+                  className="px-3.5 py-2 text-[13px] text-[#9CA3AF] hover:text-white rounded-2xl hover:bg-white/[0.05] transition-all cursor-pointer"
                 >
                   {link.label}
                 </Link>
@@ -207,11 +171,11 @@ function HomePage() {
             <div className="flex items-center gap-2">
               <Link
                 to="/login"
-                className="hidden md:inline-flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-black bg-amber-400 hover:bg-amber-300 rounded-xl transition-all hover:shadow-lg hover:shadow-amber-400/25"
+                className="hidden md:inline-flex items-center gap-2 px-4 py-2 text-[13px] font-bold text-[#030303] bg-[#D97736] hover:bg-[#FF9A4D] rounded-full transition-all hover:shadow-lg hover:shadow-[#D97736]/25"
               >
                 Dashboard
               </Link>
-              <button className="md:hidden p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-white/[0.06] transition-all cursor-pointer">
+              <button className="md:hidden p-2 rounded-2xl text-[#9CA3AF] hover:text-white hover:bg-white/[0.06] transition-all cursor-pointer">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -234,19 +198,16 @@ function HomePage() {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section
         ref={heroRef}
         className="relative min-h-[90vh] flex flex-col items-center justify-center px-6 pt-36 pb-24 overflow-hidden"
       >
-        <Particles />
-
         <div aria-hidden="true" className="absolute inset-0 pointer-events-none">
           <div
             className="absolute top-[12%] left-1/2 -translate-x-1/2 w-[900px] h-[600px] rounded-full opacity-60"
             style={{
               background:
-                "radial-gradient(ellipse, rgba(217,119,6,0.14) 0%, rgba(251,191,36,0.04) 45%, transparent 70%)",
+                "radial-gradient(ellipse, rgba(217,119,6,0.14) 0%, rgba(255,154,77,0.04) 45%, transparent 70%)",
               filter: "blur(80px)",
             }}
           />
@@ -261,11 +222,11 @@ function HomePage() {
         </div>
 
         <div
-          className={`relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto w-full transition-all duration-1000 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`relative z-10 flex flex-col items-center text-center max-w-3xl mx-auto w-full transition-all duration-500 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-400/20 bg-amber-400/5 mb-8 fade-in">
-            <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-            <span className="text-[11px] font-semibold text-amber-300 tracking-wide uppercase">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D97736]/20 bg-[#D97736]/5 mb-8 fade-in">
+            <span className="w-2 h-2 rounded-full bg-[#D97736] animate-pulse" />
+            <span className="text-[11px] font-semibold text-[#FF9A4D] tracking-wide uppercase">
               Now in Public Beta
             </span>
           </div>
@@ -276,7 +237,7 @@ function HomePage() {
             <span className="gradient-text">Hinglish</span> right.
           </h1>
 
-          <p className="text-[17px] md:text-[19px] text-zinc-400 max-w-[560px] leading-relaxed mb-9">
+          <p className="text-[17px] md:text-[19px] text-[#9CA3AF] max-w-[560px] leading-relaxed mb-9">
             Most caption tools mangle code-mixed speech. SubAI transcribes Hindi, Hinglish and 20
             other Indian languages, then lets you edit every word before you export.
           </p>
@@ -305,12 +266,11 @@ function HomePage() {
             </a>
           </div>
 
-          <p className="mt-4 text-[12px] text-zinc-600">Free to use · Powered by Groq & Whisper</p>
+          <p className="mt-4 text-[12px] text-[#6b7280]">Free to use · Powered by Groq & Whisper</p>
         </div>
 
-        {/* Stats Grid */}
         <div
-          className={`relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-2xl mx-auto mt-16 transition-all duration-1000 delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+          className={`relative z-10 grid grid-cols-2 md:grid-cols-4 gap-3 w-full max-w-2xl mx-auto mt-16 transition-all duration-500 delay-300 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
         >
           <StatCard
             value="99%"
@@ -327,7 +287,7 @@ function HomePage() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-4 h-4 text-amber-400"
+                className="w-4 h-4 text-[#D97736]"
               >
                 <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
                 <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
@@ -352,7 +312,7 @@ function HomePage() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-4 h-4 text-amber-400"
+                className="w-4 h-4 text-[#D97736]"
               >
                 <rect width="18" height="18" x="3" y="3" rx="2" />
                 <path d="M7 3v18" />
@@ -380,7 +340,7 @@ function HomePage() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-4 h-4 text-amber-400"
+                className="w-4 h-4 text-[#D97736]"
               >
                 <circle cx="12" cy="12" r="10" />
                 <path d="M2 12h20" />
@@ -403,7 +363,7 @@ function HomePage() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="w-4 h-4 text-amber-400"
+                className="w-4 h-4 text-[#D97736]"
               >
                 <path d="M12 2v4" />
                 <path d="m16.2 7.8 2.9-2.9" />
@@ -419,7 +379,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Features Bento Grid */}
       <section id="features" className="py-28 px-6 overflow-hidden">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 fade-in">
@@ -427,7 +386,7 @@ function HomePage() {
             <h2 className="text-4xl md:text-[3.5rem] font-black tracking-tight leading-[1.06] mb-5 text-white">
               Everything a creator <span className="gradient-text">actually needs</span>
             </h2>
-            <p className="text-zinc-400 max-w-md mx-auto text-[16px] leading-relaxed">
+            <p className="text-[#9CA3AF] max-w-md mx-auto text-[16px] leading-relaxed">
               From first upload to exported reel, SubAI handles every step so you can focus on
               making great content.
             </p>
@@ -449,7 +408,7 @@ function HomePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-5 h-5 text-amber-400"
+                  className="w-5 h-5 text-[#D97736]"
                 >
                   <path d="M12 18V5" />
                   <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" />
@@ -462,14 +421,14 @@ function HomePage() {
                 </svg>
               }
             >
-              <div className="mt-6 rounded-xl bg-black/30 border border-white/[0.06] p-4 space-y-2">
+              <div className="mt-6 rounded-2xl bg-[rgba(10,10,10,0.8)] border border-[rgba(255,255,255,0.08)] p-4 space-y-2">
                 <p className="text-[13px] text-zinc-300">
-                  <span className="text-zinc-600 mr-1.5">{"\u201c"}</span>Basically technically
-                  speaking yaar<span className="text-zinc-600 ml-0.5">{"\u201d"}</span>
+                  <span className="text-[#6b7280] mr-1.5">{"\u201c"}</span>Basically technically
+                  speaking yaar<span className="text-[#6b7280] ml-0.5">{"\u201d"}</span>
                 </p>
                 <p className="text-[13px] text-zinc-300">
-                  <span className="text-zinc-600 mr-1.5">{"\u201c"}</span>Aaj ka video dekh bhai,
-                  life-changing hai<span className="text-zinc-600 ml-0.5">{"\u201d"}</span>
+                  <span className="text-[#6b7280] mr-1.5">{"\u201c"}</span>Aaj ka video dekh bhai,
+                  life-changing hai<span className="text-[#6b7280] ml-0.5">{"\u201d"}</span>
                 </p>
               </div>
             </FeatureCard>
@@ -489,7 +448,7 @@ function HomePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-5 h-5 text-amber-400"
+                  className="w-5 h-5 text-[#D97736]"
                 >
                   <path d="m5 8 6 6" />
                   <path d="m4 14 6-6 2-3" />
@@ -505,7 +464,7 @@ function HomePage() {
                   (label, i) => (
                     <div
                       key={i}
-                      className="px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-zinc-400 font-medium"
+                      className="px-2.5 py-1 rounded-[6px] bg-white/[0.04] border border-[rgba(255,255,255,0.08)] text-xs text-[#9CA3AF] font-medium"
                     >
                       {label}
                     </div>
@@ -529,7 +488,7 @@ function HomePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-5 h-5 text-amber-400"
+                  className="w-5 h-5 text-[#D97736]"
                 >
                   <path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z" />
                   <circle cx="13.5" cy="6.5" r=".5" fill="currentColor" />
@@ -555,7 +514,7 @@ function HomePage() {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="w-5 h-5 text-amber-400"
+                  className="w-5 h-5 text-[#D97736]"
                 >
                   <rect width="18" height="18" x="3" y="3" rx="2" />
                   <path d="M7 3v18" />
@@ -572,7 +531,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Why SubAI — Transcript Comparison */}
       <section className="py-28 px-6 overflow-hidden bg-black/20 border-b border-white/[0.03]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 fade-in">
@@ -580,7 +538,7 @@ function HomePage() {
             <h2 className="text-4xl md:text-[3.4rem] font-black tracking-tight leading-[1.06] mb-5 text-white">
               Raw transcription vs <span className="gradient-text">SubAI output</span>
             </h2>
-            <p className="text-zinc-400 max-w-xl mx-auto text-[16px] leading-relaxed">
+            <p className="text-[#9CA3AF] max-w-xl mx-auto text-[16px] leading-relaxed">
               Most tools give you a messy auto-transcript. SubAI cleans the speech, keeps the
               code-switch, and delivers captions that actually make sense.
             </p>
@@ -603,7 +561,7 @@ function HomePage() {
                 ].map((line, i) => (
                   <p
                     key={i}
-                    className="text-[14px] text-zinc-500 italic leading-relaxed border-l-2 border-red-500/20 pl-3"
+                    className="text-[14px] text-[#6b7280] italic leading-relaxed border-l-2 border-red-500/20 pl-3"
                   >
                     {line}
                   </p>
@@ -645,15 +603,15 @@ function HomePage() {
                     className="text-[14px] text-zinc-300 leading-relaxed border-l-2 border-emerald-500/20 pl-3"
                   >
                     <p>
-                      <span className="text-zinc-500 text-[11px] font-mono">Roman:</span>{" "}
+                      <span className="text-[#6b7280] text-[11px] font-mono">Roman:</span>{" "}
                       {line.roman}
                     </p>
                     <p>
-                      <span className="text-zinc-500 text-[11px] font-mono">Native:</span>{" "}
+                      <span className="text-[#6b7280] text-[11px] font-mono">Native:</span>{" "}
                       {line.native}
                     </p>
                     <p>
-                      <span className="text-zinc-500 text-[11px] font-mono">English:</span>{" "}
+                      <span className="text-[#6b7280] text-[11px] font-mono">English:</span>{" "}
                       {line.eng}
                     </p>
                   </div>
@@ -677,7 +635,7 @@ function HomePage() {
             ].map((label) => (
               <span
                 key={label}
-                className="px-3 py-1 rounded-lg bg-white/[0.04] border border-white/[0.06] text-xs text-zinc-500 font-medium"
+                className="px-3 py-1 rounded-[6px] bg-white/[0.04] border border-[rgba(255,255,255,0.08)] text-xs text-[#6b7280] font-medium"
               >
                 {label}
               </span>
@@ -686,7 +644,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Comparison Table */}
       <section className="py-28 px-6 overflow-hidden border-b border-white/[0.03]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16 fade-in">
@@ -696,15 +653,15 @@ function HomePage() {
             </h2>
           </div>
 
-          <div className="overflow-x-auto rounded-2xl border border-white/[0.07]">
+          <div className="overflow-x-auto rounded-2xl border border-[rgba(255,255,255,0.08)]">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-white/[0.06] bg-white/[0.02]">
-                  <th className="text-left py-4 px-5 text-zinc-400 font-medium">Feature</th>
-                  <th className="text-left py-4 px-5 text-amber-300 font-semibold">SubAI</th>
-                  <th className="text-left py-4 px-5 text-zinc-600 font-medium">CapCut</th>
-                  <th className="text-left py-4 px-5 text-zinc-600 font-medium">Premiere Pro</th>
-                  <th className="text-left py-4 px-5 text-zinc-600 font-medium">Veed.io</th>
+                <tr className="border-b border-[rgba(255,255,255,0.08)] bg-white/[0.02]">
+                  <th className="text-left py-4 px-5 text-[#9CA3AF] font-medium">Feature</th>
+                  <th className="text-left py-4 px-5 text-[#FF9A4D] font-semibold">SubAI</th>
+                  <th className="text-left py-4 px-5 text-[#6b7280] font-medium">CapCut</th>
+                  <th className="text-left py-4 px-5 text-[#6b7280] font-medium">Premiere Pro</th>
+                  <th className="text-left py-4 px-5 text-[#6b7280] font-medium">Veed.io</th>
                 </tr>
               </thead>
               <tbody>
@@ -726,9 +683,9 @@ function HomePage() {
                   >
                     <td className="py-3.5 px-5 text-zinc-300">{row.feature}</td>
                     <td className="py-3.5 px-5 text-emerald-400">{row.subai}</td>
-                    <td className="py-3.5 px-5 text-zinc-600">{row.capcut ?? row.others}</td>
-                    <td className="py-3.5 px-5 text-zinc-600">{row.premiere ?? row.others}</td>
-                    <td className="py-3.5 px-5 text-zinc-600">{row.veed ?? row.others}</td>
+                    <td className="py-3.5 px-5 text-[#6b7280]">{row.capcut ?? row.others}</td>
+                    <td className="py-3.5 px-5 text-[#6b7280]">{row.premiere ?? row.others}</td>
+                    <td className="py-3.5 px-5 text-[#6b7280]">{row.veed ?? row.others}</td>
                   </tr>
                 ))}
               </tbody>
@@ -737,7 +694,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="py-28 px-6 overflow-hidden bg-black/20 border-b border-white/[0.03]">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-16 fade-in">
@@ -776,7 +732,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Plugin CTA */}
       <section className="py-28 px-6 overflow-hidden bg-black/40 border-b border-white/[0.03] relative">
         <div
           aria-hidden="true"
@@ -787,7 +742,7 @@ function HomePage() {
           }}
         />
         <div className="max-w-4xl mx-auto text-center relative z-10">
-          <div className="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-amber-400/10 border border-amber-400/20">
+          <div className="mb-8 inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-[#D97736]/10 border border-[#D97736]/20">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -798,7 +753,7 @@ function HomePage() {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-amber-400"
+              className="text-[#D97736]"
             >
               <path d="M12 2H2v10l9.29 9.29a1 1 0 0 0 1.42 0l6.58-6.58a1 1 0 0 0 0-1.42Z" />
               <path d="M7 7h.01" />
@@ -807,7 +762,7 @@ function HomePage() {
           <h2 className="text-4xl md:text-[3.4rem] font-black tracking-tight leading-[1.06] mb-5 text-white">
             Works where <span className="gradient-text">you work</span>
           </h2>
-          <p className="text-zinc-400 max-w-lg mx-auto text-[16px] leading-relaxed mb-10">
+          <p className="text-[#9CA3AF] max-w-lg mx-auto text-[16px] leading-relaxed mb-10">
             Download the SubAI Plugin to auto-sync captions directly into Premiere Pro, CapCut, and
             DaVinci Resolve. No manual import needed.
           </p>
@@ -834,7 +789,7 @@ function HomePage() {
             {["Premiere Pro", "CapCut", "DaVinci Resolve", "Final Cut Pro"].map((app) => (
               <span
                 key={app}
-                className="px-4 py-2 rounded-xl bg-white/[0.04] border border-white/[0.07] text-xs text-zinc-400 font-medium"
+                className="px-4 py-2 rounded-[6px] bg-white/[0.04] border border-[rgba(255,255,255,0.08)] text-xs text-[#9CA3AF] font-medium"
               >
                 {app}
               </span>
@@ -843,7 +798,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Live Styles Sandbox */}
       <section
         id="styles"
         ref={sandboxRef}
@@ -851,13 +805,13 @@ function HomePage() {
       >
         <div className="max-w-4xl mx-auto">
           <div
-            className={`text-center mb-12 transition-all duration-700 ${sandboxInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+            className={`text-center mb-12 transition-all duration-500 ${sandboxInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
           >
             <p className="section-label">Live Sandbox</p>
             <h2 className="text-4xl md:text-[3.4rem] font-black tracking-tight leading-[1.06] mb-5 text-white">
               Preset styles, <span className="gradient-text">ready to ship</span>
             </h2>
-            <p className="text-zinc-400 max-w-xl mx-auto text-[16px] leading-relaxed">
+            <p className="text-[#9CA3AF] max-w-xl mx-auto text-[16px] leading-relaxed">
               Tap a preset below to preview it live in the canvas.
             </p>
           </div>
@@ -867,10 +821,10 @@ function HomePage() {
               <button
                 key={p.id}
                 onClick={() => setPreset(p)}
-                className={`px-4 py-2 rounded-xl border text-[13px] font-medium transition-all duration-200 ${
+                className={`px-4 py-2 rounded-full border text-[13px] font-medium transition-all duration-150 ${
                   preset.id === p.id
-                    ? "bg-amber-400/10 border-amber-400/40 text-amber-300 shadow-sm shadow-amber-400/10"
-                    : "bg-white/[0.03] border-white/[0.07] text-zinc-300 hover:border-amber-400/25 hover:text-amber-300 hover:bg-amber-400/5"
+                    ? "bg-[#D97736]/10 border-[#D97736]/40 text-[#FF9A4D] shadow-sm shadow-[#D97736]/10"
+                    : "bg-white/[0.03] border-[rgba(255,255,255,0.08)] text-zinc-300 hover:border-[#D97736]/25 hover:text-[#FF9A4D] hover:bg-[#D97736]/5"
                 }`}
               >
                 {p.name}
@@ -878,7 +832,7 @@ function HomePage() {
             ))}
           </div>
 
-          <div className="relative rounded-2xl overflow-hidden border border-white/[0.07] shadow-2xl shadow-black transition-all duration-500 hover:border-amber-400/15">
+          <div className="relative rounded-2xl overflow-hidden border border-[rgba(255,255,255,0.08)] shadow-2xl shadow-black transition-all duration-500 hover:border-[#D97736]/15">
             <div className="absolute inset-0 glass-strong z-0" />
             <div className="relative z-10 w-full p-4 flex justify-center">
               <div style={{ transform: "scale(0.85)", transformOrigin: "top center" }}>
@@ -889,30 +843,29 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/[0.06] bg-[#060609] pt-16 pb-8">
+      <footer className="border-t border-[rgba(255,255,255,0.08)] bg-[#060609] pt-16 pb-8">
         <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-1 md:col-span-2">
             <Link to="/" className="flex items-center gap-2.5 mb-4 group">
-              <img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-lg object-cover" />
+              <img src="/logo.jpeg" alt="SubAI" className="w-7 h-7 rounded-[6px] object-cover" />
               <span className="font-bold text-[15px] text-white tracking-tight">SubAI</span>
             </Link>
-            <p className="text-zinc-400 text-sm max-w-xs leading-relaxed">
+            <p className="text-[#9CA3AF] text-sm max-w-xs leading-relaxed">
               The free, browser-native AI caption studio built for Indian creators.
             </p>
           </div>
           <div>
             <h4 className="font-bold text-white mb-4 text-sm tracking-wide">Product</h4>
-            <ul className="space-y-3 text-sm text-zinc-400">
+            <ul className="space-y-3 text-sm text-[#9CA3AF]">
               <li>
-                <Link to="/pricing" className="hover:text-amber-400 transition-colors duration-200">
+                <Link to="/pricing" className="hover:text-[#D97736] transition-colors duration-150">
                   Pricing
                 </Link>
               </li>
               <li>
                 <Link
                   to="/changelog"
-                  className="hover:text-amber-400 transition-colors duration-200"
+                  className="hover:text-[#D97736] transition-colors duration-150"
                 >
                   Changelog
                 </Link>
@@ -920,7 +873,7 @@ function HomePage() {
               <li>
                 <Link
                   to="/templates"
-                  className="hover:text-amber-400 transition-colors duration-200"
+                  className="hover:text-[#D97736] transition-colors duration-150"
                 >
                   Templates
                 </Link>
@@ -928,7 +881,7 @@ function HomePage() {
               <li>
                 <Link
                   to="/plugin/download"
-                  className="hover:text-amber-400 transition-colors duration-200"
+                  className="hover:text-[#D97736] transition-colors duration-150"
                 >
                   Plugin
                 </Link>
@@ -937,19 +890,19 @@ function HomePage() {
           </div>
           <div>
             <h4 className="font-bold text-white mb-4 text-sm tracking-wide">Company</h4>
-            <ul className="space-y-3 text-sm text-zinc-400">
+            <ul className="space-y-3 text-sm text-[#9CA3AF]">
               <li>
-                <Link to="/about" className="hover:text-amber-400 transition-colors duration-200">
+                <Link to="/about" className="hover:text-[#D97736] transition-colors duration-150">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/login" className="hover:text-amber-400 transition-colors duration-200">
+                <Link to="/login" className="hover:text-[#D97736] transition-colors duration-150">
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/signup" className="hover:text-amber-400 transition-colors duration-200">
+                <Link to="/signup" className="hover:text-[#D97736] transition-colors duration-150">
                   Sign Up
                 </Link>
               </li>
@@ -957,14 +910,14 @@ function HomePage() {
           </div>
           <div>
             <h4 className="font-bold text-white mb-4 text-sm tracking-wide">Legal</h4>
-            <ul className="space-y-3 text-sm text-zinc-400">
+            <ul className="space-y-3 text-sm text-[#9CA3AF]">
               <li>
-                <Link to="/privacy" className="hover:text-amber-400 transition-colors duration-200">
+                <Link to="/privacy" className="hover:text-[#D97736] transition-colors duration-150">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="hover:text-amber-400 transition-colors duration-200">
+                <Link to="/terms" className="hover:text-[#D97736] transition-colors duration-150">
                   Terms of Service
                 </Link>
               </li>
@@ -972,10 +925,10 @@ function HomePage() {
           </div>
         </div>
         <div className="max-w-6xl mx-auto px-6 pt-8 border-t border-white/[0.04] flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-zinc-600 text-xs">© 2026 Preet Patil. All rights reserved.</p>
-          <div className="flex items-center gap-4 text-zinc-600 text-xs">
+          <p className="text-[#6b7280] text-xs">© 2026 Preet Patil. All rights reserved.</p>
+          <div className="flex items-center gap-4 text-[#6b7280] text-xs">
             <span>Powered by Groq & Whisper</span>
-            <span className="w-1 h-1 rounded-full bg-zinc-700" />
+            <span className="w-1 h-1 rounded-full bg-[#6b7280]" />
             <span>v1.0.0</span>
           </div>
         </div>

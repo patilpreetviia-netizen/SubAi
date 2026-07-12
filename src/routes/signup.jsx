@@ -42,12 +42,11 @@ function strengthLabel(s) {
 }
 function strengthColor(s) {
   if (s <= 2) return "#f87171";
-  if (s <= 3) return "#facc15";
+  if (s <= 3) return "#FF9A4D";
   if (s === 4) return "#4ade80";
   return "#22c55e";
 }
 
-/* ── Google icon ────────────────────────────────────── */
 function GoogleIcon() {
   return (
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -59,7 +58,6 @@ function GoogleIcon() {
   );
 }
 
-/* ── Eye toggle ─────────────────────────────────────── */
 function EyeIcon({ open }) {
   return open ? (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -74,8 +72,6 @@ function EyeIcon({ open }) {
   );
 }
 
-/* ──────────────────────────────────────────────────── */
-
 function SignupPage() {
   const navigate = useNavigate();
   const { signUp, signInWithGoogle } = useAuthStore();
@@ -89,7 +85,6 @@ function SignupPage() {
   const [error, setError] = useState(null);
   const [confirmMsg, setConfirmMsg] = useState(null);
 
-  /* ── Email/password signup ── */
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -112,7 +107,6 @@ function SignupPage() {
     navigate({ to: "/dashboard" });
   };
 
-  /* ── OAuth ── */
   const onOAuth = async (provider) => {
     setOauthLoading("google");
     setError(null);
@@ -129,97 +123,97 @@ function SignupPage() {
   return (
     <div className={styles.wrap}>
       <div className={styles.card}>
-        <Link to="/" className={styles.brand}>
-          <span className={styles.dot} /> SubAI
-        </Link>
-        <h1 className={styles.title}>Create your account</h1>
-        <p className={styles.desc}>Free forever — free-tier infra all the way down.</p>
+        <div className={styles.cardInner}>
+          <Link to="/" className={styles.brand}>
+            <img src="/subai-logo.png" alt="SubAI" style={{ height: 64, width: "auto" }} />
+          </Link>
+          <h1 className={styles.title}>Create your account</h1>
+          <p className={styles.desc}>Free forever — free-tier infra all the way down.</p>
 
-        {error && <div className={styles.error} role="alert">{error}</div>}
-        {confirmMsg && <div className={styles.success} role="status">{confirmMsg}</div>}
+          {error && <div className={styles.error} role="alert">{error}</div>}
+          {confirmMsg && <div className={styles.success} role="status">{confirmMsg}</div>}
 
-        {!confirmMsg && (
-          <>
-            {/* ── OAuth buttons ── */}
-            <div className={styles.oauthRow}>
-              <button
-                type="button"
-                className={styles.oauthBtn}
-                onClick={() => onOAuth("google")}
-                disabled={!!oauthLoading}
-              >
-                <GoogleIcon />
-                {oauthLoading === "google" ? "Redirecting…" : "Sign up with Google"}
-              </button>
-            </div>
-
-            <div className={styles.divider}><span>or</span></div>
-
-            {/* ── Email/password form ── */}
-            <form onSubmit={onSubmit}>
-              <Input
-                label="Full name"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Aarav Sharma"
-                disabled={disabled}
-              />
-              <Input
-                label="Email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@studio.in"
-                disabled={disabled}
-              />
-              <div className={styles.pwWrap}>
-                <Input
-                  label="Password"
-                  type={showPw ? "text" : "password"}
-                  required
-                  minLength={6}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="min 6 characters"
-                  disabled={disabled}
-                />
+          {!confirmMsg && (
+            <>
+              <div className={styles.oauthRow}>
                 <button
                   type="button"
-                  className={styles.eyeBtn}
-                  onClick={() => setShowPw((v) => !v)}
-                  aria-label={showPw ? "Hide password" : "Show password"}
-                  disabled={disabled}
+                  className={styles.oauthBtn}
+                  onClick={() => onOAuth("google")}
+                  disabled={!!oauthLoading}
                 >
-                  <EyeIcon open={showPw} />
+                  <GoogleIcon />
+                  {oauthLoading === "google" ? "Redirecting…" : "Sign up with Google"}
                 </button>
               </div>
 
-              {strengthScore >= 0 && (
-                <div className={styles.strength}>
-                  <div className={styles.strengthBar}>
-                    <div
-                      className={styles.strengthFill}
-                      style={{
-                        width: `${(strengthScore / 5) * 100}%`,
-                        background: strengthColor(strengthScore),
-                      }}
-                    />
-                  </div>
-                  <span className={styles.strengthLabel}>{strengthLabel(strengthScore)}</span>
+              <div className={styles.divider}><span>or</span></div>
+
+              <form onSubmit={onSubmit}>
+                <Input
+                  label="Full name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Aarav Sharma"
+                  disabled={disabled}
+                />
+                <Input
+                  label="Email"
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@studio.in"
+                  disabled={disabled}
+                />
+                <div className={styles.pwWrap}>
+                  <Input
+                    label="Password"
+                    type={showPw ? "text" : "password"}
+                    required
+                    minLength={6}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="min 6 characters"
+                    disabled={disabled}
+                  />
+                  <button
+                    type="button"
+                    className={styles.eyeBtn}
+                    onClick={() => setShowPw((v) => !v)}
+                    aria-label={showPw ? "Hide password" : "Show password"}
+                    disabled={disabled}
+                  >
+                    <EyeIcon open={showPw} />
+                  </button>
                 </div>
-              )}
 
-              <Button type="submit" className={styles.submit} disabled={disabled || !!oauthLoading}>
-                {loading ? "Creating…" : "Create account"}
-              </Button>
-            </form>
-          </>
-        )}
+                {strengthScore >= 0 && (
+                  <div className={styles.strength}>
+                    <div className={styles.strengthBar}>
+                      <div
+                        className={styles.strengthFill}
+                        style={{
+                          width: `${(strengthScore / 5) * 100}%`,
+                          background: strengthColor(strengthScore),
+                        }}
+                      />
+                    </div>
+                    <span className={styles.strengthLabel}>{strengthLabel(strengthScore)}</span>
+                  </div>
+                )}
 
-        <div className={styles.foot}>
-          Already have an account? <Link to="/login">Log in</Link>
+                <Button type="submit" className={styles.submit} disabled={disabled || !!oauthLoading}>
+                  {loading ? "Creating…" : "Create account"}
+                </Button>
+              </form>
+            </>
+          )}
+
+          <div className={styles.foot}>
+            Already have an account? <Link to="/login">Log in</Link>
+          </div>
         </div>
       </div>
     </div>
