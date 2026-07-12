@@ -106,8 +106,16 @@ function DashboardPage() {
     setModalVideoUrl(URL.createObjectURL(file));
   };
 
+  const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2GB
+
   const handleGenerate = async () => {
     if (!modalFile) return;
+
+    if (modalFile.size > MAX_FILE_SIZE) {
+      push(`File too large: ${(modalFile.size / (1024 * 1024 * 1024)).toFixed(1)}GB. Maximum is 2GB.`);
+      return;
+    }
+
     setTranscribing(true);
     setUploading(true);
     const file = modalFile;
